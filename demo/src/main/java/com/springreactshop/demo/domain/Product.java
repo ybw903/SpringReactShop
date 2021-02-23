@@ -7,12 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-@Setter @Getter
-public class Member {
+@Getter
+@Setter
+public class Product {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long Id;
 
-    private String userName;
+    private String productName;
+    private Double productPrice;
+
 }
