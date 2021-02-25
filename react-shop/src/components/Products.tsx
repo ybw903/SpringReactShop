@@ -13,7 +13,7 @@ const Products = () => {
 
 
     return(
-        <ProductGrid></ProductGrid>
+        <ProductGrid productList={productList}></ProductGrid>
     )
 }
 

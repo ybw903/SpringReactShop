@@ -3,14 +3,19 @@ import {
     Card,
     Button
 } from 'react-bootstrap';
+import { Product } from '../types/products';
 
-const ProductCard = () => {
+type Props = {
+    product: Product
+}
+
+const ProductCard = ({product}: Props) => {
     return(
         <Card>
             <Card.Body>
-                <Card.Title>카드의 제목</Card.Title>
-                <Card.Text>카드의 내용</Card.Text>
-                <span>카드의 가격</span>
+                <Card.Title>{product.productName}</Card.Title>
+                <Card.Text>{product.productDescription}</Card.Text>
+                <span>{product.productPrice}</span>
                 <Button className="cart-button" variant="outline-primary">카트에 담기</Button>
             </Card.Body>
         </Card>
