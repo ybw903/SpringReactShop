@@ -9,7 +9,7 @@ const Products = () => {
 
     useEffect(()=>{
         getProducts().then(products => setProductList(products));
-    })
+    },[]as Product[])
 
 
     return(
