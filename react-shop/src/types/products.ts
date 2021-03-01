@@ -3,4 +3,5 @@ export type Product = {
     productDescription: string;
     productPrice: number;
     id:number;
+    quantity:number
 };

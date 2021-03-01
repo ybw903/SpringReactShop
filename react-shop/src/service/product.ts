@@ -12,7 +12,8 @@ export const getProducts = async (): Promise<Product[]> => {
 
     return products.map(el =>{
         return{
-            ...el
+            ...el,
+            quantity:1
         };
     });
 }
