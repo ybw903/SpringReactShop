@@ -22,3 +22,13 @@ code {
 .cart-button {
   float: right;
 }
+
+.cart-price {
+  float: right;
+}
+
+.remove-item {
+  display: inline-block;
+  padding-left: 1rem;
+  cursor: pointer;
+}
