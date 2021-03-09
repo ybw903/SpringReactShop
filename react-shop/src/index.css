@@ -36,3 +36,15 @@ code {
   padding-left: 1rem;
   cursor: pointer;
 }
+
+.login-form{
+  width: 450px;
+  margin: auto;
+}
+
+.form-title {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 10px;
+}

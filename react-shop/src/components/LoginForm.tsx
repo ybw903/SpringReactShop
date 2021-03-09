@@ -34,8 +34,8 @@ function LoginForm({onSubmit}: MyFormProps) {
     };
 
     return(
-        <Form onSubmit={handleSubmit}>
-            <h3>Log in</h3>
+        <Form onSubmit={handleSubmit} className="login-form">
+            <h3 className="form-title">Log in</h3>
             <div className="form-group">
                 <label>Username</label>
                 <input type="text" className="form-control" placeholder="이름을 입력하세요"
