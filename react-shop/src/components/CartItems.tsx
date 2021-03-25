@@ -24,6 +24,7 @@ type Props = PropsFromRedux& {
 }
 
 const CartItems = ({products, onRemoveFromCart}: Props) => {
+    const cartTotal = products.reduce((total,prod) =>total+prod.productPrice*prod.quantity,0);
     return(
         <ListGroup>
             { products.map((product, i) =>(
@@ -36,6 +37,9 @@ const CartItems = ({products, onRemoveFromCart}: Props) => {
                     
                 </ListGroup.Item>
             ))}
+            <ListGroup.Item>
+                <strong>총액</strong> <span className="cart-price"><strong>${cartTotal}</strong></span>
+            </ListGroup.Item>
         </ListGroup>
     );
 };

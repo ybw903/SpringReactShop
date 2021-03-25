@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Authentication from './Authentication';
 import Cart from './Cart';
+import Checkout from './Checkout';
 import Navigation from './Navigation';
 import Products from './Products';
 
@@ -18,6 +19,9 @@ const App = () =>{
         </Route>
         <Route path ="/cart">
           <Cart/>
+        </Route>
+        <Route path = "/checkout">
+          <Checkout/>
         </Route>
         <Route path ="/auth">
           <Authentication/>
