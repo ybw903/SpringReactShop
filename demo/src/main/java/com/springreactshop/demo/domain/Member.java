@@ -1,5 +1,6 @@
 package com.springreactshop.demo.domain;
 
+import com.springreactshop.demo.representation.UserDto;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -8,7 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter @Getter
+@Builder
 public class Member {
 
     @Id
@@ -18,4 +22,6 @@ public class Member {
     private String username;
 
     private String password;
+
+
 }

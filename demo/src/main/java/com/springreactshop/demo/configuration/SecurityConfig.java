@@ -30,14 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     JwtRequestFilter jwtRequestFilter;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jwtUserDetailService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(jwtUserDetailService).passwordEncoder(passwordEncoder);
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     @Override
@@ -56,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/authenticate").permitAll()
                     .antMatchers("/products").permitAll()
+                    .antMatchers("/users/signup").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin().disable();

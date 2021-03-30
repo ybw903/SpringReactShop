@@ -2,8 +2,10 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.repository.MemberRepository;
+import com.springreactshop.demo.representation.JwtRequest;
 import com.springreactshop.demo.representation.UserDto;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public Long signUp(Member member){
+    public Long signUp(JwtRequest signupRequest){
+        Member member = Member.builder()
+                .username(signupRequest.getUsername())
+                .password(passwordEncoder.encode(signupRequest.getPassword()))
+                .build();
         return memberRepository.save(member).getId();
     }
 

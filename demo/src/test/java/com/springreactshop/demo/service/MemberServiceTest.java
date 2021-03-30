@@ -2,6 +2,7 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.repository.MemberRepository;
+import com.springreactshop.demo.representation.JwtRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,14 +22,16 @@ class MemberServiceTest {
     @Test
     public void 회원가입() {
         //Given
-        Member member = new Member();
-        member.setUserName("testUser");
+        JwtRequest signupRequest = new JwtRequest();
+        signupRequest.setUsername("testUser");
+        signupRequest.setPassword("1234");
 
         //When
-        Long saveId = memberService.signUp(member);
+        Long saveId = memberService.signUp(signupRequest);
 
         //Then
-        Member signedMember = memberRepository.findAll().get(0);
-        assertThat(signedMember.getUserName()).isEqualTo(member.getUserName());
+        Member signedMember = memberRepository.findById(saveId).orElse(null);
+        assertThat(signedMember).isNotNull();
+        assertThat(signedMember.getUsername()).isEqualTo(signupRequest.getUsername());
     }
 }
