@@ -4,6 +4,7 @@ import com.springreactshop.demo.configuration.JwtTokenUtil;
 import com.springreactshop.demo.representation.JwtRequest;
 import com.springreactshop.demo.representation.JwtResponse;
 import com.springreactshop.demo.service.JwtUserDetailService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
+@Slf4j
 public class JwtAuthenticationController {
 
     @Autowired
@@ -26,7 +28,7 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtUserDetailService userDetailService;
 
-    @PostMapping(value = "/authenticate")
+    @PostMapping(value = "/api/authenticate")
     public ResponseEntity<?> createAuthenticationToken(
             @RequestBody JwtRequest authenticateRequest) throws Exception {
         authenticate(authenticateRequest.getUsername(), authenticateRequest.getPassword());
