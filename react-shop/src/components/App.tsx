@@ -5,6 +5,7 @@ import Cart from './Cart';
 import Checkout from './Checkout';
 import Navigation from './Navigation';
 import Products from './Products';
+import RegistrationFrom from './RegistrationForm';
 
 const App = () =>{
   return(
@@ -25,6 +26,9 @@ const App = () =>{
         </Route>
         <Route path ="/auth">
           <Authentication/>
+        </Route>
+        <Route path ="/registraition">
+          <RegistrationFrom/>
         </Route>
       </Switch>
       

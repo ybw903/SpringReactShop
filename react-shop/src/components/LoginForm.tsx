@@ -1,6 +1,7 @@
 import React, { useState} from 'react';
 import { Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { login } from '../service/auth';
 
 type MyFormProps = {
@@ -48,7 +49,7 @@ function LoginForm({onSubmit}: MyFormProps) {
                 name="password" value={password} onChange={handleChange}/>
             </div>
             <Button type="submit" className="btn btn-primary btn-lg btn-block">로그인</Button>
-            <p className="text-right">비밀번호를 잊으셨나요?</p>
+            <div className="d-flex justify-content-between"><Link to="/registraition">회원가입하러가기</Link> <Link to="">비밀번호를 잊으셨나요?</Link></div>
         </Form>
     );
 }
