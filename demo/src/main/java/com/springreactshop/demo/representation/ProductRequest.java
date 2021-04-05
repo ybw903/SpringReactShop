@@ -6,8 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
-public class ProductDto {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ProductRequest {
+
+    private Long id;
 
     private String productName;
 
@@ -17,8 +22,13 @@ public class ProductDto {
 
     private int productQuantity;
 
+    private int orderPrice;
+
+    private int orderQuantity;
+
     public Product toEntity(){
         return Product.builder()
+                .Id(id)
                 .productName(productName)
                 .productDescription(productDescription)
                 .productPrice(productPrice)

@@ -27,10 +27,10 @@ class MemberServiceTest {
         signupRequest.setPassword("1234");
 
         //When
-        Long saveId = memberService.signUp(signupRequest);
+        String username = memberService.signUp(signupRequest);
 
         //Then
-        Member signedMember = memberRepository.findById(saveId).orElse(null);
+        Member signedMember = memberRepository.findByUsername(username);
         assertThat(signedMember).isNotNull();
         assertThat(signedMember.getUsername()).isEqualTo(signupRequest.getUsername());
     }

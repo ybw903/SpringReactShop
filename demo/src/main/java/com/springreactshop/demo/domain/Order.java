@@ -22,15 +22,30 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="DELIVERY_ID")
+    private Delivery delivery;
+
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "PAYMENT_ID")
+//    private Payment payment;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    private int totalPrice;
+
     private Date orderDate;
 
-
+    public void setStatus(OrderStatus Status) {this.status = Status;}
+    public void setTotalPrice(int totalPrice) {this.totalPrice = totalPrice;}
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
+
 
     //==연관관계 메소드==//
     public void setMember(Member member) {
@@ -43,15 +58,39 @@ public class Order {
         orderProduct.setOrder(this);
     }
 
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+
     //==생성 메소드==//
-    public static Order createOrder(Member member, OrderProduct... orderProducts) {
+    public static Order createOrder(Member member,Delivery delivery, List<OrderProduct> orderProducts) {
         Order order = new Order();
         order.setMember(member);
+        order.setDelivery(delivery);
+
+        int totalPrice = 0;
         for(OrderProduct orderProduct : orderProducts) {
             order.addOrderProduct(orderProduct);
+            totalPrice += orderProduct.getTotalPrice();
         }
+
+        order.setStatus(OrderStatus.ORDER);
+        order.setTotalPrice(totalPrice);
         order.setOrderDate(new Date());
         return order;
+    }
+
+    //==비즈니스 로직==//
+    /**주문 취소*/
+    public void cancel() {
+        if(delivery.getDeliveryStatus() == DeliveryStatus.COMP) {
+            throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+        this.setStatus(OrderStatus.CANCEL);
+        for(OrderProduct orderProduct : orderProducts) {
+            orderProduct.cancel();
+        }
     }
 
 }

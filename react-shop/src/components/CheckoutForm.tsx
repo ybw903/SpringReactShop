@@ -15,8 +15,8 @@ const CheckoutForm = () => {
                 </Row>
                 <Row>
                     <Col>
-                        <label htmlFor='email'>Email <span className='text-muted'>(선택사항)</span></label>
-                        <input type='text' className='form-control' id='email' placeholder='you@example.com'></input>
+                        <label htmlFor='phone'>Phone <span className='text-muted'>(선택사항)</span></label>
+                        <input type='text' className='form-control' id='phone' placeholder='010-1234-5678'></input>
                     </Col>
                 </Row>
                 <Row>
@@ -31,15 +31,15 @@ const CheckoutForm = () => {
                     <Col>
                         <h4>Payment</h4>
                         <div className='custom-control custom-radio'>
-                            <input id="credit" type="radio" className="custom-control-input"></input>
+                            <input id="credit" type="radio" className="custom-control-input" name="payment"></input>
                             <label className="custom-control-label" htmlFor="credit">신용카드</label>
                         </div>
                         <div className='custom-control custom-radio'>
-                            <input id="debit" type="radio" className="custom-control-input"></input>
+                            <input id="debit" type="radio" className="custom-control-input" name="payment"></input>
                             <label className="custom-control-label" htmlFor="debit">계좌이체</label>
                         </div>
                         <div className='custom-control custom-radio'>
-                            <input id="paypal" type="radio" className="custom-control-input"></input>
+                            <input id="paypal" type="radio" className="custom-control-input" name="payment"></input>
                             <label className="custom-control-label" htmlFor="paypal">페이팔</label>
                         </div>
                     </Col>

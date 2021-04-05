@@ -15,6 +15,7 @@ export function login(username:string, password:string, history: History) {
             dispatch(LoginSuccess({username, token}));
             history.push('/');
         }).catch((error)=>{
+            console.log(error);
             dispatch(LoginFauilure(error));
         }) 
     }
@@ -28,7 +29,6 @@ export function register(username:string, password: string) {
             dispatch(RegisterSuccess());
         })
         .catch((error)=>{
-            console.log(error);
             dispatch(RegisterFailure(error));
         })
     }

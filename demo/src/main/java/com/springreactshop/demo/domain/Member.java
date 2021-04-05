@@ -1,5 +1,7 @@
 package com.springreactshop.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springreactshop.demo.representation.MemberDto;
 import com.springreactshop.demo.representation.UserDto;
 import lombok.*;
 import org.aspectj.weaver.ast.Or;
@@ -10,8 +12,8 @@ import java.util.List;
 
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
-@Setter @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Member {
 
     @Id
@@ -21,7 +23,11 @@ public class Member {
 
     private String username;
 
+    @JsonIgnore
     private String password;
+
+    @Embedded
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     public List<Order> orders = new ArrayList<>();
@@ -30,5 +36,14 @@ public class Member {
     public Member(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    //==회원 정보 갱신==//
+    public void updateMember(MemberDto memberDto) {
+        Address address = new Address();
+        if(this.address==null)this.address = address;
+        this.address.setPhone(memberDto.getPhone());
+        this.address.setStreet(memberDto.getStreet());
+        this.address.setZipcode(memberDto.getZipcode());
     }
 }

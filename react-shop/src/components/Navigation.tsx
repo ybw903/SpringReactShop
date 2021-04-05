@@ -35,8 +35,13 @@ const Navigation = ({loggedIn, onLogout, history}:Props) => {
             </Nav>
             <Nav style={{marginLeft: "10px"}}>
                 {loggedIn===true?
-                <Button onClick={()=>onLogout(history)}>Logout</Button>:
-                <Link to ="/auth"><Button>Login</Button></Link>}
+                <div className="logout-div">
+                    <Button onClick={()=>onLogout(history)}>Logout</Button>
+                    <span className ="fa fa-user fa-2x text-primary remove-item"></span>
+                </div>
+                :
+                    <Link to ="/auth"><Button>Login</Button></Link>
+                }
             </Nav>
         </Navbar>
     )

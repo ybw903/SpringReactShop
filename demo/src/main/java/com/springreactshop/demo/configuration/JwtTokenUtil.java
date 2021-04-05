@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Component
 public class JwtTokenUtil implements Serializable {
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    public static final long JWT_TOKEN_VALIDITY = 30 * 60 * 1000L;;
 
     @Value("$jwt.secret")
     private String secret;
@@ -36,7 +36,8 @@ public class JwtTokenUtil implements Serializable {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJwt(token).getBody();
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        //Jws 서명이 있는 JWT
     }
 
     private Boolean isTokenExpired(String token) {

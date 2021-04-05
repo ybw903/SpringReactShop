@@ -23,6 +23,9 @@ code {
   float: right;
 }
 
+.logout-div{
+  display: flex;
+}
 .remove-item {
   display: inline-block;
   padding-left: 1rem;
