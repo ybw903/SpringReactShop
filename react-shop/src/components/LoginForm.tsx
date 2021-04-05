@@ -1,13 +1,29 @@
 import React, { useState} from 'react';
 import { Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { login } from '../service/auth';
+import { connect, ConnectedProps } from 'react-redux';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import {History} from 'history';
+import { login, loginRequest } from '../actions/auth';
+import { RootState } from '../store';
 
-type MyFormProps = {
-    onSubmit: (form: {username: string; password: string}) => void;
+const mapState = ({authState}: RootState) =>({
+    authState: authState
+});
+
+const mapDispatch = {
+   onLogin: (username:string, password: string, history: History) => login(username, password, history)
 }
-function LoginForm({onSubmit}: MyFormProps) {
+
+const connector = connect(
+    mapState,
+    mapDispatch,
+);
+
+type Props = ConnectedProps<typeof connector> & RouteComponentProps;
+
+
+function LoginForm({authState, onLogin, history}: Props) {
    
     const [form, setForm] = useState({
         username: '',
@@ -26,8 +42,7 @@ function LoginForm({onSubmit}: MyFormProps) {
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //onSubmit(form);
-        login(form.username,form.password);
+        onLogin(username, password, history);
         setForm({
             username: '',
             password: ''
@@ -49,9 +64,9 @@ function LoginForm({onSubmit}: MyFormProps) {
                 name="password" value={password} onChange={handleChange}/>
             </div>
             <Button type="submit" className="btn btn-primary btn-lg btn-block">로그인</Button>
-            <div className="d-flex justify-content-between"><Link to="/registraition">회원가입하러가기</Link> <Link to="">비밀번호를 잊으셨나요?</Link></div>
+            <p className="text-center"><Link to="/registraition">회원가입하러가기</Link></p>
         </Form>
     );
 }
 
-export default LoginForm;
+export default withRouter(connector(LoginForm));

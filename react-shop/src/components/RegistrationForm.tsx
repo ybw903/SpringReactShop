@@ -1,20 +1,45 @@
 import React, { useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { login } from '../service/auth';
+import { connect, ConnectedProps } from 'react-redux';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { register } from '../actions/auth';
+import { RootState } from '../store';
 
-type MyFormProps = {
-    onSubmit: (form: { username: string; password: string }) => void;
+const mapState = ({authState}: RootState) =>({
+    authState: authState
+});
+
+const mapDispatch = {
+   onRegisetr : (username:string, password: string) => register(username, password)
 }
-function RegistrationFrom() {
+
+const connector = connect(
+    mapState,
+    mapDispatch,
+);
+
+type Props = ConnectedProps<typeof connector> & RouteComponentProps;
+
+
+function RegistrationFrom({authState, onRegisetr}:Props) {
 
     const [form, setForm] = useState({
         username: '',
         password: ''
     });
-
     const { username, password } = form;
+
+    const [showModal, setModal] = useState(false);
+    const [resultMessage , setMessage] = useState('');
+
+    const handleShow = () => {
+        setModal(true);
+    }
+
+    const handleClose = () => {
+        setModal(false);
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -26,8 +51,11 @@ function RegistrationFrom() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //onSubmit(form);
-        login(form.username, form.password);
+        onRegisetr(username,password);
+
+        setMessage((authState.error === null?'성공':'실패'));
+        handleShow();
+
         setForm({
             username: '',
             password: ''
@@ -49,11 +77,23 @@ function RegistrationFrom() {
                     <input type="password" className="form-control" placeholder="비밀번호를 입력하세요"
                         name="password" value={password} onChange={handleChange} />
                 </div>
-                <Button type="submit" className="btn btn-primary btn-lg btn-block">회원가입</Button>
-                <div className="d-flex justify-content-between"><Link to="/auth">로그인하러가기</Link> <Link to="">비밀번호를 잊으셨나요?</Link></div>
+                <Button type="submit" className="btn btn-danger btn-lg btn-block">회원가입</Button>
+                <p className="text-center"><Link to="/auth">로그인하러가기</Link></p>
             </Form>
+            <Modal show={showModal} onHide={handleClose}>
+                <Modal.Header closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    {resultMessage}
+                </Modal.Body>
+                <Modal.Footer>
+                    {resultMessage=='성공'?
+                    <Link to="/auth"><Button className="btn btn-primary btn-lg btn-block">로그인하러가기</Button></Link>
+                    :<Button className="btn btn-primary btn-lg btn-block" onClick={()=>handleClose()}>닫기</Button>}
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 }
 
-export default RegistrationFrom;
+export default withRouter(connector(RegistrationFrom));

@@ -26,14 +26,4 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping(value = "/signup")
-    public ResponseEntity<?> addUser(@RequestBody JwtRequest signupRequest) {
-
-        Long userId = memberService.signUp(signupRequest);
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(MemberController.class).slash(userId);
-        URI createdUri = selfLinkBuilder.toUri();
-        return ResponseEntity.created(createdUri).body("ok");
-    }
-
-
 }

@@ -4,12 +4,9 @@ import LoginForm from './LoginForm';
 
 const Authentication = () => {
 
-    const onSubmit = (form: {username: string; password: string}) => {
-        console.log(form);
-    }
     return (
         <Container className="auth-container">
-            <LoginForm onSubmit={onSubmit}></LoginForm>
+            <LoginForm></LoginForm>
         </Container>
 
     )

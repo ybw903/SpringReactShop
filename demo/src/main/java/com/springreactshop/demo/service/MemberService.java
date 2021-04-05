@@ -17,12 +17,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Long signUp(JwtRequest signupRequest){
+    public String signUp(JwtRequest signupRequest){
         Member member = Member.builder()
                 .username(signupRequest.getUsername())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
                 .build();
-        return memberRepository.save(member).getId();
+        return memberRepository.save(member).getUsername();
     }
 
     public UserDto getUserByUsername(String username) {

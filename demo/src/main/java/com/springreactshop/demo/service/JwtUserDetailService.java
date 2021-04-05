@@ -1,5 +1,6 @@
 package com.springreactshop.demo.service;
 
+import com.springreactshop.demo.representation.JwtRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,10 @@ public class JwtUserDetailService implements UserDetailsService {
 //        } else {
 //            throw new UsernameNotFoundException("User not found with username: " + username);
 //        }
+    }
+
+    public String addUser(JwtRequest signupRequest) {
+        return memberService.signUp(signupRequest);
     }
 
 

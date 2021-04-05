@@ -6,6 +6,7 @@ import com.springreactshop.demo.representation.JwtResponse;
 import com.springreactshop.demo.service.JwtUserDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,6 +14,10 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @CrossOrigin
@@ -40,6 +45,17 @@ public class JwtAuthenticationController {
 
         return ResponseEntity.ok(new JwtResponse(token));
     }
+
+
+    @PostMapping(value = "/api/authenticate/signup")
+    public ResponseEntity<?> signUp(@RequestBody JwtRequest signupRequest) {
+
+        String userName = userDetailService.addUser(signupRequest);
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(MemberController.class).slash(userName);
+        URI createdUri = selfLinkBuilder.toUri();
+        return ResponseEntity.created(createdUri).body("ok");
+    }
+
 
 
     private void authenticate(String username, String password) throws Exception {

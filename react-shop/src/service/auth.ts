@@ -1,18 +1,10 @@
+import { User } from "../types/user";
+import axios from 'axios';
 
-export const login = async (username: string, password: string): Promise<void> => {
+export const authLogin =  (username: string, password: string) => {
+    return axios.post("/api/authenticate/login",{username, password})
+}
 
-    const requestOption = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username, password})
-    }
-
-    const response = await fetch(`/authenticate`,requestOption);
-
-    const response_data = await response.json();
-
-    if(response.ok) {
-        console.log("okok");
-        console.log(response_data);
-    }
+export const authSignUp = (username: string, password: string) => {
+    return axios.post("/api/authenticate/signup", {username, password})
 }
