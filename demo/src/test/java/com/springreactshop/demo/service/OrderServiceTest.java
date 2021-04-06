@@ -2,6 +2,7 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.configuration.JwtTokenUtil;
 import com.springreactshop.demo.domain.*;
+import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.representation.JwtRequest;
@@ -30,7 +31,13 @@ class OrderServiceTest {
     OrderService orderService;
 
     @Autowired
+    OrderRepository orderRepository;
+
+    @Autowired
     MemberService memberService;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @Autowired
     ProductRepository productRepository;
@@ -49,11 +56,13 @@ class OrderServiceTest {
         OrderRequest orderRequest = new OrderRequest(member.getUsername(), productRequests);
 
         //when
-        Order order =  orderService.order(orderRequest);
+        Order order = orderService.order(orderRequest);
 
         //then
         assertThat(order.getMember().getUsername()).isEqualTo(member.getUsername());
-        assertThat(order.getDelivery().getAddress()).isNull();//TODO 테스트 고치기
+        assertThat(order.getDelivery().getAddress().getPhone()).isEqualTo(member.getAddress().getPhone());
+        assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(member.getAddress().getStreet());
+        assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(member.getAddress().getZipcode());
         assertThat(order.getDelivery().getDeliveryStatus()).isEqualTo(DeliveryStatus.READY);
         assertThat(order.getOrderProducts().size()).isEqualTo(productRequests.size());
         assertThat(order.getTotalPrice()).isEqualTo(
@@ -61,6 +70,48 @@ class OrderServiceTest {
                                 .mapToInt(productRequest -> productRequest.getOrderPrice() * productRequest.getOrderQuantity())
                                 .sum());
         assertThat(order.getStatus()).isEqualTo(OrderStatus.ORDER);
+    }
+
+    @Test
+    public void 주문취소() {
+        //given
+        List<ProductRequest> productRequests = new ArrayList<>();
+        for(int i =1; i<4; i++) {
+            ProductRequest productRequest = generateProductRequest(i);
+            productRepository.save(productRequest.toEntity());
+            productRequests.add(productRequest);
+        }
+        Member member = makeUser();
+        OrderRequest orderRequest = new OrderRequest(member.getUsername(), productRequests);
+        Order order =  orderService.order(orderRequest);
+
+        //when
+        orderService.cancelOrder(order.getId());
+
+        //then
+        Order cancelOrder = orderRepository.findById(order.getId()).get();
+        assertThat(cancelOrder.getStatus()).isEqualTo(OrderStatus.CANCEL);
+    }
+
+    @Test
+    public void 주문목록() {
+        //given
+        List<ProductRequest> productRequests = new ArrayList<>();
+        for(int i =1; i<4; i++) {
+            ProductRequest productRequest = generateProductRequest(i);
+            productRepository.save(productRequest.toEntity());
+            productRequests.add(productRequest);
+        }
+        Member member = makeUser();
+        OrderRequest orderRequest = new OrderRequest(member.getUsername(), productRequests);
+        Order order =  orderService.order(orderRequest);
+
+        //when
+        orderService.cancelOrder(order.getId());
+
+        //then
+        Order cancelOrder = orderRepository.findById(order.getId()).get();
+        assertThat(cancelOrder.getStatus()).isEqualTo(OrderStatus.CANCEL);
     }
 
     public Member makeUser() {
@@ -75,8 +126,9 @@ class OrderServiceTest {
                 .zipcode("000000")
                 .street("서울시강남구테헤란로")
                 .build();
-        member.updateMember(memberDto);
-        return member;
+
+        memberService.updateMember(member,memberDto);
+        return memberRepository.findByUsername("user");
     }
 
     public ProductRequest generateProductRequest(int idx) {

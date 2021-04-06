@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="DELIVERY_ID")
     private Long id;
 
@@ -28,11 +28,15 @@ public class Delivery {
 
     public void setOrder(Order order) {this.order=order;}
 
+    public void setAddress(Address address) {this.address = address;}
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {this.deliveryStatus = deliveryStatus;}
+
     //==생성 메소드==//
     public static Delivery createDelivery(Address address) {
         Delivery delivery = new Delivery();
-        delivery.address = address;
-        delivery.deliveryStatus = DeliveryStatus.READY;
+        delivery.setAddress(address);
+        delivery.setDeliveryStatus(DeliveryStatus.READY);
         return delivery;
     }
 }

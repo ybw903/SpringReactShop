@@ -8,12 +8,14 @@ import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.representation.OrderRequest;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -39,6 +41,18 @@ public class OrderService {
         orderRepository.save(order);
 
         return  order;
+    }
+
+    public List<Order> orderList() {
+        return orderRepository.findAll();
+    }
+
+    /** 주문 취소*/
+    public void cancelOrder(Long orderId) {
+        Optional<Order> optionalOrder =orderRepository.findById(orderId);
+        if(optionalOrder.isEmpty()) return;
+        Order order = optionalOrder.get();
+        order.cancel();
     }
 
 }

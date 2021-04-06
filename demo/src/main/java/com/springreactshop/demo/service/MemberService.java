@@ -3,6 +3,7 @@ package com.springreactshop.demo.service;
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.representation.JwtRequest;
+import com.springreactshop.demo.representation.MemberDto;
 import com.springreactshop.demo.representation.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,6 +33,11 @@ public class MemberService {
             return null;
         }
         return user;
+    }
+
+    public Member updateMember(Member member, MemberDto memberDto) {
+        member.updateMember(memberDto);
+        return memberRepository.save(member); //>???
     }
 
     public UserDto getUserByUsername(String username) {
