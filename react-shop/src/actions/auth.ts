@@ -12,6 +12,11 @@ export function login(username:string, password:string, history: History) {
         .then((response) =>{
             let token: string = response.data;
             console.log(token);
+            
+            // TODO : Refactor if need
+            localStorage.setItem('token', token);
+            localStorage.setItem('authUser', username);
+
             dispatch(LoginSuccess({username, token}));
             history.push('/');
         }).catch((error)=>{
@@ -56,6 +61,8 @@ export const LoginFauilure = (error: any):AuthActionTypes => {
 }
 
 export const Logout = (history: History):AuthActionTypes => {
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("token");
     return {
         type: LOG_OUT
     };
