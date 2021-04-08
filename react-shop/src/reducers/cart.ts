@@ -10,7 +10,7 @@ const cartReducer = (state = initialState, action: CartActionTypes): CartState =
 
             let idx: number = state.products.findIndex(p=>p.id===action.product.id);
             if(idx!==-1){
-                state.products[idx].quantity+=1;
+                state.products[idx].orderQuantity+=1;
                 return {
                     products: state.products
                 };

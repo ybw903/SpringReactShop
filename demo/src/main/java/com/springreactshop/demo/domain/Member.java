@@ -1,6 +1,8 @@
 package com.springreactshop.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.springreactshop.demo.representation.MemberDto;
 import com.springreactshop.demo.representation.UserDto;
 import lombok.*;
@@ -30,6 +32,7 @@ public class Member {
     private Address address;
 
     @OneToMany(mappedBy = "member")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public List<Order> orders = new ArrayList<>();
 
     @Builder

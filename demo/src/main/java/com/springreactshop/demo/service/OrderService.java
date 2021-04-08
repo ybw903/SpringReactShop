@@ -43,16 +43,20 @@ public class OrderService {
         return  order;
     }
 
+    public Optional<Order> getOrder(Long orderId) {
+        return orderRepository.findById(orderId);
+    }
+
     public List<Order> orderList() {
         return orderRepository.findAll();
     }
 
     /** 주문 취소*/
-    public void cancelOrder(Long orderId) {
+    public Order cancelOrder(Long orderId) {
         Optional<Order> optionalOrder =orderRepository.findById(orderId);
-        if(optionalOrder.isEmpty()) return;
         Order order = optionalOrder.get();
         order.cancel();
+        return orderRepository.save(order);
     }
 
 }

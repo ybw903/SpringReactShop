@@ -6,7 +6,6 @@ export const order = (username: string, productList: Product[]) => {
     const productRequsetList = productList.map(el => {
         return {
             ...el,
-            orderQuantity: el.quantity,
             orderPrice: el.productPrice
         }
     })

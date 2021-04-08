@@ -24,14 +24,14 @@ type Props = PropsFromRedux& {
 }
 
 const CartItems = ({products, onRemoveFromCart}: Props) => {
-    const cartTotal = products.reduce((total,prod) =>total+prod.productPrice*prod.quantity,0);
+    const cartTotal = products.reduce((total,prod) =>total+prod.productPrice*prod.orderQuantity,0);
     return(
         <ListGroup>
             { products.map((product, i) =>(
                 <ListGroup.Item key={i}>
                     {product.productName}
                     
-                    <span className="cart-price">${product.productPrice} <span className="text-muted">{product.quantity}개</span>
+                    <span className="cart-price">${product.productPrice} <span className="text-muted">{product.orderQuantity}개</span>
                     <span className ="fa fa-times text-danger remove-item" onClick={()=> onRemoveFromCart(i)}></span>
                     </span>
                     

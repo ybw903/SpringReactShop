@@ -1,5 +1,9 @@
 package com.springreactshop.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.aspectj.weaver.ast.Or;
 
@@ -20,10 +24,12 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Member member;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="DELIVERY_ID")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Delivery delivery;
 
 //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -31,6 +37,7 @@ public class Order {
 //    private Payment payment;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

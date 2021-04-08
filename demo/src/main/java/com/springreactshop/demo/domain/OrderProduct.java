@@ -1,5 +1,7 @@
 package com.springreactshop.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +19,12 @@ public class OrderProduct {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Product product;
 
     private int orderPrice;

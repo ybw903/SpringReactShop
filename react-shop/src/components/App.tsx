@@ -6,6 +6,7 @@ import Checkout from './Checkout';
 import Navigation from './Navigation';
 import Products from './Products';
 import RegistrationFrom from './RegistrationForm';
+import User from './User';
 
 const App = () =>{
   return(
@@ -29,6 +30,9 @@ const App = () =>{
         </Route>
         <Route path ="/registraition">
           <RegistrationFrom/>
+        </Route>
+        <Route path ="/user">
+          <User/>
         </Route>
       </Switch>
       
