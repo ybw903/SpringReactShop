@@ -1,13 +1,10 @@
 import React from 'react';
-import { Route, RouteProps } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 import FobiddenPage from './FobiddenPage';
 
 export interface ProtectedRouteProps extends RouteProps {
     component : any
-    isAuthenticated: boolean
-    isAllowed: boolean
-    restrictedPath: string
-    authenticationPath: string
+
 }
   
 const RouteIf = (props: ProtectedRouteProps)  => {
@@ -15,9 +12,12 @@ const RouteIf = (props: ProtectedRouteProps)  => {
     return (
       <Route
         {...rest}
-        render={props => 
-            localStorage.getItem('authUser')?(<Component {...props}/>):(<FobiddenPage/>)
+        render={routeProps => 
+            localStorage.getItem('authUser')?
+            (<Component {...routeProps}/>):(<Redirect to='/403'/>)
         }
       />
     )
   }
+
+export default RouteIf;

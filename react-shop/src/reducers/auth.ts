@@ -1,4 +1,4 @@
-import { AuthActionTypes, AuthState, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOG_OUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "../types/auth";
+import { AuthActionTypes, AuthState, LOAD_USER, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOG_OUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "../types/auth";
 
 const initialState :AuthState = {
     loggedIn: false,
@@ -50,6 +50,11 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
                 ...state,
                 isFetching:false,
                 error : action.error
+            }
+        case LOAD_USER:
+            return {
+                ...state,
+                user : action.user
             }
         default:
             return state;

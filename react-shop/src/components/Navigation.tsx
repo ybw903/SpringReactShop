@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Navbar, Nav, Button
+    Navbar, Nav, Button, NavDropdown, Dropdown
 } from 'react-bootstrap';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import CartButton from './CartButton';
@@ -30,18 +30,27 @@ const Navigation = ({loggedIn, onLogout, history}:Props) => {
             <Navbar.Brand><Link to="/">Shop</Link></Navbar.Brand>
             <Nav className="mr-auto">
             </Nav>
-            <Nav>
-                <CartButton />
-            </Nav>
-            <Nav style={{marginLeft: "10px"}}>
+            
+            <Nav style={{marginRight:10}} >
                 {loggedIn===true?
-                <div className="logout-div">
-                    <Button onClick={()=>onLogout(history)}>Logout</Button>
-                    <span className ="fa fa-user fa-2x text-primary remove-item"></span>
-                </div>
+                <Dropdown>
+                <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                    User
+                    {/* <span className ="fa fa-user fa-2x text-primary remove-item"></span> */}
+                </Dropdown.Toggle>
+                
+                <Dropdown.Menu style ={{position:'absolute'}}>
+                  <Dropdown.Item><Link to ="/user">회원정보</Link></Dropdown.Item>
+                  <Dropdown.Item onClick={()=>onLogout(history)}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
                 :
                     <Link to ="/auth"><Button>Login</Button></Link>
                 }
+            </Nav>
+            <Nav>
+                <CartButton />
             </Nav>
         </Navbar>
     )

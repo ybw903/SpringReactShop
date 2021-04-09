@@ -1,4 +1,6 @@
 export interface User {
     username: string;
-    token: string;
+    zipcode?: string;
+    street?: string;
+    phone?: string;
 }

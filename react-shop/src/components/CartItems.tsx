@@ -20,10 +20,10 @@ const connector = connect(
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 type Props = PropsFromRedux& {
-
+    isEdit: boolean
 }
 
-const CartItems = ({products, onRemoveFromCart}: Props) => {
+const CartItems = ({isEdit, products, onRemoveFromCart}: Props) => {
     const cartTotal = products.reduce((total,prod) =>total+prod.productPrice*prod.orderQuantity,0);
     return(
         <ListGroup>
@@ -32,7 +32,7 @@ const CartItems = ({products, onRemoveFromCart}: Props) => {
                     {product.productName}
                     
                     <span className="cart-price">${product.productPrice} <span className="text-muted">{product.orderQuantity}개</span>
-                    <span className ="fa fa-times text-danger remove-item" onClick={()=> onRemoveFromCart(i)}></span>
+                    {isEdit? <span className ="fa fa-times text-danger remove-item" onClick={()=> onRemoveFromCart(i)}></span>:<></>}
                     </span>
                     
                 </ListGroup.Item>

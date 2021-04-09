@@ -29,7 +29,7 @@ public class OrderService {
 
     public Order order(OrderRequest orderRequest) {
         Member member =  memberRepository.findByUsername(orderRequest.getUsername());
-        Delivery delivery = Delivery.createDelivery(member.getAddress());
+        Delivery delivery = Delivery.createDelivery(orderRequest.getAddress());
 
         List<OrderProduct> orderProducts =
         orderRequest.getProductList().stream()

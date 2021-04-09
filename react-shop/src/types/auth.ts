@@ -9,6 +9,8 @@ export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
+export const LOAD_USER = 'LOAD_USER';
+
 export interface LoginRequest{
     type : typeof LOGIN_REQUEST
 }
@@ -40,7 +42,12 @@ export interface RegisterFailure{
     error : any
 }
 
-export type AuthActionTypes = LoginRequest|LoginSuccess|LoginFauilure|LogOut|RegisterRequest|RegisterSuccess|RegisterFailure;
+export interface loadUser{
+    type : typeof LOAD_USER
+    user: User
+}
+
+export type AuthActionTypes = LoginRequest|LoginSuccess|LoginFauilure|LogOut|RegisterRequest|RegisterSuccess|RegisterFailure|loadUser;
 
 export type AuthState = {
     loggedIn?: boolean;

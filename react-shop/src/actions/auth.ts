@@ -1,8 +1,8 @@
-import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOG_OUT, AuthActionTypes, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE} from '../types/auth';
+import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOG_OUT, AuthActionTypes, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, LOAD_USER} from '../types/auth';
 import { User } from '../types/user';
 import {History} from 'history';
 import axios from 'axios';
-import { authLogin, authSignUp } from '../service/auth';
+import { authLogin, authSignUp, setUpAxiosInterceptors } from '../service/auth';
 
 export function login(username:string, password:string, history: History) {
     return (dispatch: (authAction: AuthActionTypes) => void) => {
@@ -10,14 +10,14 @@ export function login(username:string, password:string, history: History) {
 
         authLogin(username, password)
         .then((response) =>{
-            let token: string = response.data;
+            let token: string = response.data.jwttoken;
             console.log(token);
             
             // TODO : Refactor if need
             localStorage.setItem('token', token);
             localStorage.setItem('authUser', username);
 
-            dispatch(LoginSuccess({username, token}));
+            dispatch(LoginSuccess({username,phone:undefined,zipcode:undefined,street:undefined}));
             history.push('/');
         }).catch((error)=>{
             console.log(error);
@@ -39,7 +39,6 @@ export function register(username:string, password: string) {
     }
 }
 
-
 export const loginRequest = ():AuthActionTypes => {
     return {
         type: LOGIN_REQUEST
@@ -47,6 +46,7 @@ export const loginRequest = ():AuthActionTypes => {
 }
 
 export const LoginSuccess = (user: User):AuthActionTypes => {
+    setUpAxiosInterceptors();
     return {
         type: LOGIN_SUCCESS,
         user: user
@@ -85,4 +85,11 @@ export const RegisterFailure = (error: any):AuthActionTypes => {
         type: REGISTER_FAILURE,
         error: error
     };
+}
+
+export const LoadUser = (user: User) :AuthActionTypes => {
+    return {
+        type: LOAD_USER,
+        user: user
+    }
 }

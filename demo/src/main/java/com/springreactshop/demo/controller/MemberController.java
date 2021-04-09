@@ -2,6 +2,7 @@ package com.springreactshop.demo.controller;
 
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.representation.MemberDto;
+import com.springreactshop.demo.representation.MemberProfileResponse;
 import com.springreactshop.demo.representation.ProductDto;
 import com.springreactshop.demo.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -25,9 +26,10 @@ public class MemberController {
         Member member = memberService.getUserProfileByUserName(username);
         if(member == null) return ResponseEntity.notFound().build();
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(member.getUsername());
+        MemberProfileResponse memberProfileResponse = new MemberProfileResponse(member);
 
-        EntityModel<Member> memberResource = EntityModel.of(member);
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(memberProfileResponse.getUsername());
+        EntityModel<MemberProfileResponse> memberResource = EntityModel.of(memberProfileResponse);
         memberResource.add(selfLinkBuilder.withSelfRel());
 
         return ResponseEntity.ok().body(memberResource);
@@ -38,11 +40,12 @@ public class MemberController {
         Member member = memberService.getUserProfileByUserName(username);
         if(member == null) return ResponseEntity.notFound().build();
 
-        member.updateMember(memberDto);
+        member= memberService.updateMember(member, memberDto);
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(member.getUsername());
+        MemberProfileResponse memberProfileResponse = new MemberProfileResponse(member);
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(memberProfileResponse.getUsername());
 
-        EntityModel<Member> memberResource = EntityModel.of(member);
+        EntityModel<MemberProfileResponse> memberResource = EntityModel.of(memberProfileResponse);
         memberResource.add(selfLinkBuilder.withSelfRel());
 
         return ResponseEntity.ok().body(memberResource);

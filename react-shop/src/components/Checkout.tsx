@@ -7,13 +7,14 @@ import {
 import CartItems from './CartItems';
 import CheckoutForm from './CheckoutForm';
 
+
 const Checkout = () => {
     return(
         <Container>
             <Row>
                 <Col md={4} >
                     <h4>Your Cart</h4>
-                    <CartItems/>
+                    <CartItems isEdit={false}/>
                 </Col>
                 <Col md={8}>
                     <CheckoutForm/>
@@ -23,4 +24,4 @@ const Checkout = () => {
     )
 }
 
-export default Checkout;
+export default (Checkout);
