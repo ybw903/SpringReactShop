@@ -41,6 +41,7 @@ const Navigation = ({loggedIn, onLogout, history}:Props) => {
                 
                 <Dropdown.Menu style ={{position:'absolute'}}>
                   <Dropdown.Item><Link to ="/user">회원정보</Link></Dropdown.Item>
+                  <Dropdown.Item><Link to ="/order">주문정보</Link></Dropdown.Item>
                   <Dropdown.Item onClick={()=>onLogout(history)}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

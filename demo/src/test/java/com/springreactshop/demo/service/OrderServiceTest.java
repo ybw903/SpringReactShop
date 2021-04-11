@@ -53,7 +53,8 @@ class OrderServiceTest {
             productRequests.add(productRequest);
         }
         Member member = makeUser();
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(), productRequests);
+        Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
+        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, productRequests);
 
         //when
         Order order = orderService.order(orderRequest);
@@ -82,7 +83,8 @@ class OrderServiceTest {
             productRequests.add(productRequest);
         }
         Member member = makeUser();
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(), productRequests);
+        Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
+        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, productRequests);
         Order order =  orderService.order(orderRequest);
 
         //when
@@ -103,7 +105,8 @@ class OrderServiceTest {
             productRequests.add(productRequest);
         }
         Member member = makeUser();
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(), productRequests);
+        Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
+        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, productRequests);
         Order order =  orderService.order(orderRequest);
 
         //when

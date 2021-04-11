@@ -1,15 +1,16 @@
 package com.springreactshop.demo.service;
 
-import com.springreactshop.demo.domain.Delivery;
-import com.springreactshop.demo.domain.Member;
-import com.springreactshop.demo.domain.Order;
-import com.springreactshop.demo.domain.OrderProduct;
+import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.representation.OrderRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,8 +48,9 @@ public class OrderService {
         return orderRepository.findById(orderId);
     }
 
-    public List<Order> orderList() {
-        return orderRepository.findAll();
+    public Page<Order> orderPages(Pageable page) {
+
+        return orderRepository.findAll(page);
     }
 
     /** 주문 취소*/

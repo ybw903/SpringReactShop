@@ -6,6 +6,7 @@ import Checkout from './Checkout';
 import FobiddenPage from './FobiddenPage';
 import Navigation from './Navigation';
 import Products from './Products';
+import RecentOrder from './RecentOrder';
 import RegistrationFrom from './RegistrationForm';
 import RouteIf from './RouteIf';
 import User from './User';
@@ -37,6 +38,8 @@ const App = () =>{
           <FobiddenPage/>
         </Route>
         <RouteIf path ="/user" component={User}>
+        </RouteIf>
+        <RouteIf path ="/order" component={RecentOrder}>
         </RouteIf>
       </Switch>
       

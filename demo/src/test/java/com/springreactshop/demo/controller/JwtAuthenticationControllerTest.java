@@ -38,7 +38,7 @@ class JwtAuthenticationControllerTest {
         memberService.signUp(signRequest);
 
         //when&then
-        this.mockMvc.perform(post("/api/authenticate")
+        this.mockMvc.perform(post("/api/authenticate/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(signRequest))
                         )
