@@ -1,12 +1,8 @@
 package com.springreactshop.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.springreactshop.demo.representation.MemberDto;
-import com.springreactshop.demo.representation.UserDto;
 import lombok.*;
-import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -31,14 +27,18 @@ public class Member {
     @Embedded
     private Address address;
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole roles;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonIgnore
     public List<Order> orders = new ArrayList<>();
 
     @Builder
-    public Member(String username, String password) {
+    public Member(String username, String password, MemberRole memberRole) {
         this.username = username;
         this.password = password;
+        this.roles = memberRole;
     }
 
     //==회원 정보 갱신==//

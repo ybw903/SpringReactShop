@@ -29,7 +29,7 @@ class MemberServiceTest {
         signupRequest.setPassword("1234");
 
         //When
-        String username = memberService.signUp(signupRequest);
+        String username = memberService.signUpUser(signupRequest);
 
         //Then
         assertThat(username).isEqualTo("testUser");

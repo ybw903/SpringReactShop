@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Builder
-public class UserDto implements UserDetails {
+public class MemberDetails implements UserDetails {
 
     private Long id;
     private String role;
@@ -25,11 +25,11 @@ public class UserDto implements UserDetails {
         this.id = id;
     }
 
-    public UserDto() {
+    public MemberDetails() {
 
     }
 
-    public UserDto (Long id, String role, String username, String password) {
+    public MemberDetails(Long id, String role, String username, String password) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -43,7 +43,6 @@ public class UserDto implements UserDetails {
     public void setRole(String role) {
         this.role = role;
     }
-
 
     public void setPassword(String password) {
         this.password = password;

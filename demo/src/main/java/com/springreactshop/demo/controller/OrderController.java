@@ -16,6 +16,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,15 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<?> order(@RequestBody OrderRequest orderRequest) {
         log.info(orderRequest.toString());
-        Order order = orderService.order(orderRequest);
+
+        Order order = null;
+        try {
+            order = orderService.order(orderRequest);
+        } catch (RuntimeException re) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
 
         WebMvcLinkBuilder selfLinkBuilder = linkTo(OrderController.class).slash(order.getId());
         URI createdUri =selfLinkBuilder.toUri();

@@ -2,7 +2,6 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.representation.JwtRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class JwtUserDetailService implements UserDetailsService {
+public class JwtMemberDetailService implements UserDetailsService {
 
     @Autowired
-    private MemberService memberService;
+    private final MemberService memberService;
 
-    public JwtUserDetailService(MemberService memberService) {
+    public JwtMemberDetailService(MemberService memberService) {
         this.memberService = memberService;
     }
 
@@ -25,16 +24,10 @@ public class JwtUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return memberService.getUserByUsername(username);
-//        if ("user_id".equals(username)) {
-//            return new User("user_id", "$2a$10$m/enYHaLsCwH2dKMUAtQp.ksGOA6lq7Fd2pnMb4L.yT4GyeAPRPyS",
-//                    new ArrayList<>());
-//        } else {
-//            throw new UsernameNotFoundException("User not found with username: " + username);
-//        }
     }
 
     public String addUser(JwtRequest signupRequest) {
-        return memberService.signUp(signupRequest);
+        return memberService.signUpUser(signupRequest);
     }
 
 

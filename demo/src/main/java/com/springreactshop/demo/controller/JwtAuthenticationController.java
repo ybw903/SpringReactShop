@@ -3,7 +3,7 @@ package com.springreactshop.demo.controller;
 import com.springreactshop.demo.configuration.JwtTokenUtil;
 import com.springreactshop.demo.representation.JwtRequest;
 import com.springreactshop.demo.representation.JwtResponse;
-import com.springreactshop.demo.service.JwtUserDetailService;
+import com.springreactshop.demo.service.JwtMemberDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -31,7 +31,7 @@ public class JwtAuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private JwtUserDetailService userDetailService;
+    private JwtMemberDetailService userDetailService;
 
     @PostMapping(value = "/api/authenticate/login")
     public ResponseEntity<?> createAuthenticationToken(

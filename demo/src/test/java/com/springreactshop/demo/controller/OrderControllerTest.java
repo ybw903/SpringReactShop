@@ -9,7 +9,7 @@ import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.representation.OrderRequest;
 import com.springreactshop.demo.representation.ProductRequest;
-import com.springreactshop.demo.service.JwtUserDetailService;
+import com.springreactshop.demo.service.JwtMemberDetailService;
 import com.springreactshop.demo.service.OrderService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,13 +22,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
@@ -61,7 +59,7 @@ class OrderControllerTest {
     private OrderService orderService;
 
     @Autowired
-    private JwtUserDetailService jwtUserDetailService;
+    private JwtMemberDetailService jwtMemberDetailService;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -89,7 +87,7 @@ class OrderControllerTest {
     @Test
     public void 주문추가() throws Exception {
         //given
-        UserDetails userDetails = jwtUserDetailService.loadUserByUsername("testUser");
+        UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("testUser");
         String token = jwtTokenUtil.generateToken(userDetails);
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
 
@@ -156,7 +154,7 @@ class OrderControllerTest {
     @Test
     public void 주문취소() throws Exception {
         //given
-        UserDetails userDetails = jwtUserDetailService.loadUserByUsername("testUser");
+        UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("testUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
@@ -218,7 +216,7 @@ class OrderControllerTest {
     @Test
     public void 주문페이지() throws Exception {
         //given
-        UserDetails userDetails = jwtUserDetailService.loadUserByUsername("testUser");
+        UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("testUser");
         String token = jwtTokenUtil.generateToken(userDetails);
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
 

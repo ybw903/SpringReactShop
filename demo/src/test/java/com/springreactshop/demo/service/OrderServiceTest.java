@@ -1,6 +1,5 @@
 package com.springreactshop.demo.service;
 
-import com.springreactshop.demo.configuration.JwtTokenUtil;
 import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
@@ -9,21 +8,15 @@ import com.springreactshop.demo.representation.JwtRequest;
 import com.springreactshop.demo.representation.MemberDto;
 import com.springreactshop.demo.representation.OrderRequest;
 import com.springreactshop.demo.representation.ProductRequest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -45,7 +38,7 @@ class OrderServiceTest {
     ProductRepository productRepository;
 
     @Test
-    public void 주문하기() {
+    public void 주문하기() throws Exception{
 
         //given
         List<ProductRequest> productRequests = new ArrayList<>();
@@ -76,7 +69,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void 주문취소() {
+    public void 주문취소() throws Exception{
         //given
         List<ProductRequest> productRequests = new ArrayList<>();
         for(int i =1; i<4; i++) {
@@ -108,8 +101,8 @@ class OrderServiceTest {
         signupRequest.setUsername("user");
         signupRequest.setPassword("password");
 
-        memberService.signUp(signupRequest);
-        Member member = memberService.getUserProfileByUserName("user");
+        memberService.signUpUser(signupRequest);
+        Member member = memberService.getMemberProfileByUserName("user");
         MemberDto memberDto = MemberDto.builder()
                 .phone("010-1234-5678")
                 .zipcode("000000")
@@ -117,7 +110,7 @@ class OrderServiceTest {
                 .build();
 
         memberService.updateMember(member,memberDto);
-        return memberRepository.findByUsername("user");
+        return memberRepository.findByUsername("user").orElse(null);
     }
 
     public ProductRequest generateProductRequest(int idx) {

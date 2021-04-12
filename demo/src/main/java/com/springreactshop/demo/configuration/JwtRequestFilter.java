@@ -1,6 +1,6 @@
 package com.springreactshop.demo.configuration;
 
-import com.springreactshop.demo.service.JwtUserDetailService;
+import com.springreactshop.demo.service.JwtMemberDetailService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUserDetailService jwtUserDetailService;
+    private JwtMemberDetailService jwtMemberDetailService;
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -47,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if(username!=null && SecurityContextHolder.getContext().getAuthentication() == null ){
 
-            UserDetails userDetails = this.jwtUserDetailService.loadUserByUsername(username);
+            UserDetails userDetails = this.jwtMemberDetailService.loadUserByUsername(username);
 
             if(jwtTokenUtil.validateToken(jwtToken, userDetails)){
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken

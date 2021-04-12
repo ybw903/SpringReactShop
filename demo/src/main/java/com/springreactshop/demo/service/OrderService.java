@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +29,9 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public Order order(OrderRequest orderRequest) {
-        Member member =  memberRepository.findByUsername(orderRequest.getUsername());
+    public Order order(OrderRequest orderRequest) throws Exception {
+        Member member =  memberRepository.findByUsername(orderRequest.getUsername())
+                .orElseThrow(()-> new UsernameNotFoundException(orderRequest.getUsername()));
         Delivery delivery = Delivery.createDelivery(orderRequest.getAddress());
 
         List<OrderProduct> orderProducts =
