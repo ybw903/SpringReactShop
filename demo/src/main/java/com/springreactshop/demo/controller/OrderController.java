@@ -8,6 +8,7 @@ import com.springreactshop.demo.representation.ProductResource;
 import com.springreactshop.demo.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -28,6 +29,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RequestMapping(value = "/api/orders", produces = MediaTypes.HAL_JSON_VALUE)
 @Slf4j
 public class OrderController {
+
+    @Autowired
+    PagedResourcesAssembler<Order> assembler;
 
     private final OrderService orderService;
 
@@ -77,7 +81,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<OrderResource>> orderList(Pageable page, PagedResourcesAssembler<Order> assembler) {
+    public ResponseEntity<PagedModel<OrderResource>> orderList(Pageable page) {
         Page<Order> orders =this.orderService.orderPages(page);
         PagedModel<OrderResource> orderResource = assembler.toModel(orders, OrderResource::new);
         return ResponseEntity.ok(orderResource);

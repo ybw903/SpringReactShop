@@ -29,7 +29,7 @@ public class UserDto implements UserDetails {
 
     }
 
-    public UserDto(Long id, String role, String username, String password) {
+    public UserDto (Long id, String role, String username, String password) {
         this.id = id;
         this.role = role;
         this.username = username;

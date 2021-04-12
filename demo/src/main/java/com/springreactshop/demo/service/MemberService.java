@@ -27,7 +27,7 @@ public class MemberService {
         return memberRepository.save(member).getUsername();
     }
 
-    public Member getUserProfileByUserName(String username)  {
+    public Member getMemberProfileByUserName(String username)  {
         Member user = memberRepository.findByUsername(username);
         if(user == null) {
             return null;

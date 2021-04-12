@@ -23,7 +23,7 @@ public class MemberController {
 
     @GetMapping("/{username}")
     public ResponseEntity<?> getUserProfile(@PathVariable String username) {
-        Member member = memberService.getUserProfileByUserName(username);
+        Member member = memberService.getMemberProfileByUserName(username);
         if(member == null) return ResponseEntity.notFound().build();
 
         MemberProfileResponse memberProfileResponse = new MemberProfileResponse(member);
@@ -37,7 +37,7 @@ public class MemberController {
 
     @PutMapping("/{username}")
     public ResponseEntity<?> updateUserProfile(@PathVariable String username, @RequestBody MemberDto memberDto) {
-        Member member = memberService.getUserProfileByUserName(username);
+        Member member = memberService.getMemberProfileByUserName(username);
         if(member == null) return ResponseEntity.notFound().build();
 
         member= memberService.updateMember(member, memberDto);

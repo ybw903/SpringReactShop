@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class OrderServiceTest {
 
     @Autowired
@@ -61,9 +63,9 @@ class OrderServiceTest {
 
         //then
         assertThat(order.getMember().getUsername()).isEqualTo(member.getUsername());
-        assertThat(order.getDelivery().getAddress().getPhone()).isEqualTo(member.getAddress().getPhone());
-        assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(member.getAddress().getStreet());
-        assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(member.getAddress().getZipcode());
+        assertThat(order.getDelivery().getAddress().getPhone()).isEqualTo(address.getPhone());
+        assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(address.getStreet());
+        assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(address.getZipcode());
         assertThat(order.getDelivery().getDeliveryStatus()).isEqualTo(DeliveryStatus.READY);
         assertThat(order.getOrderProducts().size()).isEqualTo(productRequests.size());
         assertThat(order.getTotalPrice()).isEqualTo(
@@ -98,23 +100,7 @@ class OrderServiceTest {
     @Test
     public void 주문목록() {
         //given
-        List<ProductRequest> productRequests = new ArrayList<>();
-        for(int i =1; i<4; i++) {
-            ProductRequest productRequest = generateProductRequest(i);
-            productRepository.save(productRequest.toEntity());
-            productRequests.add(productRequest);
-        }
-        Member member = makeUser();
-        Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, productRequests);
-        Order order =  orderService.order(orderRequest);
 
-        //when
-        orderService.cancelOrder(order.getId());
-
-        //then
-        Order cancelOrder = orderRepository.findById(order.getId()).get();
-        assertThat(cancelOrder.getStatus()).isEqualTo(OrderStatus.CANCEL);
     }
 
     public Member makeUser() {

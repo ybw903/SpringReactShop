@@ -1,0 +1,64 @@
+= REST API Guide
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:operation-curl-request-title: Example request
+:operation-http-response-title: Example response
+
+|===
+| 동사 | 용례
+
+| `GET`
+| 리소스를 가져올 때 사용
+
+| `POST`
+| 새 리소스를 만들 때 사용
+
+| `PUT`
+| 기존 리소스를 수정할 때 사용
+
+| `PATCH`
+| 기존 리소스의 일부를 수정할 때 사용
+
+| `DELETE`
+| 기존 리소스를 삭제할 떄 사용
+|===
+
+[[login]]
+== 로그인
+
+'POST' 요청을 사용해서 회원인가에 필요한 JWT를 반환받는다.
+
+operation::login[snippets='request-fields,curl-request,http-request,request-headers,http-response,response-headers,response-fields']
+
+[[resources-order]]
+== 주문
+
+주문 리소스는 주문을 만들거나 조회할 때 사용한다.
+
+[[resources-order-list]]
+=== 주문 목록 조회
+
+`GET` 요청을 사용하여 주문 목록을 조회할 수 있다.
+
+operation::order/order-list[snippets='request-parameters,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
+
+[[resources-order-create]]
+=== 주문 생성
+
+`POST` 요청을 사용해서 새 주문을 만들 수 있다.
+
+operation::order/create-order[snippets='request-fields,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
+
+[[resources-order-cancel]]
+=== 주문 취소
+
+`DELETE` 요청을 사용해서 주문을 취소 할 수 있다.
+
+operation::order/cancel-order[snippets='path-parameters,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']

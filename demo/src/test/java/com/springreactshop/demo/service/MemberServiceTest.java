@@ -6,6 +6,7 @@ import com.springreactshop.demo.representation.JwtRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +20,7 @@ class MemberServiceTest {
     @Autowired
     MemberRepository memberRepository;
 
+
     @Test
     public void 회원추가() {
         //Given
@@ -30,8 +32,6 @@ class MemberServiceTest {
         String username = memberService.signUp(signupRequest);
 
         //Then
-        Member signedMember = memberRepository.findByUsername(username);
-        assertThat(signedMember).isNotNull();
-        assertThat(signedMember.getUsername()).isEqualTo(signupRequest.getUsername());
+        assertThat(username).isEqualTo("testUser");
     }
 }
