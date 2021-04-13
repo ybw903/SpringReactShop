@@ -1,11 +1,16 @@
 package com.springreactshop.demo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
+import com.springreactshop.demo.configuration.JwtTokenUtil;
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.domain.Product;
+import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.ProductRepository;
+import com.springreactshop.demo.representation.ProductDto;
 import com.springreactshop.demo.representation.ProductRequest;
+import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,11 +22,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
@@ -29,6 +33,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,7 +47,19 @@ class ProductControllerTest {
     MockMvc mockMvc;
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    JwtMemberDetailService jwtMemberDetailService;
 
     @Test
     void 상품목록조회테스트() throws Exception {
@@ -114,6 +131,84 @@ class ProductControllerTest {
                                 subsectionWithPath("_embedded.productResources").description("productResource List"),
                                 subsectionWithPath("page").description("query of pagable"),
                                 fieldWithPath("_links.self.href").description("link to self")
+                        )
+                ));
+    }
+
+    @Test
+    void 상품추가() throws Exception {
+
+        //given
+        Member member = Member.builder()
+                .username("adminUser")
+                .password("1234")
+                .memberRole(MemberRole.ADMIN)
+                .build();
+        memberRepository.save(member);
+
+        UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        ProductDto productDto = ProductDto
+                .builder()
+                .productName("testProduct")
+                .productDescription("testProduct")
+                .productPrice(100)
+                .productQuantity(999)
+                .build();
+
+        //when
+        ResultActions resultActions = this.mockMvc.perform(post("/api/products?page=0&size=10")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaTypes.HAL_JSON)
+                .header("Authorization","Bearer " + token)
+                .content(objectMapper.writeValueAsString(productDto))
+        );
+
+        //then
+        resultActions
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(header().exists(HttpHeaders.LOCATION))
+                .andExpect(header().string("Content-Type", "application/hal+json"))
+                .andExpect(jsonPath("id").exists())
+                .andExpect(jsonPath("productName").exists())
+                .andExpect(jsonPath("productDescription").exists())
+                .andExpect(jsonPath("productPrice").exists())
+                .andExpect(jsonPath("productQuantity").exists())
+                .andExpect(jsonPath("_links.self").exists())
+                .andExpect(jsonPath("_links.productsList").exists())
+                .andExpect(jsonPath("_links.update-product").exists())
+                .andDo(document("product/create-product",
+                        links(
+                                linkWithRel("self").description("lintk to self"),
+                                linkWithRel("productsList").description("lintk to productsList"),
+                                linkWithRel("update-product").description("lintk to update an existing product")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("accept header"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type header"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("jwt Authorization header")
+                        ),
+                        requestFields(
+                                fieldWithPath("productName").description("name of new product"),
+                                fieldWithPath("productDescription").description("description of new product"),
+                                fieldWithPath("productPrice").description("price of new product"),
+                                fieldWithPath("productQuantity").description("quantity of new product")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.LOCATION).description("Content type"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("identifier of new product"),
+                                fieldWithPath("productName").description("name of new product"),
+                                fieldWithPath("productDescription").description("description of new product"),
+                                fieldWithPath("productPrice").description("price of new product"),
+                                fieldWithPath("productQuantity").description("quantity of new product"),
+                                fieldWithPath("_links.self.href").description("link to self"),
+                                fieldWithPath("_links.productsList.href").description("link to productsList"),
+                                fieldWithPath("_links.update-product.href").description("link to update an existing product")
                         )
                 ));
     }

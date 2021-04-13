@@ -61,6 +61,14 @@ operation::member/member-update[snippets='path-parameters,request-fields,curl-re
 
 operation::product/product-list[snippets='request-parameters,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
 
+[[resources-product-create]]
+=== 상품 생성
+
+`POST` 요청을 사용하여 새 상품을 추가할 수 있다.
+
+operation::product/create-product[snippets='request-fields,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
+
+
 [[resources-order]]
 == 주문
 
