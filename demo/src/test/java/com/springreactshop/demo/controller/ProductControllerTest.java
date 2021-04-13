@@ -12,7 +12,6 @@ import com.springreactshop.demo.representation.ProductDto;
 import com.springreactshop.demo.representation.ProductRequest;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -31,6 +30,7 @@ import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.li
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,7 +47,7 @@ class ProductControllerTest {
     MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @Autowired
     ProductRepository productRepository;
@@ -60,6 +60,11 @@ class ProductControllerTest {
 
     @Autowired
     JwtMemberDetailService jwtMemberDetailService;
+
+    @AfterEach
+    void 멤버저장소초기화() {
+        memberRepository.deleteAll();
+    }
 
     @Test
     void 상품목록조회테스트() throws Exception {
@@ -212,5 +217,89 @@ class ProductControllerTest {
                         )
                 ));
     }
+
+    @Test
+    void 상품수정() throws Exception {
+
+        //given
+        Member member = Member.builder()
+                .username("adminUser")
+                .password("1234")
+                .memberRole(MemberRole.ADMIN)
+                .build();
+        memberRepository.save(member);
+
+        UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        Product product = ProductDto
+                .builder()
+                .productName("testProduct")
+                .productDescription("testProduct")
+                .productPrice(100)
+                .productQuantity(999)
+                .build().toEntity();
+        Product savedProduct = productRepository.save(product);
+
+        ProductDto productDto = ProductDto
+                .builder()
+                .productName("changedProduct")
+                .productDescription("changedProductDescription")
+                .productPrice(999)
+                .productQuantity(9999)
+                .build();
+
+        //when
+        ResultActions resultActions = this.mockMvc.perform(put("/api/products/{id}",product.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaTypes.HAL_JSON)
+                .header("Authorization","Bearer " + token)
+                .content(objectMapper.writeValueAsString(productDto))
+        );
+
+        //then
+        resultActions
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type","application/hal+json"))
+                .andExpect(jsonPath("id").exists())
+                .andExpect(jsonPath("productName").exists())
+                .andExpect(jsonPath("productDescription").exists())
+                .andExpect(jsonPath("productPrice").exists())
+                .andExpect(jsonPath("productQuantity").exists())
+                .andExpect(jsonPath("_links.self").exists())
+                .andExpect(jsonPath("_links.productsList").exists())
+                .andExpect(jsonPath("_links.update-product").exists())
+                .andDo(document("product/update-product",
+                        links(
+                                linkWithRel("self").description("lintk to self"),
+                                linkWithRel("productsList").description("lintk to productsList"),
+                                linkWithRel("update-product").description("lintk to update an existing product")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("accept header"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type header"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("jwt Authorization header")
+                        ),
+                        pathParameters(
+                                parameterWithName("id").description("identifier an existing product")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type")
+                        ),
+                        responseFields(
+                                fieldWithPath("id").description("identifier of changed product"),
+                                fieldWithPath("productName").description("name of changed product"),
+                                fieldWithPath("productDescription").description("description of changed product"),
+                                fieldWithPath("productPrice").description("price of changed product"),
+                                fieldWithPath("productQuantity").description("quantity of changed product"),
+                                fieldWithPath("_links.self.href").description("link to self"),
+                                fieldWithPath("_links.productsList.href").description("link to productsList"),
+                                fieldWithPath("_links.update-product.href").description("link to update an existing product")
+                        )
+                ));
+    }
+
+
 
 }

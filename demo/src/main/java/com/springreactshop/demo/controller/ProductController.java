@@ -37,8 +37,7 @@ public class ProductController {
         WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(productId);
         URI createdUri =selfLinkBuilder.toUri();
         ProductResource productResource = new ProductResource(product);
-        productResource.add(linkTo(ProductController.class).withRel("productsList"));
-        productResource.add(selfLinkBuilder.withRel("update-product"));
+
         return ResponseEntity.created(createdUri).body(productResource);
     }
 

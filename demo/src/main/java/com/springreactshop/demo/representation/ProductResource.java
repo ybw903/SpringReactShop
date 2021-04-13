@@ -29,5 +29,7 @@ public class ProductResource extends RepresentationModel<ProductResource> {
         this.productPrice = product.getProductPrice();
         this.productQuantity = product.getProductQuantity();
         add(linkTo(ProductController.class).slash(product.getId()).withSelfRel());
+        add(linkTo(ProductController.class).withRel("productsList"));
+        add(linkTo(ProductController.class).withRel("update-product"));
     }
 }

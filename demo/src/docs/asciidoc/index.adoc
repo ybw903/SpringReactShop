@@ -68,6 +68,13 @@ operation::product/product-list[snippets='request-parameters,curl-request,http-r
 
 operation::product/create-product[snippets='request-fields,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
 
+[[resources-product-update]]
+=== 상품 수정
+
+`PUT` 요청을 사용하여 기존 상품을 수정할 수 있다.
+
+operation::product/update-product[snippets='path-parameters,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
+
 
 [[resources-order]]
 == 주문
