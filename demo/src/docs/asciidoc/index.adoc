@@ -75,6 +75,13 @@ operation::product/create-product[snippets='request-fields,curl-request,http-req
 
 operation::product/update-product[snippets='path-parameters,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
 
+[[resources-product-delete]]
+=== 상품 삭제
+
+`DELETE` 요청을 사용하여 기존 상품을 삭제할 수 있다.
+
+operation::product/delete-product[snippets='path-parameters,curl-request,http-request,request-headers,http-response']
+
 
 [[resources-order]]
 == 주문

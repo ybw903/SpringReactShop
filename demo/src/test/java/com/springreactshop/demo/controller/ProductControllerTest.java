@@ -29,8 +29,7 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -296,6 +295,53 @@ class ProductControllerTest {
                                 fieldWithPath("_links.self.href").description("link to self"),
                                 fieldWithPath("_links.productsList.href").description("link to productsList"),
                                 fieldWithPath("_links.update-product.href").description("link to update an existing product")
+                        )
+                ));
+    }
+
+    @Test
+    void 상품삭제() throws Exception {
+
+        //given
+        Member member = Member.builder()
+                .username("adminUser")
+                .password("1234")
+                .memberRole(MemberRole.ADMIN)
+                .build();
+        memberRepository.save(member);
+
+        UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        Product product = ProductDto
+                .builder()
+                .productName("testProduct")
+                .productDescription("testProduct")
+                .productPrice(100)
+                .productQuantity(999)
+                .build().toEntity();
+        Product savedProduct = productRepository.save(product);
+
+
+        //when
+        ResultActions resultActions = this.mockMvc.perform(delete("/api/products/{id}",product.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaTypes.HAL_JSON)
+                .header("Authorization","Bearer " + token)
+        );
+
+        //then
+        resultActions
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(document("product/delete-product",
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("accept header"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type header"),
+                                headerWithName(HttpHeaders.AUTHORIZATION).description("jwt Authorization header")
+                        ),
+                        pathParameters(
+                                parameterWithName("id").description("identifier an existing product")
                         )
                 ));
     }
