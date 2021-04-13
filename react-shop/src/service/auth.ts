@@ -10,7 +10,7 @@ export const setUpAxiosInterceptors = () => {
     axios.interceptors.request.use(
         config => {
             const token = localStorage.getItem('token');
-            console.log(console);
+            console.log(token);
             if(token) {
                 config.headers["Content-Type"] = "application/json; charset=utf-8";
                 config.headers['Authorization'] = 'Bearer ' + token;

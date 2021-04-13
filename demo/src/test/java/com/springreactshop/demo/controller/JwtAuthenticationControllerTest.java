@@ -68,22 +68,6 @@ class JwtAuthenticationControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("jwttoken").exists())
-                .andDo(document("login",
-                        requestHeaders(
-                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type header")
-                        ),
-                        requestFields(
-                                fieldWithPath("username").description("member name requiring authentication"),
-                                fieldWithPath("password").description("member password requiring authentication")
-                        ),
-                        responseHeaders(
-                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type")
-                        ),
-                        responseFields(
-                                fieldWithPath("jwttoken").description("signed jwttoken")
-                        )
-                ))
-
         ;
     }
 }

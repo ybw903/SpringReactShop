@@ -27,7 +27,7 @@ public class MemberController {
 
         MemberProfileResponse memberProfileResponse = new MemberProfileResponse(member);
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(memberProfileResponse.getUsername());
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(MemberController.class).slash(memberProfileResponse.getUsername());
         EntityModel<MemberProfileResponse> memberResource = EntityModel.of(memberProfileResponse);
         memberResource.add(selfLinkBuilder.withSelfRel());
 
@@ -42,7 +42,7 @@ public class MemberController {
         member= memberService.updateMember(member, memberUpdateAddressRequest);
 
         MemberProfileResponse memberProfileResponse = new MemberProfileResponse(member);
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(memberProfileResponse.getUsername());
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(MemberController.class).slash(memberProfileResponse.getUsername());
 
         EntityModel<MemberProfileResponse> memberResource = EntityModel.of(memberProfileResponse);
         memberResource.add(selfLinkBuilder.withSelfRel());

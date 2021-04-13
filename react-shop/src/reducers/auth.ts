@@ -54,6 +54,7 @@ const authReducer = (state = initialState, action: AuthActionTypes): AuthState =
         case LOAD_USER:
             return {
                 ...state,
+                loggedIn: true,
                 user : action.user
             }
         default:

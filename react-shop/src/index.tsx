@@ -6,12 +6,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import store from './store';
+import { loadUser } from './service/user';
+import { LoadUser } from './actions/auth';
 
 
+  loadUser()?.then((user)=>{
+    if(user) store.dispatch(LoadUser(user));
+  }
+  )
 
 ReactDOM.render(
+  
   <React.StrictMode>
     <Router>
       <Provider store={store}>

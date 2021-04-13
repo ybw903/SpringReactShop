@@ -6,7 +6,7 @@ export const getProducts = async (): Promise<Product[]> => {
     const response_data = await response.json();
 
     console.log(response_data);
-    const products :Product[] = await response_data._embedded.products
+    const products :Product[] = await response_data._embedded.productResources;
     
     console.log(products);
 

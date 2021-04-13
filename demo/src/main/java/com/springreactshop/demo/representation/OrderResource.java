@@ -26,7 +26,7 @@ public class OrderResource extends RepresentationModel<OrderResource> {
 
     private final Delivery delivery;
 
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+    private final List<OrderProduct> orderProducts ;
 
     private final OrderStatus status;
 
