@@ -1,4 +1,4 @@
-package com.springreactshop.demo.configuration;
+package com.springreactshop.demo.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

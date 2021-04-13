@@ -2,7 +2,7 @@ package com.springreactshop.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
-import com.springreactshop.demo.configuration.JwtTokenUtil;
+import com.springreactshop.demo.security.JwtTokenUtil;
 import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;

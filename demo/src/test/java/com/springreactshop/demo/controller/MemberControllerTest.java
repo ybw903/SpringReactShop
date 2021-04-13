@@ -2,15 +2,12 @@ package com.springreactshop.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
-import com.springreactshop.demo.configuration.JwtTokenUtil;
+import com.springreactshop.demo.security.JwtTokenUtil;
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.repository.MemberRepository;
-import com.springreactshop.demo.repository.OrderRepository;
-import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.representation.MemberUpdateAddressRequest;
 import com.springreactshop.demo.service.JwtMemberDetailService;
-import com.springreactshop.demo.service.OrderService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +19,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 

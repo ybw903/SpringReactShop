@@ -1,6 +1,6 @@
 package com.springreactshop.demo.controller;
 
-import com.springreactshop.demo.configuration.JwtTokenUtil;
+import com.springreactshop.demo.security.JwtTokenUtil;
 import com.springreactshop.demo.representation.JwtRequest;
 import com.springreactshop.demo.representation.JwtResponse;
 import com.springreactshop.demo.service.JwtMemberDetailService;

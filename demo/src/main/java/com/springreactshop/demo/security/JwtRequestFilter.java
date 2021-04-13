@@ -1,4 +1,4 @@
-package com.springreactshop.demo.configuration;
+package com.springreactshop.demo.security;
 
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import io.jsonwebtoken.ExpiredJwtException;
