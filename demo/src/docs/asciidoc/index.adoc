@@ -30,13 +30,6 @@ endif::[]
 | 기존 리소스를 삭제할 떄 사용
 |===
 
-[[login]]
-== 로그인
-
-'POST' 요청을 사용해서 회원인가에 필요한 JWT를 반환받는다.
-
-operation::login[snippets='request-fields,curl-request,http-request,request-headers,http-response,response-headers,response-fields']
-
 [[resources-member]]
 == 회원
 
