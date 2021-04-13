@@ -23,12 +23,12 @@ public class MemberProfileResponse implements Serializable {
             this.username=member.getUsername();
             this.zipcode="";
             this.street="";
-            this.zipcode="";
+            this.phone="";
         } else {
             this.username=member.getUsername();
             this.zipcode=member.getAddress().getZipcode();
             this.street=member.getAddress().getStreet();
-            this.zipcode=member.getAddress().getZipcode();
+            this.phone=member.getAddress().getZipcode();
         }
     }
 }

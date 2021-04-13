@@ -1,6 +1,7 @@
 package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Member;
+import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ class JwtMemberDetailServiceTest {
         Member member = Member.builder()
                         .username("testUser")
                         .password("1234")
+                        .memberRole(MemberRole.USER)
                         .build();
         memberRepository.save(member);
 

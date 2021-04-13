@@ -4,7 +4,7 @@ import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.representation.JwtRequest;
-import com.springreactshop.demo.representation.MemberDto;
+import com.springreactshop.demo.representation.MemberUpdateAddressRequest;
 import com.springreactshop.demo.representation.MemberDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,8 +36,8 @@ public class MemberService {
         return optionalMember.orElseThrow(()->new UsernameNotFoundException(username));
     }
 
-    public Member updateMember(Member member, MemberDto memberDto) {
-        member.updateMember(memberDto);
+    public Member updateMember(Member member, MemberUpdateAddressRequest memberUpdateAddressRequest) {
+        member.updateMember(memberUpdateAddressRequest);
         return memberRepository.save(member); //>???
     }
 

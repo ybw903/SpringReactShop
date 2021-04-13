@@ -75,6 +75,7 @@ class OrderControllerTest {
         Member member = Member.builder()
                 .username("testUser")
                 .password("1234")
+                .memberRole(MemberRole.USER)
                 .build();
         memberRepository.save(member);
     }

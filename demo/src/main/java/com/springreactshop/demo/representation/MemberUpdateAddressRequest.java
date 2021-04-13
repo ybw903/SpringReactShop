@@ -12,7 +12,7 @@ import javax.persistence.Embedded;
 @Data @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberDto {
+public class MemberUpdateAddressRequest {
 
     private String zipcode;
     private String street;

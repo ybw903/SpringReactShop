@@ -3,6 +3,7 @@ package com.springreactshop.demo.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
 import com.springreactshop.demo.domain.Member;
+import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.representation.JwtRequest;
 import com.springreactshop.demo.service.MemberService;
@@ -51,6 +52,7 @@ class JwtAuthenticationControllerTest {
         Member member = Member.builder()
                 .username("testUserA")
                 .password(passwordEncoder.encode("1234"))
+                .memberRole(MemberRole.USER)
                 .build();
         memberRepository.save(member);
 

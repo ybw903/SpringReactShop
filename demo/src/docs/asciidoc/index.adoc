@@ -37,6 +37,26 @@ endif::[]
 
 operation::login[snippets='request-fields,curl-request,http-request,request-headers,http-response,response-headers,response-fields']
 
+[[resources-member]]
+== 회원
+
+회원 리소스는 회원을 조회하거나 수정할 때 사용한다.
+
+[[resources-member-profile]]
+=== 회원 정보 조회
+
+`GET` 요청을 사용하여 회원 정보 하나를 조회할 수 있다.
+
+operation::member/member-profile[snippets='path-parameters,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
+
+[[resources-member-update]]
+=== 회원 정보 수정
+
+`PUT` 요청을 사용하여 기존 회원 정보를 수정할 수 있다.
+
+operation::member/member-update[snippets='path-parameters,request-fields,curl-request,http-request,request-headers,http-response,response-headers,response-fields,links']
+
+
 [[resources-order]]
 == 주문
 

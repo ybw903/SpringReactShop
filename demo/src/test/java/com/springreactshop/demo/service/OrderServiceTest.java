@@ -5,7 +5,7 @@ import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.representation.JwtRequest;
-import com.springreactshop.demo.representation.MemberDto;
+import com.springreactshop.demo.representation.MemberUpdateAddressRequest;
 import com.springreactshop.demo.representation.OrderRequest;
 import com.springreactshop.demo.representation.ProductRequest;
 import org.junit.jupiter.api.Test;
@@ -103,13 +103,13 @@ class OrderServiceTest {
 
         memberService.signUpUser(signupRequest);
         Member member = memberService.getMemberProfileByUserName("user");
-        MemberDto memberDto = MemberDto.builder()
+        MemberUpdateAddressRequest memberUpdateAddressRequest = MemberUpdateAddressRequest.builder()
                 .phone("010-1234-5678")
                 .zipcode("000000")
                 .street("서울시강남구테헤란로")
                 .build();
 
-        memberService.updateMember(member,memberDto);
+        memberService.updateMember(member, memberUpdateAddressRequest);
         return memberRepository.findByUsername("user").orElse(null);
     }
 
