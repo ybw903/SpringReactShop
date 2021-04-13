@@ -24,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/products", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/api/products", produces = MediaTypes.HAL_JSON_VALUE)
 public class ProductController {
 
     private final ProductService productService;
@@ -85,8 +85,8 @@ public class ProductController {
         if(optionalProduct.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
-        deleteProduct(id);
+        productService.deleteProduct(id);
+        //deleteProduct(id);
 
         return ResponseEntity.ok().build();
     }

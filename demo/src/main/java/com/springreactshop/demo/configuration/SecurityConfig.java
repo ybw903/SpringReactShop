@@ -4,6 +4,7 @@ import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -51,8 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                 .authorizeRequests()
-                    .antMatchers("/api/authenticate/*").permitAll()
-                    .antMatchers("/products").permitAll()
+                    .antMatchers("/api/authenticate/**").permitAll()
+                    .antMatchers(HttpMethod.POST,"/api/products").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.PUT,"/api/products/**").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.DELETE,"/api/products/**").hasRole("ADMIN")
+                    .antMatchers("/api/products").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin().disable();

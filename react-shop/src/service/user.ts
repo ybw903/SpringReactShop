@@ -4,8 +4,7 @@ export const loadUser = () => {
     try{
        const username = localStorage.getItem('authUser');
        if(!username)return; 
-       const user = getUserProfile(username);
-       return user;
+       return getUserProfile(username);
         
     } catch {
         console.log('localStorage is not working');

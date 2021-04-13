@@ -15,11 +15,7 @@ import RouteIf from './RouteIf';
 import User from './User';
 
 const App = () =>{
-  const dispatch = useDispatch();
-  loadUser()?.then((user)=>{
-    if(user) dispatch(LoadUser(user));
-  }
-  )
+  
   return(
     <div>
       <header>
