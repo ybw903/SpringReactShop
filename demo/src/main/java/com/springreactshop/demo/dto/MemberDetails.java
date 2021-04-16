@@ -1,4 +1,4 @@
-package com.springreactshop.demo.representation;
+package com.springreactshop.demo.dto;
 
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;

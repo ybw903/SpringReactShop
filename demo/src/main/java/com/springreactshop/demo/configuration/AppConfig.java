@@ -1,7 +1,6 @@
 package com.springreactshop.demo.configuration;
 
-import com.springreactshop.demo.repository.ProductRepository;
-import com.springreactshop.demo.representation.ProductDto;
+import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -9,7 +8,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Set;
 
 @Configuration
 public class AppConfig {

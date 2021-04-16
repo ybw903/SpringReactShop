@@ -2,63 +2,57 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.repository.ProductRepository;
-import com.springreactshop.demo.representation.ProductDto;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
 
-    @Autowired
-    ProductService productService;
+    @Mock
+    private ProductRepository productRepository;
+    @InjectMocks
+    private ProductService productService;
 
-    @Autowired
-    ProductRepository productRepository;
+    @Test
+    void 상품목록불러오기() {
+        //given
+        int page = 0;
+        int pageSize =10;
+        Pageable pageable = PageRequest.of(page,pageSize);
+        Page<Product> expectedPageOfProduct = getPageOfProduct(pageSize);
+        given(productRepository.findAll(pageable)).willReturn(expectedPageOfProduct);
 
-//    @Test
-//    public void 상품추가() {
-//
-//        //Given
-//        Product product = Product.builder()
-//                .productName("테스트상품")
-//                .productDescription("테스트상품 설명")
-//                .productPrice(1000)
-//                .build();
-//
-//        //When
-//        productService.addProduct(product);
-//
-//        //Then
-//        Product addedProduct = productRepository.findAll().get(0);
-//        assertThat(addedProduct.getId()).isEqualTo(product.getId());
-//        assertThat(addedProduct.getProductName()).isEqualTo(product.getProductName());
-//        assertThat(addedProduct.getProductDescription()).isEqualTo(product.getProductDescription());
-//        assertThat(addedProduct.getProductPrice()).isEqualTo(product.getProductPrice());
-//    }
-//
-//    @Test
-//    public void 상품추가ByDto() {
-//
-//        //Given
-//        ProductDto productDto = new ProductDto();
-//        productDto.setProductName("test");
-//        productDto.setProductDescription("test-desc");
-//        productDto.setProductPrice(100);
-//
-//        //When
-//        Product product = productDto.toEntity();
-//        productService.addProduct(product);
-//
-//        //Then
-//        Product addedProduct = productRepository.findAll().get(0);
-//        assertThat(addedProduct.getId()).isGreaterThan(product.getId());
-//        assertThat(addedProduct.getProductName()).isEqualTo(product.getProductName());
-//        assertThat(addedProduct.getProductDescription()).isEqualTo(product.getProductDescription());
-//        assertThat(addedProduct.getProductPrice()).isEqualTo(product.getProductPrice());
-//    }
+        //when
+        Page<Product> pageOfProduct =  productService.productsPages(pageable);
+
+        //then
+        assertThat(pageOfProduct.getTotalElements()).isEqualTo(expectedPageOfProduct.getTotalElements());
+    }
+
+    private Product getMockProduct() {
+        return mock(Product.class);
+    }
+
+    private Page<Product> getPageOfProduct(int pageSize) {
+        List<Product> products = new ArrayList<>();
+        for(int i = 0; i < pageSize; i++) {
+            products.add(getMockProduct());
+        }
+        return new PageImpl<>(products);
+    }
 
 }

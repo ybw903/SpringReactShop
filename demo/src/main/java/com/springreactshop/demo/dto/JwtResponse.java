@@ -1,4 +1,4 @@
-package com.springreactshop.demo.representation;
+package com.springreactshop.demo.dto;
 
 import java.io.Serializable;
 

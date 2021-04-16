@@ -3,7 +3,7 @@ package com.springreactshop.demo.service;
 import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
-import com.springreactshop.demo.representation.OrderRequest;
+import com.springreactshop.demo.dto.OrderRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,4 +1,4 @@
-package com.springreactshop.demo.representation;
+package com.springreactshop.demo.dto;
 
 import com.springreactshop.demo.domain.Product;
 import lombok.AllArgsConstructor;

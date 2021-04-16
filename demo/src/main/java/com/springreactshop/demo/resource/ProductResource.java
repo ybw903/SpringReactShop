@@ -1,10 +1,8 @@
-package com.springreactshop.demo.representation;
+package com.springreactshop.demo.resource;
 
 import com.springreactshop.demo.controller.ProductController;
 import com.springreactshop.demo.domain.Product;
 import lombok.Getter;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

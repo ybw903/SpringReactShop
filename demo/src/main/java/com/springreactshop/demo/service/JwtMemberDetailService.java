@@ -1,13 +1,12 @@
 package com.springreactshop.demo.service;
 
-import com.springreactshop.demo.representation.JwtRequest;
+import com.springreactshop.demo.dto.JwtRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 
 @Service
 public class JwtMemberDetailService implements UserDetailsService {

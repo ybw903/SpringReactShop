@@ -1,8 +1,8 @@
 package com.springreactshop.demo.controller;
 
 import com.springreactshop.demo.domain.Order;
-import com.springreactshop.demo.representation.OrderRequest;
-import com.springreactshop.demo.representation.OrderResource;
+import com.springreactshop.demo.dto.OrderRequest;
+import com.springreactshop.demo.resource.OrderResource;
 import com.springreactshop.demo.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

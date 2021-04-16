@@ -1,7 +1,6 @@
-package com.springreactshop.demo.representation;
+package com.springreactshop.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.springreactshop.demo.domain.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;

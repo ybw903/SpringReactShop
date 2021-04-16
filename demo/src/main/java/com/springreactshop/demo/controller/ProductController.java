@@ -1,11 +1,10 @@
 package com.springreactshop.demo.controller;
 
 import com.springreactshop.demo.domain.Product;
-import com.springreactshop.demo.representation.ProductDto;
-import com.springreactshop.demo.representation.ProductResource;
+import com.springreactshop.demo.dto.ProductDto;
+import com.springreactshop.demo.resource.ProductResource;
 import com.springreactshop.demo.service.ProductService;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -42,7 +41,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<PagedModel<ProductResource>> productList(Pageable pageable, PagedResourcesAssembler<Product> assembler) {
         Page<Product> page =this.productService.productsPages(pageable);
-        var pageResource = assembler.toModel(page, p-> new ProductResource(p));
+        var pageResource = assembler.toModel(page, ProductResource::new);
         return ResponseEntity.ok(pageResource);
     }
 

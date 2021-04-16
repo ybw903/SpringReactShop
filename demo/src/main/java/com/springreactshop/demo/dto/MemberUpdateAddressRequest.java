@@ -1,4 +1,4 @@
-package com.springreactshop.demo.representation;
+package com.springreactshop.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springreactshop.demo.domain.Address;

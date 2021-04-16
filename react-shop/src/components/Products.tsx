@@ -29,18 +29,20 @@ const Products = () => {
     
     const pageFirst = () => {setPage({...page,number:0})}
     const pageLast = () => { setPage({...page,number: page.totalPages-1});}
-    const pageNext = () => { 
+    const pageNext = () => {
+        const changeNum = page.number===page.totalPages-1?page.number:page.number+1;
         setPage(
         {
             ...page,
-            number:page.number===page.totalPages-1?page.totalPages-1:page.number+1
+            number:changeNum
         });
     }
     const pagePrev = () => {
+        const changeNum = page.number===0?page.number:page.number-1
         setPage(
         {   
             ...page,
-            number:page.number===0?0:page.number-1
+            number:changeNum
         });
     }
     console.log(page.number);

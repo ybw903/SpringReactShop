@@ -1,8 +1,8 @@
 package com.springreactshop.demo.controller;
 
 import com.springreactshop.demo.domain.Member;
-import com.springreactshop.demo.representation.MemberUpdateAddressRequest;
-import com.springreactshop.demo.representation.MemberProfileResponse;
+import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
+import com.springreactshop.demo.dto.MemberProfileResponse;
 import com.springreactshop.demo.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.EntityModel;

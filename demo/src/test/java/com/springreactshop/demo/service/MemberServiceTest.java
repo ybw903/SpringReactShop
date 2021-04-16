@@ -2,19 +2,15 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.repository.MemberRepository;
-import com.springreactshop.demo.representation.JwtRequest;
-import com.springreactshop.demo.representation.MemberUpdateAddressRequest;
+import com.springreactshop.demo.dto.JwtRequest;
+import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MemberServiceTest {

@@ -6,7 +6,7 @@ import com.springreactshop.demo.security.JwtTokenUtil;
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.repository.MemberRepository;
-import com.springreactshop.demo.representation.MemberUpdateAddressRequest;
+import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

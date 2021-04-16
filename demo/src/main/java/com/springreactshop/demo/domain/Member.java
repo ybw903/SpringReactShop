@@ -1,7 +1,7 @@
 package com.springreactshop.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.springreactshop.demo.representation.MemberUpdateAddressRequest;
+import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
 import lombok.*;
 
 import javax.persistence.*;

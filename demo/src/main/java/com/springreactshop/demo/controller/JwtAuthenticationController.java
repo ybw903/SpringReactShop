@@ -1,8 +1,8 @@
 package com.springreactshop.demo.controller;
 
 import com.springreactshop.demo.security.JwtTokenUtil;
-import com.springreactshop.demo.representation.JwtRequest;
-import com.springreactshop.demo.representation.JwtResponse;
+import com.springreactshop.demo.dto.JwtRequest;
+import com.springreactshop.demo.dto.JwtResponse;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

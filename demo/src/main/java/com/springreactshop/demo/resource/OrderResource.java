@@ -1,17 +1,10 @@
-package com.springreactshop.demo.representation;
+package com.springreactshop.demo.resource;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.springreactshop.demo.controller.OrderController;
-import com.springreactshop.demo.controller.ProductController;
 import com.springreactshop.demo.domain.*;
 import lombok.Getter;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

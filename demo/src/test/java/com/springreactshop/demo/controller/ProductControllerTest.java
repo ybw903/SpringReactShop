@@ -8,8 +8,8 @@ import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.ProductRepository;
-import com.springreactshop.demo.representation.ProductDto;
-import com.springreactshop.demo.representation.ProductRequest;
+import com.springreactshop.demo.dto.ProductDto;
+import com.springreactshop.demo.dto.ProductRequest;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -115,9 +115,15 @@ class ProductControllerTest {
                 .andExpect(jsonPath("_embedded.productResources[0]._links.self").exists())
                 .andExpect(jsonPath("page").exists())
                 .andExpect(jsonPath("_links.self").exists())
+                .andExpect(jsonPath("_links.next").exists())
+                .andExpect(jsonPath("_links.last").exists())
+                .andExpect(jsonPath("_links.first").exists())
                 .andDo(document("product/product-list",
                         links(
-                                linkWithRel("self").description("lintk to self")
+                                linkWithRel("self").description("link to self"),
+                                linkWithRel("next").description("link to next page"),
+                                linkWithRel("last").description("link to last page"),
+                                linkWithRel("first").description("link to first page")
                         ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("accept header"),
@@ -134,7 +140,10 @@ class ProductControllerTest {
                                 subsectionWithPath("_embedded").description("It is an object link relation types"),
                                 subsectionWithPath("_embedded.productResources").description("productResource List"),
                                 subsectionWithPath("page").description("query of pagable"),
-                                fieldWithPath("_links.self.href").description("link to self")
+                                fieldWithPath("_links.self.href").description("link to self"),
+                                fieldWithPath("_links.next.href").description("link to next page"),
+                                fieldWithPath("_links.last.href").description("link to last page"),
+                                fieldWithPath("_links.first.href").description("link to first page")
                         )
                 ));
     }
