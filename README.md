@@ -20,3 +20,10 @@
 * TypeScript
 * Bootstrap
 * Redux
+
+## :clipboard: 주요 기능
+* 회원 등록
+* 회원 로그인
+* 상품 조회
+* 카트에 상품 담기
+* 주문
