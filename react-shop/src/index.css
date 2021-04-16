@@ -11,6 +11,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+::-webkit-scrollbar {
+  display:none;
+} 
+
+header {
+  height: 56px;
+  width: 100%;
+}
+
 .container{
   padding: 70px 1rem 70px 1rem;
 }

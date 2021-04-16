@@ -1,6 +1,4 @@
-import { User } from "../types/user";
 import axios from 'axios';
-import { config } from "node:process";
 
 export const authLogin =  (username: string, password: string) => {
     return axios.post("/api/authenticate/login",{username, password})

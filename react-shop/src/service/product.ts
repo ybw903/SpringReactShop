@@ -1,19 +1,25 @@
+import { Page } from "../types/page";
 import { Product } from "../types/products";
+import { ProductPage } from "../types/productsPage";
 
-export const getProducts = async (): Promise<Product[]> => {
-    const response = await fetch(`/api/products?page=0&size=20`);
+export const getProducts = async (page:Number): Promise<ProductPage> => {
+    const response = await fetch(`/api/products?page=${page}&size=16`);
 
     const response_data = await response.json();
 
     console.log(response_data);
-    const products :Product[] = await response_data._embedded.productResources;
-    
-    console.log(products);
 
-    return products.map(el =>{
+    const products :Product[] = await response_data._embedded.productResources;
+    const pages: Page = await response_data.page;
+
+    const productList =  products.map(el =>{
         return{
             ...el,
             orderQuantity:1
         };
     });
+    const productPage: ProductPage = {productList, pages};
+    console.log(productPage);
+
+    return productPage;
 }
