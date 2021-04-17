@@ -1,5 +1,6 @@
 package com.springreactshop.demo.domain;
 
+import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.exception.NotEnoughStockException;
 import lombok.*;
 
@@ -37,6 +38,14 @@ public class Product {
             throw new NotEnoughStockException("need more stock");
         }
         this.productQuantity = restStock;
+    }
+
+    public Product update(ProductDto.Request productRequest) {
+        this.productName = productRequest.getProductName();
+        this.productDescription = productRequest.getProductDescription();
+        this.productPrice = productRequest.getProductPrice();
+        this.productQuantity = productRequest.getProductQuantity();
+        return this;
     }
 
 }

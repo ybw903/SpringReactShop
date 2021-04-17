@@ -1,6 +1,5 @@
 package com.springreactshop.demo.controller;
 
-import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.resource.ProductResource;
 import com.springreactshop.demo.service.ProductService;
@@ -15,7 +14,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Optional;
+
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -29,59 +28,39 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto.Request productRequest,
                                                       Errors errors) {
-
         ProductDto.Response prouctResponse = productService.addProduct(productRequest);
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(prouctResponse.getId());
-        URI createdUri =selfLinkBuilder.toUri();
-        ProductResource productResource = new ProductResource(productRequest.toEntity());
-
+        URI createdUri =linkTo(ProductController.class).slash(prouctResponse.getId()).toUri();
+        ProductResource productResource = new ProductResource(prouctResponse);
         return ResponseEntity.created(createdUri).body(productResource);
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<ProductResource>> productList(Pageable pageable, PagedResourcesAssembler<Product> assembler) {
-        Page<Product> page =this.productService.productsPages(pageable);
+    public ResponseEntity<PagedModel<ProductResource>> productList(Pageable pageable,
+                                                                   PagedResourcesAssembler<ProductDto.Response> assembler) {
+        Page<ProductDto.Response> page =this.productService.productsPages(pageable);
         var pageResource = assembler.toModel(page, ProductResource::new);
         return ResponseEntity.ok(pageResource);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResource> getProduct(@PathVariable Long id) {
-        Optional<Product>optionalProduct = this.productService.getProduct(id);
-        if(optionalProduct.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+        ProductDto.Response productResponse = this.productService.getProductResponseById(id);
 
-        Product product = optionalProduct.get();
-        ProductResource productResource = new ProductResource(product);
+        ProductResource productResource = new ProductResource(productResponse);
         return ResponseEntity.ok(productResource);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResource> updateProduct(@PathVariable Long id,
                                                          @RequestBody ProductDto.Request productDto) {
-
-        Optional<Product> optionalProduct = this.productService.getProduct(id);
-        if(optionalProduct.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Product existingProduct = optionalProduct.get();
-        existingProduct = productDto.toEntity();
-
-        ProductResource productResource = new ProductResource(existingProduct);
+        ProductDto.Response productResponse = this.productService.update(id, productDto);
+        ProductResource productResource = new ProductResource(productResponse);
         return ResponseEntity.ok(productResource);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
-
-        Optional<Product> optionalProduct = this.productService.getProduct(id);
-        if(optionalProduct.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         productService.deleteProduct(id);
-
         return ResponseEntity.ok("success");
         // https://stackoverflow.com/questions/25970523/restful-what-should-a-delete-response-body-contain/25970628
     }

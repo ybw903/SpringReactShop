@@ -2,6 +2,7 @@ package com.springreactshop.demo.resource;
 
 import com.springreactshop.demo.controller.ProductController;
 import com.springreactshop.demo.domain.Product;
+import com.springreactshop.demo.dto.ProductDto;
 import lombok.Getter;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -20,7 +21,7 @@ public class ProductResource extends RepresentationModel<ProductResource> {
 
     private final int productQuantity;
 
-    public ProductResource(Product product) {
+    public ProductResource(ProductDto.Response product) {
         this.Id = product.getId();
         this.productName = product.getProductName();
         this.productDescription = product.getProductDescription();
