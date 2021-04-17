@@ -1,6 +1,7 @@
 package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Product;
+import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -41,6 +43,22 @@ class ProductServiceTest {
 
         //then
         assertThat(pageOfProduct.getTotalElements()).isEqualTo(expectedPageOfProduct.getTotalElements());
+    }
+
+    @Test
+    void 상품추가() {
+        //given
+        ProductDto productDto = ProductDto.builder().build();
+        Product product = Product.builder().Id(0L).build();
+        Product mockProduct = getMockProduct();
+
+        given(productRepository.save(any(Product.class))).willReturn(mockProduct);
+
+        //when
+        Long productId = productService.addProduct(productDto);
+
+        //then
+        assertThat(productId).isEqualTo(product.getId());
     }
 
     private Product getMockProduct() {

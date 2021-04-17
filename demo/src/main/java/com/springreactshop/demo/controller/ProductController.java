@@ -29,11 +29,10 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto productDto, Errors errors) {
 
-        Product product = productDto.toEntity();
-        Long productId = productService.addProduct(product);
+        Long productId = productService.addProduct(productDto);
         WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(productId);
         URI createdUri =selfLinkBuilder.toUri();
-        ProductResource productResource = new ProductResource(product);
+        ProductResource productResource = new ProductResource(productDto.toEntity());
 
         return ResponseEntity.created(createdUri).body(productResource);
     }
@@ -68,7 +67,6 @@ public class ProductController {
 
         Product existingProduct = optionalProduct.get();
         existingProduct = productDto.toEntity();
-        Long savedProductId = this.productService.addProduct(existingProduct);
 
         ProductResource productResource = new ProductResource(existingProduct);
         return ResponseEntity.ok(productResource);

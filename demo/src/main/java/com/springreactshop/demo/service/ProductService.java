@@ -1,6 +1,7 @@
 package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Product;
+import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,8 @@ public class ProductService {
 
     private ProductRepository productRepository;
 
-    public Long addProduct(Product product) {
+    public Long addProduct(ProductDto productDto) {
+        Product product = productDto.toEntity();
         return productRepository.save(product).getId();
     }
 

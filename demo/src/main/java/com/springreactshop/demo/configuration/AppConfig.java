@@ -28,7 +28,7 @@ public class AppConfig {
                             .productPrice(i*100)
                             .productQuantity(9999)
                             .build();
-                    productService.addProduct(productDto.toEntity());
+                    productService.addProduct(productDto);
                 }
             }
         };
