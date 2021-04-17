@@ -51,7 +51,7 @@ class MemberServiceTest {
                 = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
 
         //When
-        Member updatedMember = memberService.updateMember(member,memberUpdateAddressRequest);
+        Member updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
 
         //Then
         assertThat(updatedMember.getUsername()).isEqualTo("testUserC");
@@ -68,7 +68,7 @@ class MemberServiceTest {
         Member member = memberRepository.findByUsername("testUserC").orElseThrow();
         MemberDto.AddressUpdateRequest memberUpdateAddressRequest
                 = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
-        Member updatedMember = memberService.updateMember(member,memberUpdateAddressRequest);
+        Member updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
 
         //When
         Member memberProfile = memberService.getMemberProfileByUserName(updatedMember.getUsername());

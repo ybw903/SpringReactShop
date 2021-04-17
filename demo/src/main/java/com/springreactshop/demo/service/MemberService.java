@@ -32,17 +32,19 @@ public class MemberService {
         return memberRepository.save(member).getUsername();
     }
 
-    public Member getMemberProfileByUserName(String username) throws UsernameNotFoundException {
+    public Member getMemberProfileByUserName(String username) {
         Optional<Member> optionalMember = memberRepository.findByUsername(username);
         return optionalMember.orElseThrow(()->new UsernameNotFoundException(username));
     }
 
-    public Member updateMember(Member member, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
+    public Member updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
+        Optional<Member> optionalMember = memberRepository.findByUsername(username);
+        Member member = optionalMember.orElseThrow(()-> new UsernameNotFoundException(username));
         member.updateMember(memberUpdateAddressRequest);
         return memberRepository.save(member); //>???
     }
 
-    public MemberDetails getUserByUsername(String username) throws UsernameNotFoundException{
+    public MemberDetails getUserByUsername(String username){
         Optional<Member> optionalMember = memberRepository.findByUsername(username);
         Member member = optionalMember.orElseThrow(()-> new UsernameNotFoundException(username));
 

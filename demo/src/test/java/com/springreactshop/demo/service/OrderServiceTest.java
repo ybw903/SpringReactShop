@@ -104,7 +104,7 @@ class OrderServiceTest {
                 .street("서울시강남구테헤란로")
                 .build();
 
-        memberService.updateMember(member, memberUpdateAddressRequest);
+        memberService.updateMember(member.getUsername(), memberUpdateAddressRequest);
         return memberRepository.findByUsername("user").orElse(null);
     }
 

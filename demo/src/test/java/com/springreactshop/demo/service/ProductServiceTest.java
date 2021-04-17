@@ -131,7 +131,6 @@ class ProductServiceTest {
         assertThat(productResponse.getProductQuantity()).isEqualTo(expected.getProductQuantity());
     }
 
-
     private Product getMockProduct() {
         return mock(Product.class);
     }
