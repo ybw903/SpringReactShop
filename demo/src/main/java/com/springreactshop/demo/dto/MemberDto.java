@@ -1,6 +1,7 @@
 package com.springreactshop.demo.dto;
 
 import com.springreactshop.demo.domain.Member;
+import com.springreactshop.demo.domain.Product;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,18 +17,14 @@ public class MemberDto {
         private String street;
         private String phone;
 
-        public InfoResponse(Member member) {
-            if(member.getAddress()==null) {
-                this.username=member.getUsername();
-                this.zipcode="";
-                this.street="";
-                this.phone="";
-            } else {
-                this.username=member.getUsername();
-                this.zipcode=member.getAddress().getZipcode();
-                this.street=member.getAddress().getStreet();
-                this.phone=member.getAddress().getZipcode();
-            }
+        public static InfoResponse of(Member member) {
+            return InfoResponse
+                    .builder()
+                    .username(member.getUsername())
+                    .zipcode(member.getAddress()==null?"":member.getAddress().getZipcode())
+                    .street(member.getAddress()==null?"":member.getAddress().getStreet())
+                    .phone(member.getAddress()==null?"":member.getAddress().getPhone())
+                    .build();
         }
     }
 

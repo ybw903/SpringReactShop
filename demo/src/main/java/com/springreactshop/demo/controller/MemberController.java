@@ -22,10 +22,7 @@ public class MemberController {
 
     @GetMapping("/{username}")
     public ResponseEntity<MemberResource> getUserInfo(@PathVariable String username) {
-        Member member = memberService.getMemberProfileByUserName(username);
-        if(member == null) return ResponseEntity.notFound().build();
-        MemberDto.InfoResponse memberInfoResponse = new MemberDto.InfoResponse(member);
-
+        MemberDto.InfoResponse memberInfoResponse = memberService.getMemberProfileByUserName(username);
         MemberResource memberResource = new MemberResource(memberInfoResponse);
         return ResponseEntity.ok().body(memberResource);
     }
@@ -34,10 +31,8 @@ public class MemberController {
     public ResponseEntity<MemberResource> updateUserProfile (@PathVariable String username,
                       @RequestBody MemberDto.AddressUpdateRequest  memberUpdateAddressRequest) {
 
-        Member updatedMember = memberService.updateMember(username, memberUpdateAddressRequest);
-        MemberDto.InfoResponse memberInfoResponse = new MemberDto.InfoResponse(updatedMember);
+        MemberDto.InfoResponse memberInfoResponse = memberService.updateMember(username, memberUpdateAddressRequest);
         MemberResource memberResource = new MemberResource(memberInfoResponse);
-
         return ResponseEntity.ok().body(memberResource);
     }
 

@@ -51,13 +51,13 @@ class MemberServiceTest {
                 = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
 
         //When
-        Member updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
+        MemberDto.InfoResponse updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
 
         //Then
         assertThat(updatedMember.getUsername()).isEqualTo("testUserC");
-        assertThat(updatedMember.getAddress().getZipcode()).isEqualTo("000000");
-        assertThat(updatedMember.getAddress().getStreet()).isEqualTo("서울시강남구테헤란로");
-        assertThat(updatedMember.getAddress().getPhone()).isEqualTo("012-345-6789");
+        assertThat(updatedMember.getZipcode()).isEqualTo("000000");
+        assertThat(updatedMember.getStreet()).isEqualTo("서울시강남구테헤란로");
+        assertThat(updatedMember.getPhone()).isEqualTo("012-345-6789");
     }
 
     @Test
@@ -65,18 +65,10 @@ class MemberServiceTest {
         //Given
         String username = memberService.signUpUser(signupRequest);
 
-        Member member = memberRepository.findByUsername("testUserC").orElseThrow();
-        MemberDto.AddressUpdateRequest memberUpdateAddressRequest
-                = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
-        Member updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
-
         //When
-        Member memberProfile = memberService.getMemberProfileByUserName(updatedMember.getUsername());
+        MemberDto.InfoResponse memberProfile = memberService.getMemberProfileByUserName(username);
 
         //Then
-        assertThat(memberProfile.getUsername()).isEqualTo("testUserC");
-        assertThat(memberProfile.getAddress().getZipcode()).isEqualTo("000000");
-        assertThat(memberProfile.getAddress().getStreet()).isEqualTo("서울시강남구테헤란로");
-        assertThat(memberProfile.getAddress().getPhone()).isEqualTo("012-345-6789");
+        assertThat(memberProfile.getUsername()).isEqualTo(signupRequest.getUsername());
     }
 }
