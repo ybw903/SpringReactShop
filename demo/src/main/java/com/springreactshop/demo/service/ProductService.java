@@ -18,9 +18,10 @@ public class ProductService {
 
     private ProductRepository productRepository;
 
-    public Long addProduct(ProductDto productDto) {
-        Product product = productDto.toEntity();
-        return productRepository.save(product).getId();
+    public ProductDto.Response addProduct(ProductDto.Request productRequest) {
+        Product product = productRequest.toEntity();
+        Product saved = productRepository.save(product);
+        return ProductDto.Response.of(saved);
     }
 
     public Page<Product> productsPages(Pageable pageable) {

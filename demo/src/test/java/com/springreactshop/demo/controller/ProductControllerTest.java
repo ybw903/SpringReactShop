@@ -162,7 +162,7 @@ class ProductControllerTest {
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        ProductDto productDto = ProductDto
+        ProductDto.Request productDto = ProductDto.Request
                 .builder()
                 .productName("testProduct")
                 .productDescription("testProduct")
@@ -240,7 +240,7 @@ class ProductControllerTest {
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        Product product = ProductDto
+        Product product = ProductDto.Request
                 .builder()
                 .productName("testProduct")
                 .productDescription("testProduct")
@@ -249,7 +249,7 @@ class ProductControllerTest {
                 .build().toEntity();
         Product savedProduct = productRepository.save(product);
 
-        ProductDto productDto = ProductDto
+        ProductDto.Request productRequest = ProductDto.Request
                 .builder()
                 .productName("changedProduct")
                 .productDescription("changedProductDescription")
@@ -262,7 +262,7 @@ class ProductControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaTypes.HAL_JSON)
                 .header("Authorization","Bearer " + token)
-                .content(objectMapper.writeValueAsString(productDto))
+                .content(objectMapper.writeValueAsString(productRequest))
         );
 
         //then
@@ -322,7 +322,7 @@ class ProductControllerTest {
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        Product product = ProductDto
+        Product product = ProductDto.Request
                 .builder()
                 .productName("testProduct")
                 .productDescription("testProduct")

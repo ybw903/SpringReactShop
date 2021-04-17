@@ -27,12 +27,13 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto productDto, Errors errors) {
+    public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto.Request productRequest,
+                                                      Errors errors) {
 
-        Long productId = productService.addProduct(productDto);
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(productId);
+        ProductDto.Response prouctResponse = productService.addProduct(productRequest);
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(ProductController.class).slash(prouctResponse.getId());
         URI createdUri =selfLinkBuilder.toUri();
-        ProductResource productResource = new ProductResource(productDto.toEntity());
+        ProductResource productResource = new ProductResource(productRequest.toEntity());
 
         return ResponseEntity.created(createdUri).body(productResource);
     }
@@ -58,7 +59,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResource> updateProduct(@PathVariable Long id,
-                                                         @RequestBody ProductDto productDto) {
+                                                         @RequestBody ProductDto.Request productDto) {
 
         Optional<Product> optionalProduct = this.productService.getProduct(id);
         if(optionalProduct.isEmpty()) {
@@ -73,7 +74,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
 
         Optional<Product> optionalProduct = this.productService.getProduct(id);
         if(optionalProduct.isEmpty()) {
@@ -81,7 +82,7 @@ public class ProductController {
         }
         productService.deleteProduct(id);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("success");
         // https://stackoverflow.com/questions/25970523/restful-what-should-a-delete-response-body-contain/25970628
     }
 

@@ -22,13 +22,13 @@ public class AppConfig {
             @Override
             public void run(ApplicationArguments args) throws Exception {
                 for(int i = 0; i<=1000; i++) {
-                    ProductDto productDto = ProductDto.builder()
+                    ProductDto.Request productRequest = ProductDto.Request.builder()
                             .productName("test" + i)
                             .productDescription("testDesc" + i)
                             .productPrice(i*100)
                             .productQuantity(9999)
                             .build();
-                    productService.addProduct(productDto);
+                    productService.addProduct(productRequest);
                 }
             }
         };

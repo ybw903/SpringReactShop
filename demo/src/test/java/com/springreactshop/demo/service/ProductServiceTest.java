@@ -48,17 +48,17 @@ class ProductServiceTest {
     @Test
     void 상품추가() {
         //given
-        ProductDto productDto = ProductDto.builder().build();
+        ProductDto.Request productRequest = ProductDto.Request.builder().build();
         Product product = Product.builder().Id(0L).build();
         Product mockProduct = getMockProduct();
 
         given(productRepository.save(any(Product.class))).willReturn(mockProduct);
 
         //when
-        Long productId = productService.addProduct(productDto);
+        ProductDto.Response productResponse = productService.addProduct(productRequest);
 
         //then
-        assertThat(productId).isEqualTo(product.getId());
+        assertThat(productResponse.getId()).isEqualTo(product.getId());
     }
 
     private Product getMockProduct() {
