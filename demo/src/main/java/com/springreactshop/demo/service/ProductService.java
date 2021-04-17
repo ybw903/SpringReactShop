@@ -30,10 +30,10 @@ public class ProductService {
 
     public Page<ProductDto.Response> productsPages(Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
-        List<ProductDto.Response> productsResponse
-                = productPage.getContent().stream()
-                .map(ProductDto.Response::of)
-                .collect(Collectors.toList());
+        List<ProductDto.Response> productsResponse = productPage
+                                                    .getContent().stream()
+                                                    .map(ProductDto.Response::of)
+                                                    .collect(Collectors.toList());
         return new PageImpl<>(productsResponse,pageable,productPage.getTotalElements());
     }
 
