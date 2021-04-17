@@ -99,7 +99,37 @@ class ProductServiceTest {
         assertThat(productResponse.getId()).isEqualTo(product.getId());
     }
 
+    @Test
+    void 상품갱신() {
+        //given
+        Product product = Product.builder().Id(0L).build();
+        ProductDto.Request productRequest = ProductDto.Request
+                                                .builder()
+                                                .productName("testName")
+                                                .productDescription("testDescription")
+                                                .productPrice(100)
+                                                .productQuantity(100)
+                                                .build();
+        ProductDto.Response expected = ProductDto.Response
+                                                .builder()
+                                                .id(0L)
+                                                .productName("testName")
+                                                .productDescription("testDescription")
+                                                .productPrice(100)
+                                                .productQuantity(100)
+                                                .build();
+        given(productRepository.findById(0L)).willReturn(Optional.of(product));
 
+        //when
+        ProductDto.Response productResponse = productService.update(0L, productRequest);
+
+        //then
+        assertThat(productResponse.getId()).isEqualTo(expected.getId());
+        assertThat(productResponse.getProductName()).isEqualTo(expected.getProductName());
+        assertThat(productResponse.getProductDescription()).isEqualTo(expected.getProductDescription());
+        assertThat(productResponse.getProductPrice()).isEqualTo(expected.getProductPrice());
+        assertThat(productResponse.getProductQuantity()).isEqualTo(expected.getProductQuantity());
+    }
 
 
     private Product getMockProduct() {
