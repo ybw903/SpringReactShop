@@ -4,7 +4,6 @@ import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.exception.ProductNotFoundException;
 import com.springreactshop.demo.repository.ProductRepository;
-import com.springreactshop.demo.resource.ProductResource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -86,6 +85,20 @@ class ProductServiceTest {
         //then
         assertThat(foundProductById.getId()).isEqualTo(savedProduct.getId());
     }
+
+    @Test
+    void 아이디로조회한단일상품응답반환() {
+        //given
+        Product product = Product.builder().Id(0L).build();
+        given(productRepository.findById(0L)).willReturn(Optional.of(product));
+
+        //when
+        ProductDto.Response productResponse  = productService.getProductResponseById(0L);
+
+        //then
+        assertThat(productResponse.getId()).isEqualTo(product.getId());
+    }
+
 
 
 

@@ -7,6 +7,7 @@ import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.dto.MemberDetails;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class MemberService {
 

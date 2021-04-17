@@ -5,6 +5,7 @@ import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.exception.ProductNotFoundException;
 import com.springreactshop.demo.repository.ProductRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +17,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductDto.Response addProduct(ProductDto.Request productRequest) {
         Product product = productRequest.toEntity();
