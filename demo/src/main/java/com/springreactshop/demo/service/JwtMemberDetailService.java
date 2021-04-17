@@ -1,6 +1,6 @@
 package com.springreactshop.demo.service;
 
-import com.springreactshop.demo.dto.JwtRequest;
+import com.springreactshop.demo.dto.AuthDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +25,7 @@ public class JwtMemberDetailService implements UserDetailsService {
         return memberService.getUserByUsername(username);
     }
 
-    public String addUser(JwtRequest signupRequest) {
+    public String addUser(AuthDto.Request signupRequest) {
         return memberService.signUpUser(signupRequest);
     }
 

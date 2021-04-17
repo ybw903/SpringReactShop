@@ -9,7 +9,7 @@ import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.dto.ProductDto;
-import com.springreactshop.demo.dto.ProductRequest;
+import com.springreactshop.demo.dto.OrderProductRequest;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ class ProductControllerTest {
     void 상품목록조회테스트() throws Exception {
         //given
         Product product1 =
-                ProductRequest.builder()
+                OrderProductRequest.builder()
                         .id(1L)
                         .productName("test1")
                         .productDescription("test1")
@@ -77,7 +77,7 @@ class ProductControllerTest {
                         .productQuantity(999)
                         .build().toEntity();
         Product product2 =
-                ProductRequest.builder()
+                OrderProductRequest.builder()
                         .id(2L)
                         .productName("test2")
                         .productDescription("test2")
@@ -85,7 +85,7 @@ class ProductControllerTest {
                         .productQuantity(999)
                         .build().toEntity();
         Product product3 =
-                ProductRequest.builder()
+                OrderProductRequest.builder()
                         .id(3L)
                         .productName("test3")
                         .productDescription("test3")

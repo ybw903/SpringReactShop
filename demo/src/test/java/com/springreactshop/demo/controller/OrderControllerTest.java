@@ -8,7 +8,7 @@ import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.dto.OrderRequest;
-import com.springreactshop.demo.dto.ProductRequest;
+import com.springreactshop.demo.dto.OrderProductRequest;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import com.springreactshop.demo.service.OrderService;
 import org.junit.jupiter.api.AfterEach;
@@ -92,14 +92,14 @@ class OrderControllerTest {
         String token = jwtTokenUtil.generateToken(userDetails);
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
 
-        List<ProductRequest> productRequests = new ArrayList<>();
+        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            ProductRequest productRequest = generateProductRequest(i);
-            productRepository.save(productRequest.toEntity());
-            productRequests.add(productRequest);
+            OrderProductRequest orderProductRequest = generateProductRequest(i);
+            productRepository.save(orderProductRequest.toEntity());
+            orderProductRequests.add(orderProductRequest);
         }
 
-        OrderRequest orderRequest = new OrderRequest(userDetails.getUsername(),address, productRequests);
+        OrderRequest orderRequest = new OrderRequest(userDetails.getUsername(),address, orderProductRequests);
 
         //when&then
         this.mockMvc.perform(post("/api/orders")
@@ -159,14 +159,14 @@ class OrderControllerTest {
         String token = jwtTokenUtil.generateToken(userDetails);
 
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
-        List<ProductRequest> productRequests = new ArrayList<>();
+        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            ProductRequest productRequest = generateProductRequest(i);
-            productRepository.save(productRequest.toEntity());
-            productRequests.add(productRequest);
+            OrderProductRequest orderProductRequest = generateProductRequest(i);
+            productRepository.save(orderProductRequest.toEntity());
+            orderProductRequests.add(orderProductRequest);
         }
 
-        OrderRequest orderRequest = new OrderRequest("testUser",address,productRequests);
+        OrderRequest orderRequest = new OrderRequest("testUser",address, orderProductRequests);
         Order addedOrder = orderService.order(orderRequest);
         Long orderId = addedOrder.getId();
 
@@ -221,16 +221,16 @@ class OrderControllerTest {
         String token = jwtTokenUtil.generateToken(userDetails);
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
 
-        List<ProductRequest> productRequests = new ArrayList<>();
+        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
         for(int i =1; i<10; i++) {
-            ProductRequest productRequest = generateProductRequest(i);
-            productRepository.save(productRequest.toEntity());
-            productRequests.add(productRequest);
+            OrderProductRequest orderProductRequest = generateProductRequest(i);
+            productRepository.save(orderProductRequest.toEntity());
+            orderProductRequests.add(orderProductRequest);
         }
 
-        OrderRequest orderRequest1 = new OrderRequest("testUser",address,productRequests.subList(0,3));
-        OrderRequest orderRequest2 = new OrderRequest("testUser",address,productRequests.subList(4,6));
-        OrderRequest orderRequest3 = new OrderRequest("testUser",address,productRequests.subList(7,9));
+        OrderRequest orderRequest1 = new OrderRequest("testUser",address, orderProductRequests.subList(0,3));
+        OrderRequest orderRequest2 = new OrderRequest("testUser",address, orderProductRequests.subList(4,6));
+        OrderRequest orderRequest3 = new OrderRequest("testUser",address, orderProductRequests.subList(7,9));
         Order addedOrder1 = orderService.order(orderRequest1);
         Order addedOrder2 = orderService.order(orderRequest2);
         Order addedOrder3 = orderService.order(orderRequest3);
@@ -276,9 +276,9 @@ class OrderControllerTest {
 
     }
 
-    public ProductRequest generateProductRequest(int idx) {
+    public OrderProductRequest generateProductRequest(int idx) {
 
-        return ProductRequest.builder()
+        return OrderProductRequest.builder()
                 .id((long) idx)
                 .productName("test"+idx)
                 .productDescription("no")

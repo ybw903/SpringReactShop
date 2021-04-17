@@ -1,13 +1,10 @@
 package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.*;
+import com.springreactshop.demo.dto.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
-import com.springreactshop.demo.dto.JwtRequest;
-import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
-import com.springreactshop.demo.dto.OrderRequest;
-import com.springreactshop.demo.dto.ProductRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,15 +38,15 @@ class OrderServiceTest {
     public void 주문하기() throws Exception{
 
         //given
-        List<ProductRequest> productRequests = new ArrayList<>();
+        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            ProductRequest productRequest = generateProductRequest(i);
-            productRepository.save(productRequest.toEntity());
-            productRequests.add(productRequest);
+            OrderProductRequest orderProductRequest = generateProductRequest(i);
+            productRepository.save(orderProductRequest.toEntity());
+            orderProductRequests.add(orderProductRequest);
         }
         Member member = makeUser();
         Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, productRequests);
+        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, orderProductRequests);
 
         //when
         Order order = orderService.order(orderRequest);
@@ -60,10 +57,10 @@ class OrderServiceTest {
         assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(address.getStreet());
         assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(address.getZipcode());
         assertThat(order.getDelivery().getDeliveryStatus()).isEqualTo(DeliveryStatus.READY);
-        assertThat(order.getOrderProducts().size()).isEqualTo(productRequests.size());
+        assertThat(order.getOrderProducts().size()).isEqualTo(orderProductRequests.size());
         assertThat(order.getTotalPrice()).isEqualTo(
-                        (Integer) productRequests.stream()
-                                .mapToInt(productRequest -> productRequest.getOrderPrice() * productRequest.getOrderQuantity())
+                        (Integer) orderProductRequests.stream()
+                                .mapToInt(orderProductRequest -> orderProductRequest.getOrderPrice() * orderProductRequest.getOrderQuantity())
                                 .sum());
         assertThat(order.getStatus()).isEqualTo(OrderStatus.ORDER);
     }
@@ -71,15 +68,15 @@ class OrderServiceTest {
     @Test
     public void 주문취소() throws Exception{
         //given
-        List<ProductRequest> productRequests = new ArrayList<>();
+        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            ProductRequest productRequest = generateProductRequest(i);
-            productRepository.save(productRequest.toEntity());
-            productRequests.add(productRequest);
+            OrderProductRequest orderProductRequest = generateProductRequest(i);
+            productRepository.save(orderProductRequest.toEntity());
+            orderProductRequests.add(orderProductRequest);
         }
         Member member = makeUser();
         Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, productRequests);
+        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, orderProductRequests);
         Order order =  orderService.order(orderRequest);
 
         //when
@@ -97,13 +94,11 @@ class OrderServiceTest {
     }
 
     public Member makeUser() {
-        JwtRequest signupRequest = new JwtRequest();
-        signupRequest.setUsername("user");
-        signupRequest.setPassword("password");
+        AuthDto.Request signupRequest = new AuthDto.Request("user","password");
 
         memberService.signUpUser(signupRequest);
         Member member = memberService.getMemberProfileByUserName("user");
-        MemberUpdateAddressRequest memberUpdateAddressRequest = MemberUpdateAddressRequest.builder()
+        MemberDto.AddressUpdateRequest memberUpdateAddressRequest = MemberDto.AddressUpdateRequest.builder()
                 .phone("010-1234-5678")
                 .zipcode("000000")
                 .street("서울시강남구테헤란로")
@@ -113,9 +108,9 @@ class OrderServiceTest {
         return memberRepository.findByUsername("user").orElse(null);
     }
 
-    public ProductRequest generateProductRequest(int idx) {
+    public OrderProductRequest generateProductRequest(int idx) {
 
-        return ProductRequest.builder()
+        return OrderProductRequest.builder()
                 .id((long) idx)
                 .productName("test"+idx)
                 .productDescription("no")

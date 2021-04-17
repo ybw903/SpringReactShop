@@ -1,7 +1,7 @@
 package com.springreactshop.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
+import com.springreactshop.demo.dto.MemberDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -42,7 +42,7 @@ public class Member {
     }
 
     //==회원 정보 갱신==//
-    public void updateMember(MemberUpdateAddressRequest memberUpdateAddressRequest) {
+    public void updateMember(MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
         Address address = new Address();
         if(this.address==null)this.address = address;
         this.address.setPhone(memberUpdateAddressRequest.getPhone());

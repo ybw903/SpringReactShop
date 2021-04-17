@@ -1,8 +1,7 @@
 package com.springreactshop.demo.controller;
 
+import com.springreactshop.demo.dto.AuthDto;
 import com.springreactshop.demo.security.JwtTokenUtil;
-import com.springreactshop.demo.dto.JwtRequest;
-import com.springreactshop.demo.dto.JwtResponse;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +33,8 @@ public class JwtAuthenticationController {
     private JwtMemberDetailService userDetailService;
 
     @PostMapping(value = "/api/authenticate/login")
-    public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody JwtRequest authenticateRequest) throws Exception {
+    public ResponseEntity<AuthDto.Response> createAuthenticationToken(
+            @RequestBody AuthDto.Request authenticateRequest) throws Exception {
         authenticate(authenticateRequest.getUsername(), authenticateRequest.getPassword());
 
         final UserDetails userDetails = userDetailService
@@ -43,12 +42,12 @@ public class JwtAuthenticationController {
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        return ResponseEntity.ok(new AuthDto.Response(token));
     }
 
 
     @PostMapping(value = "/api/authenticate/signup")
-    public ResponseEntity<?> signUp(@RequestBody JwtRequest signupRequest) {
+    public ResponseEntity<String> signUp(@RequestBody AuthDto.Request signupRequest) {
 
         String userName = userDetailService.addUser(signupRequest);
         WebMvcLinkBuilder selfLinkBuilder = linkTo(MemberController.class).slash(userName);

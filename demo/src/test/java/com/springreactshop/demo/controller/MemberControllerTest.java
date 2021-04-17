@@ -2,11 +2,11 @@ package com.springreactshop.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
+import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.security.JwtTokenUtil;
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.repository.MemberRepository;
-import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -122,15 +122,15 @@ class MemberControllerTest {
         //given
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("testUser");
         String token = jwtTokenUtil.generateToken(userDetails);
-        MemberUpdateAddressRequest memberUpdateAddressRequest
-                = new MemberUpdateAddressRequest("000000","서울시강남구테헤란로","012-345-6789");
+        MemberDto.AddressUpdateRequest memberAddressUpdateRequest
+                = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
 
         //when&then
         this.mockMvc.perform(put("/api/members/{username}","testUser")
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + token)
                 .accept(MediaTypes.HAL_JSON)
-                .content(objectMapper.writeValueAsString(memberUpdateAddressRequest)))
+                .content(objectMapper.writeValueAsString(memberAddressUpdateRequest)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", "application/hal+json"))

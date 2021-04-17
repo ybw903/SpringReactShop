@@ -2,9 +2,9 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
+import com.springreactshop.demo.dto.AuthDto;
+import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.repository.MemberRepository;
-import com.springreactshop.demo.dto.JwtRequest;
-import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
 import com.springreactshop.demo.dto.MemberDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +22,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public String signUpUser(JwtRequest signupRequest){
+    public String signUpUser(AuthDto.Request signupRequest){
         Member member = Member.builder()
                 .username(signupRequest.getUsername())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
@@ -36,7 +36,7 @@ public class MemberService {
         return optionalMember.orElseThrow(()->new UsernameNotFoundException(username));
     }
 
-    public Member updateMember(Member member, MemberUpdateAddressRequest memberUpdateAddressRequest) {
+    public Member updateMember(Member member, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
         member.updateMember(memberUpdateAddressRequest);
         return memberRepository.save(member); //>???
     }

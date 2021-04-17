@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
+import com.springreactshop.demo.dto.AuthDto;
 import com.springreactshop.demo.repository.MemberRepository;
-import com.springreactshop.demo.dto.JwtRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -51,9 +51,7 @@ class JwtAuthenticationControllerTest {
                 .build();
         memberRepository.save(member);
 
-        JwtRequest signRequest = new JwtRequest();
-        signRequest.setUsername("testUserA");
-        signRequest.setPassword("1234");
+        AuthDto.Request signRequest = new AuthDto.Request("testUserA", "1234");
 
         //when&then
         this.mockMvc.perform(post("/api/authenticate/login")

@@ -1,9 +1,9 @@
 package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Member;
+import com.springreactshop.demo.dto.AuthDto;
+import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.repository.MemberRepository;
-import com.springreactshop.demo.dto.JwtRequest;
-import com.springreactshop.demo.dto.MemberUpdateAddressRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,12 +22,10 @@ class MemberServiceTest {
     MemberRepository memberRepository;
 
 
-    static JwtRequest signupRequest;
+    static AuthDto.Request signupRequest;
     @BeforeAll
     static void 준비() {
-        signupRequest = new JwtRequest();
-        signupRequest.setUsername("testUserC");
-        signupRequest.setPassword("1234");
+        signupRequest = new AuthDto.Request("testUserC", "1234");
     }
     @AfterEach
     void 멤버저장소초기화() {
@@ -49,8 +47,8 @@ class MemberServiceTest {
 
         String username = memberService.signUpUser(signupRequest);
         Member member = memberRepository.findByUsername("testUserC").orElseThrow();
-        MemberUpdateAddressRequest memberUpdateAddressRequest
-                = new MemberUpdateAddressRequest("000000","서울시강남구테헤란로","012-345-6789");
+        MemberDto.AddressUpdateRequest memberUpdateAddressRequest
+                = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
 
         //When
         Member updatedMember = memberService.updateMember(member,memberUpdateAddressRequest);
@@ -68,8 +66,8 @@ class MemberServiceTest {
         String username = memberService.signUpUser(signupRequest);
 
         Member member = memberRepository.findByUsername("testUserC").orElseThrow();
-        MemberUpdateAddressRequest memberUpdateAddressRequest
-                = new MemberUpdateAddressRequest("000000","서울시강남구테헤란로","012-345-6789");
+        MemberDto.AddressUpdateRequest memberUpdateAddressRequest
+                = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
         Member updatedMember = memberService.updateMember(member,memberUpdateAddressRequest);
 
         //When
