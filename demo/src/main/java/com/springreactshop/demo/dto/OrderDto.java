@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +21,7 @@ public class OrderDto {
     @Builder
     public static class Request {
 
+        @NotEmpty
         private String username;
 
         @JsonProperty("address")

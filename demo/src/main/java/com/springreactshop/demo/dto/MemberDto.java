@@ -32,8 +32,11 @@ public class MemberDto {
     @AllArgsConstructor
     @Builder
     public static class AddressUpdateRequest{
+        @NotEmpty
         private String zipcode;
+        @NotEmpty
         private String street;
+        @NotEmpty
         private String phone;
     }
 }
