@@ -50,8 +50,7 @@ public class JwtAuthenticationController {
     public ResponseEntity<String> signUp(@RequestBody AuthDto.Request signupRequest) {
 
         String userName = userDetailService.addUser(signupRequest);
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(MemberController.class).slash(userName);
-        URI createdUri = selfLinkBuilder.toUri();
+        URI createdUri = linkTo(MemberController.class).slash(userName).toUri();
         return ResponseEntity.created(createdUri).body("ok");
     }
 

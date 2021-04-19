@@ -4,22 +4,15 @@ import { ProductPage } from "../types/productsPage";
 
 export const getProducts = async (page:Number): Promise<ProductPage> => {
     const response = await fetch(`/api/products?page=${page}&size=16`);
-
     const response_data = await response.json();
-
-    console.log(response_data);
-
     const products :Product[] = await response_data._embedded.productResources;
     const pages: Page = await response_data.page;
-
     const productList =  products.map(el =>{
         return{
             ...el,
-            orderQuantity:1
         };
     });
-    const productPage: ProductPage = {productList, pages};
-    console.log(productPage);
 
+    const productPage: ProductPage = {productList, pages};
     return productPage;
 }

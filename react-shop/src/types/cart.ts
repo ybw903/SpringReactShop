@@ -15,6 +15,10 @@ export interface RemoveFromCartAction {
    location: number
 }
 
+export interface ChangeQuantityofCartAction {
+   
+}
+
 export interface ViewCartAction {
    type: typeof VIEW_CART
 }
@@ -25,6 +29,12 @@ export interface CheckoutCartAction {
 
 export type CartActionTypes = AddToCartAction | RemoveFromCartAction | ViewCartAction | CheckoutCartAction;
 
+export type Cart = {
+   product : Product
+   orderQuantity: number
+   orderPrice: number
+}
+
 export interface CartState {
-    products : Product[]
+    carts : Cart[]
 }

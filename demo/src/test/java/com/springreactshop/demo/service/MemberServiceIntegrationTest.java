@@ -13,14 +13,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class MemberServiceTest {
+class MemberServiceIntegrationTest {
 
     @Autowired
     MemberService memberService;
 
     @Autowired
     MemberRepository memberRepository;
-
 
     static AuthDto.Request signupRequest;
     @BeforeAll

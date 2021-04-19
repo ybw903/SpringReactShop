@@ -25,9 +25,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto.Request productRequest,
+    public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto productRequest,
                                                       Errors errors) {
-        ProductDto.Response prouctResponse = productService.addProduct(productRequest);
+        ProductDto prouctResponse = productService.addProduct(productRequest);
         URI createdUri =linkTo(ProductController.class).slash(prouctResponse.getId()).toUri();
         ProductResource productResource = new ProductResource(prouctResponse);
         return ResponseEntity.created(createdUri).body(productResource);
@@ -35,15 +35,15 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<PagedModel<ProductResource>> productList(Pageable pageable,
-                                                                   PagedResourcesAssembler<ProductDto.Response> assembler) {
-        Page<ProductDto.Response> page =this.productService.productsPages(pageable);
+                                                                   PagedResourcesAssembler<ProductDto> assembler) {
+        Page<ProductDto> page =this.productService.productsPages(pageable);
         var pageResource = assembler.toModel(page, ProductResource::new);
         return ResponseEntity.ok(pageResource);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResource> getProduct(@PathVariable Long id) {
-        ProductDto.Response productResponse = this.productService.getProductResponseById(id);
+        ProductDto productResponse = this.productService.getProductResponseById(id);
 
         ProductResource productResource = new ProductResource(productResponse);
         return ResponseEntity.ok(productResource);
@@ -51,8 +51,8 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResource> updateProduct(@PathVariable Long id,
-                                                         @RequestBody ProductDto.Request productDto) {
-        ProductDto.Response productResponse = this.productService.update(id, productDto);
+                                                         @RequestBody ProductDto productDto) {
+        ProductDto productResponse = this.productService.update(id, productDto);
         ProductResource productResource = new ProductResource(productResponse);
         return ResponseEntity.ok(productResource);
     }

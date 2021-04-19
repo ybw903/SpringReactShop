@@ -93,7 +93,8 @@ class MemberControllerTest {
                     .andExpect(jsonPath("phone").exists())
                     .andDo(document("member/member-profile",
                             links(
-                                    linkWithRel("self").description("link to self")
+                                    linkWithRel("self").description("link to self"),
+                                    linkWithRel("update-user").description("link to update user")
                             ),
                             requestHeaders(
                                     headerWithName(HttpHeaders.ACCEPT).description("accept header"),
@@ -111,7 +112,8 @@ class MemberControllerTest {
                                     fieldWithPath("zipcode").description("zipcode of member"),
                                     fieldWithPath("street").description("street of member"),
                                     fieldWithPath("phone").description("phone of member"),
-                                    fieldWithPath("_links.self.href").description("link to self")
+                                    fieldWithPath("_links.self.href").description("link to self"),
+                                    fieldWithPath("_links.update-user.href").description("link to update use")
                             )
                     ));
 
@@ -140,7 +142,8 @@ class MemberControllerTest {
                 .andExpect(jsonPath("phone").exists())
                 .andDo(document("member/member-update",
                         links(
-                                linkWithRel("self").description("link to self")
+                                linkWithRel("self").description("link to self"),
+                                linkWithRel("update-user").description("link to update user")
                         ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("accept header"),
@@ -163,7 +166,8 @@ class MemberControllerTest {
                                 fieldWithPath("zipcode").description("zipcode of member"),
                                 fieldWithPath("street").description("street of member"),
                                 fieldWithPath("phone").description("phone of member"),
-                                fieldWithPath("_links.self.href").description("link to self")
+                                fieldWithPath("_links.self.href").description("link to self"),
+                                fieldWithPath("_links.update-user.href").description("link to update use")
                         )
                 ));
 

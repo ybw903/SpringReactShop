@@ -3,7 +3,6 @@ package com.springreactshop.demo.dto;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class AuthDto {
     @Data

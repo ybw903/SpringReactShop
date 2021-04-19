@@ -1,32 +1,28 @@
 import { ADD_TO_CART, CartActionTypes, CartState, REMOVE_FROM_CART, VIEW_CART } from "../types/cart";
 
 const initialState : CartState = {
-    products: [],
+    carts: [],
 }
 
 const cartReducer = (state = initialState, action: CartActionTypes): CartState => {
     switch(action.type) {
         case ADD_TO_CART:
-
-            let idx: number = state.products.findIndex(p=>p.id===action.product.id);
-            if(idx!==-1){
-                state.products[idx].orderQuantity+=1;
-                return {
-                    products: state.products
-                };
-            } else {
-                return {
-                    products: [...state.products, action.product],
-                };
-            }           
-             
+            return {
+                carts: [...state.carts,
+                    {
+                        product: action.product, 
+                        orderPrice:action.product.productPrice,
+                        orderQuantity: 1
+                    }
+                ]
+            }    
         case REMOVE_FROM_CART:
             return {
-                products: state.products.filter((_,index) => index!==action.location),
+                carts: state.carts.filter((_,index) => index!==action.location),
             };
         case VIEW_CART:
             return {
-                products: state.products,
+                carts: state.carts,
             };
         default:
             return state;

@@ -16,7 +16,7 @@ const Cart = () => {
             <Row>
                 <Col>
                 <CartItems isEdit={true}/>
-                <Link to="/checkout" style={{float:'right', padding:'1rem, 0,0,0'}}>
+                <Link to="/checkout" style={{float:'right', padding:'1rem'}}>
                     <Button variant="primary">Continue</Button>
                 </Link>
                 </Col>

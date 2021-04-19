@@ -38,28 +38,32 @@ class OrderServiceTest {
     public void 주문하기() throws Exception{
 
         //given
-        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
+        List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            OrderProductRequest orderProductRequest = generateProductRequest(i);
-            productRepository.save(orderProductRequest.toEntity());
-            orderProductRequests.add(orderProductRequest);
+            OrderProductDto orderProductDto = generateProductRequest(i);
+            productRepository.save(orderProductDto.getProductDto().toEntityWithId());
+            orderProductDtos.add(orderProductDto);
         }
         Member member = makeUser();
         Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, orderProductRequests);
+        OrderDto.Request orderRequest= OrderDto.Request.builder()
+                                            .username(member.getUsername())
+                                            .address(address)
+                                            .orderProducts(orderProductDtos)
+                                            .build();
 
         //when
-        Order order = orderService.order(orderRequest);
+        OrderDto.Response order = orderService.order(orderRequest);
 
         //then
-        assertThat(order.getMember().getUsername()).isEqualTo(member.getUsername());
+        assertThat(order.getMemberResponse().getUsername()).isEqualTo(member.getUsername());
         assertThat(order.getDelivery().getAddress().getPhone()).isEqualTo(address.getPhone());
         assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(address.getStreet());
         assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(address.getZipcode());
         assertThat(order.getDelivery().getDeliveryStatus()).isEqualTo(DeliveryStatus.READY);
-        assertThat(order.getOrderProducts().size()).isEqualTo(orderProductRequests.size());
+        assertThat(order.getOrderProducts().size()).isEqualTo(orderProductDtos.size());
         assertThat(order.getTotalPrice()).isEqualTo(
-                        (Integer) orderProductRequests.stream()
+                        (Integer) orderProductDtos.stream()
                                 .mapToInt(orderProductRequest -> orderProductRequest.getOrderPrice() * orderProductRequest.getOrderQuantity())
                                 .sum());
         assertThat(order.getStatus()).isEqualTo(OrderStatus.ORDER);
@@ -68,16 +72,21 @@ class OrderServiceTest {
     @Test
     public void 주문취소() throws Exception{
         //given
-        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
+        List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            OrderProductRequest orderProductRequest = generateProductRequest(i);
-            productRepository.save(orderProductRequest.toEntity());
-            orderProductRequests.add(orderProductRequest);
+            OrderProductDto orderProductDto = generateProductRequest(i);
+            productRepository.save(orderProductDto.getProductDto().toEntityWithId());
+            orderProductDtos.add(orderProductDto);
         }
         Member member = makeUser();
         Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
-        OrderRequest orderRequest = new OrderRequest(member.getUsername(),address, orderProductRequests);
-        Order order =  orderService.order(orderRequest);
+        OrderDto.Request orderRequest= OrderDto.Request.builder()
+                .username(member.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos)
+                .build();
+
+        OrderDto.Response order =  orderService.order(orderRequest);
 
         //when
         orderService.cancelOrder(order.getId());
@@ -108,14 +117,18 @@ class OrderServiceTest {
         return memberRepository.findByUsername("user").orElse(null);
     }
 
-    public OrderProductRequest generateProductRequest(int idx) {
+    public OrderProductDto generateProductRequest(int idx) {
 
-        return OrderProductRequest.builder()
-                .id((long) idx)
-                .productName("test"+idx)
-                .productDescription("no")
-                .productPrice(idx*100)
-                .productQuantity(999)
+        return OrderProductDto.builder()
+                .productDto(
+                        ProductDto.builder()
+                                .id((long)idx)
+                                .productName("test" + idx)
+                                .productDescription("no")
+                                .productPrice(idx*100)
+                                .productQuantity(999)
+                                .build()
+                )
                 .orderPrice(idx*100)
                 .orderQuantity(1)
                 .build();

@@ -42,7 +42,7 @@ class ProductServiceTest {
         given(productRepository.findAll(pageable)).willReturn(expectedPageOfProduct);
 
         //when
-        Page<ProductDto.Response> pageOfProduct =  productService.productsPages(pageable);
+        Page<ProductDto> pageOfProduct =  productService.productsPages(pageable);
 
         //then
         assertThat(pageOfProduct.getTotalElements()).isEqualTo(expectedPageOfProduct.getTotalElements());
@@ -51,14 +51,14 @@ class ProductServiceTest {
     @Test
     void 상품추가() {
         //given
-        ProductDto.Request productRequest = ProductDto.Request.builder().build();
+        ProductDto productRequest = ProductDto.builder().build();
         Product product = Product.builder().Id(0L).build();
         Product mockProduct = getMockProduct();
 
         given(productRepository.save(any(Product.class))).willReturn(mockProduct);
 
         //when
-        ProductDto.Response productResponse = productService.addProduct(productRequest);
+        ProductDto productResponse = productService.addProduct(productRequest);
 
         //then
         assertThat(productResponse.getId()).isEqualTo(product.getId());
@@ -93,7 +93,7 @@ class ProductServiceTest {
         given(productRepository.findById(0L)).willReturn(Optional.of(product));
 
         //when
-        ProductDto.Response productResponse  = productService.getProductResponseById(0L);
+        ProductDto productResponse  = productService.getProductResponseById(0L);
 
         //then
         assertThat(productResponse.getId()).isEqualTo(product.getId());
@@ -103,14 +103,14 @@ class ProductServiceTest {
     void 상품갱신() {
         //given
         Product product = Product.builder().Id(0L).build();
-        ProductDto.Request productRequest = ProductDto.Request
+        ProductDto productRequest = ProductDto
                                                 .builder()
                                                 .productName("testName")
                                                 .productDescription("testDescription")
                                                 .productPrice(100)
                                                 .productQuantity(100)
                                                 .build();
-        ProductDto.Response expected = ProductDto.Response
+        ProductDto expected = ProductDto
                                                 .builder()
                                                 .id(0L)
                                                 .productName("testName")
@@ -121,7 +121,7 @@ class ProductServiceTest {
         given(productRepository.findById(0L)).willReturn(Optional.of(product));
 
         //when
-        ProductDto.Response productResponse = productService.update(0L, productRequest);
+        ProductDto productResponse = productService.update(0L, productRequest);
 
         //then
         assertThat(productResponse.getId()).isEqualTo(expected.getId());

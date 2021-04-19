@@ -8,7 +8,7 @@ import { Address } from '../types/checkout';
 
 const mapState = ({authState, cartState}: RootState) =>({
     user : authState.user,
-    products : cartState.products
+    carts : cartState.carts
 });
 
 const mapDispatch = {
@@ -26,7 +26,7 @@ type Props = PropsFromRedux& {
 }
 
 
-const CheckoutForm = ({user, products}:Props) => {
+const CheckoutForm = ({user, carts}:Props) => {
 
     const username = user?.username?user?.username:'';
     const [phone, setPhone] = useState(user?.phone?user?.phone:'');
@@ -42,7 +42,7 @@ const CheckoutForm = ({user, products}:Props) => {
             street,
             phone
         };
-        order(username,address,products)
+        order(username,address,carts)
         .then((res)=>console.log(res))
         .catch((err) =>{
             console.log(err);

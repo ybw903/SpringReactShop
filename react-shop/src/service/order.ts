@@ -1,13 +1,15 @@
 import axios from "axios"
+import { Cart } from "../types/cart"
 import { Address } from "../types/checkout"
-import { Product } from "../types/products"
 
-export const order = (username: string, address:Address, products: Product[]) => {
+export const order = (username: string, address:Address, carts: Cart[]) => {
 
-    const productList = products.map(el => {
+    //TODO : need json into product
+    const productList = carts.map(el => {
         return {
             ...el,
-            orderPrice: el.productPrice
+            orderPrice: el.orderPrice,
+            orderQuantity: el.orderQuantity
         }
     })
     return axios.post("/api/orders",{username, address, productList});

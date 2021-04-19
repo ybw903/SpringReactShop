@@ -2,13 +2,15 @@ package com.springreactshop.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
+import com.springreactshop.demo.dto.OrderDto;
+import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.security.JwtTokenUtil;
 import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.dto.OrderRequest;
-import com.springreactshop.demo.dto.OrderProductRequest;
+import com.springreactshop.demo.dto.OrderProductDto;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import com.springreactshop.demo.service.OrderService;
 import org.junit.jupiter.api.AfterEach;
@@ -92,14 +94,17 @@ class OrderControllerTest {
         String token = jwtTokenUtil.generateToken(userDetails);
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
 
-        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
+        List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            OrderProductRequest orderProductRequest = generateProductRequest(i);
-            productRepository.save(orderProductRequest.toEntity());
-            orderProductRequests.add(orderProductRequest);
+            OrderProductDto orderProductDto = generateProductRequest(i);
+            productRepository.save(orderProductDto.getProductDto().toEntityWithOutId());
+            orderProductDtos.add(orderProductDto);
         }
-
-        OrderRequest orderRequest = new OrderRequest(userDetails.getUsername(),address, orderProductRequests);
+        OrderDto.Request orderRequest= OrderDto.Request.builder()
+                .username(userDetails.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos)
+                .build();
 
         //when&then
         this.mockMvc.perform(post("/api/orders")
@@ -159,15 +164,19 @@ class OrderControllerTest {
         String token = jwtTokenUtil.generateToken(userDetails);
 
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
-        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
+        List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
-            OrderProductRequest orderProductRequest = generateProductRequest(i);
-            productRepository.save(orderProductRequest.toEntity());
-            orderProductRequests.add(orderProductRequest);
+            OrderProductDto orderProductDto = generateProductRequest(i);
+            productRepository.save(orderProductDto.getProductDto().toEntityWithOutId());
+            orderProductDtos.add(orderProductDto);
         }
 
-        OrderRequest orderRequest = new OrderRequest("testUser",address, orderProductRequests);
-        Order addedOrder = orderService.order(orderRequest);
+        OrderDto.Request orderRequest= OrderDto.Request.builder()
+                .username(userDetails.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos)
+                .build();
+        OrderDto.Response addedOrder = orderService.order(orderRequest);
         Long orderId = addedOrder.getId();
 
         //when&then
@@ -221,19 +230,31 @@ class OrderControllerTest {
         String token = jwtTokenUtil.generateToken(userDetails);
         Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
 
-        List<OrderProductRequest> orderProductRequests = new ArrayList<>();
+        List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<10; i++) {
-            OrderProductRequest orderProductRequest = generateProductRequest(i);
-            productRepository.save(orderProductRequest.toEntity());
-            orderProductRequests.add(orderProductRequest);
+            OrderProductDto orderProductDto = generateProductRequest(i);
+            productRepository.save(orderProductDto.getProductDto().toEntityWithOutId());
+            orderProductDtos.add(orderProductDto);
         }
 
-        OrderRequest orderRequest1 = new OrderRequest("testUser",address, orderProductRequests.subList(0,3));
-        OrderRequest orderRequest2 = new OrderRequest("testUser",address, orderProductRequests.subList(4,6));
-        OrderRequest orderRequest3 = new OrderRequest("testUser",address, orderProductRequests.subList(7,9));
-        Order addedOrder1 = orderService.order(orderRequest1);
-        Order addedOrder2 = orderService.order(orderRequest2);
-        Order addedOrder3 = orderService.order(orderRequest3);
+        OrderDto.Request orderRequest1 = OrderDto.Request.builder()
+                .username(userDetails.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos.subList(0,3))
+                .build();
+        OrderDto.Request orderRequest2 = OrderDto.Request.builder()
+                .username(userDetails.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos.subList(4,6))
+                .build();
+        OrderDto.Request orderRequest3 = OrderDto.Request.builder()
+                .username(userDetails.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos.subList(7,9))
+                .build();
+        OrderDto.Response addedOrder1 = orderService.order(orderRequest1);
+        OrderDto.Response addedOrder2 = orderService.order(orderRequest2);
+        OrderDto.Response addedOrder3 = orderService.order(orderRequest3);
 
         //when&then
         this.mockMvc.perform(get("/api/orders?page=0&size=10&sort=orderDate,asc")
@@ -276,14 +297,18 @@ class OrderControllerTest {
 
     }
 
-    public OrderProductRequest generateProductRequest(int idx) {
+    public OrderProductDto generateProductRequest(int idx) {
 
-        return OrderProductRequest.builder()
-                .id((long) idx)
-                .productName("test"+idx)
-                .productDescription("no")
-                .productPrice(idx*100)
-                .productQuantity(999)
+        return OrderProductDto.builder()
+                .productDto(
+                        ProductDto.builder()
+                                .id((long)idx)
+                                .productName("test" + idx)
+                                .productDescription("no")
+                                .productPrice(idx*100)
+                                .productQuantity(999)
+                                .build()
+                )
                 .orderPrice(idx*100)
                 .orderQuantity(1)
                 .build();

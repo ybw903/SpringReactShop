@@ -19,7 +19,7 @@ public class MemberResource extends RepresentationModel<MemberResource> {
         this.street = memberDtoInfoResponse.getStreet();
         this.phone = memberDtoInfoResponse.getPhone();
         add(linkTo(MemberController.class).slash(this.username).withSelfRel());
-        add(linkTo(MemberController.class).withRel("update-user"));
+        add(linkTo(MemberController.class).slash(this.username).withRel("update-user"));
 
     }
 }

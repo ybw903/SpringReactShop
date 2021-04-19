@@ -1,17 +1,12 @@
 package com.springreactshop.demo.controller;
 
-import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.resource.MemberResource;
 import com.springreactshop.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequiredArgsConstructor

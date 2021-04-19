@@ -18,7 +18,7 @@ public class OrderRequest {
     @JsonProperty("address")
     private Address address;
 
-    private List<OrderProductRequest> productList;
+    private List<OrderProductDto> productList;
 
 }
 

@@ -5,7 +5,7 @@ import { removeFromCart } from '../actions/cart';
 import { RootState } from '../store';
 
 const mapState = ({cartState}: RootState) =>({
-    products: cartState.products
+    carts: cartState.carts
 });
 
 const mapDispatch = {
@@ -23,15 +23,15 @@ type Props = PropsFromRedux& {
     isEdit: boolean
 }
 
-const CartItems = ({isEdit, products, onRemoveFromCart}: Props) => {
-    const cartTotal = products.reduce((total,prod) =>total+prod.productPrice*prod.orderQuantity,0);
+const CartItems = ({isEdit, carts, onRemoveFromCart}: Props) => {
+    const cartTotal = carts.reduce((total,el) =>total+el.orderPrice*el.orderQuantity,0);
     return(
         <ListGroup>
-            { products.map((product, i) =>(
+            { carts.map((cart, i) =>(
                 <ListGroup.Item key={i}>
-                    {product.productName}
+                    {cart.product.productName}
                     
-                    <span className="cart-price">${product.productPrice} <span className="text-muted">{product.orderQuantity}개</span>
+                    <span className="cart-price">${cart.orderPrice} <span className="text-muted">{cart.orderQuantity}개</span>
                     {isEdit? <span className ="fa fa-times text-danger remove-item" onClick={()=> onRemoveFromCart(i)}></span>:<></>}
                     </span>
                     

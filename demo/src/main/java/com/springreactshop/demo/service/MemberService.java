@@ -6,7 +6,6 @@ import com.springreactshop.demo.dto.AuthDto;
 import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.dto.MemberDetails;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,16 +32,19 @@ public class MemberService {
     }
 
     public MemberDto.InfoResponse getMemberProfileByUserName(String username) {
-        Optional<Member> optionalMember = memberRepository.findByUsername(username);
-        Member member = optionalMember.orElseThrow(()->new UsernameNotFoundException(username));
+        Member member = findMemberByUsername(username);
         return MemberDto.InfoResponse.of(member);
     }
 
     public MemberDto.InfoResponse updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
-        Optional<Member> optionalMember = memberRepository.findByUsername(username);
-        Member member = optionalMember.orElseThrow(()-> new UsernameNotFoundException(username));
+        Member member = findMemberByUsername(username);
         member.updateMember(memberUpdateAddressRequest);
-        return MemberDto.InfoResponse.of(member); //>???
+        return MemberDto.InfoResponse.of(member);
+    }
+
+    public Member findMemberByUsername(String username) {
+        Optional<Member> optionalMember = memberRepository.findByUsername(username);
+        return optionalMember.orElseThrow(()-> new UsernameNotFoundException(username));
     }
 
     public MemberDetails getUserByUsername(String username){

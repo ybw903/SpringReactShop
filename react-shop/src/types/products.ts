@@ -4,5 +4,4 @@ export type Product = {
     productPrice: number;
     productQuantity: number;
     id:number;
-    orderQuantity:number
 };

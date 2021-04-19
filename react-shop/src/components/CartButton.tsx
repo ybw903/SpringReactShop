@@ -11,7 +11,7 @@ const mapDispatch = {
 };
 
 const mapState = ({cartState}: RootState) => ({
-    products: cartState.products
+    carts: cartState.carts
 });
 
 const connector = connect(
@@ -21,7 +21,7 @@ const connector = connect(
 
 type Props = ConnectedProps<typeof connector> & RouteComponentProps;
 
-const CartButton = ({onViewCart, products, history}: Props) => {
+const CartButton = ({onViewCart, carts, history}: Props) => {
     return(
         <Button onClick={()=>onViewCart(history)}>My Cart</Button>
     )

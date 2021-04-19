@@ -21,7 +21,7 @@ public class ProductResource extends RepresentationModel<ProductResource> {
 
     private final int productQuantity;
 
-    public ProductResource(ProductDto.Response product) {
+    public ProductResource(ProductDto product) {
         this.Id = product.getId();
         this.productName = product.getProductName();
         this.productDescription = product.getProductDescription();
@@ -29,6 +29,6 @@ public class ProductResource extends RepresentationModel<ProductResource> {
         this.productQuantity = product.getProductQuantity();
         add(linkTo(ProductController.class).slash(product.getId()).withSelfRel());
         add(linkTo(ProductController.class).withRel("productsList"));
-        add(linkTo(ProductController.class).withRel("update-product"));
+        add(linkTo(ProductController.class).slash(product.getId()).withRel("update-product"));
     }
 }
