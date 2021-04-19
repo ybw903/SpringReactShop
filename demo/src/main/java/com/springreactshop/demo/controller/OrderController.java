@@ -37,6 +37,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResource> order(@RequestBody OrderDto.Request orderRequest) {
+        log.info(orderRequest.toString());
         OrderDto.Response orderResponse = orderService.order(orderRequest);
         URI createdUri =linkTo(OrderController.class).slash(orderResponse.getId()).toUri();
         OrderResource orderResource = new OrderResource(orderResponse);

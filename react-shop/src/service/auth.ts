@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { User } from '../types/user';
 
 export const authLogin =  (username: string, password: string) => {
     return axios.post("/api/authenticate/login",{username, password})
@@ -23,4 +24,9 @@ export const setUpAxiosInterceptors = () => {
 
 export const authSignUp = (username: string, password: string) => {
     return axios.post("/api/authenticate/signup", {username, password})
+}
+
+export const memberUpdate = (user: User) => {
+    console.log({...user});
+    return axios.put(`/api/members/${user.username}`,{...user} )
 }

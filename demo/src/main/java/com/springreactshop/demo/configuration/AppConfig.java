@@ -30,6 +30,8 @@ public class AppConfig {
                             .build();
                     productService.addProduct(productRequest);
                 }
+
+
             }
         };
     }

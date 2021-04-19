@@ -25,6 +25,7 @@ public class OrderDto {
         @JsonProperty("address")
         private Address address;
 
+        @JsonProperty("productList")
         private List<OrderProductDto> orderProducts;
     }
 

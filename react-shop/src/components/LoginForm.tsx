@@ -42,6 +42,7 @@ function LoginForm({authState, onLogin, history}: Props) {
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(validate(username, password));
         onLogin(username, password, history);
         setForm({
             username: '',
@@ -63,10 +64,18 @@ function LoginForm({authState, onLogin, history}: Props) {
                 <input type="password" className="form-control" placeholder="비밀번호를 입력하세요" 
                 name="password" value={password} onChange={handleChange}/>
             </div>
+            <div className="text-center">
+                
+            </div>
             <Button type="submit" className="btn btn-primary btn-lg btn-block">로그인</Button>
             <p className="text-center"><Link to="/registraition">회원가입하러가기</Link></p>
         </Form>
     );
+}
+
+function validate(username: string, password: string) {
+    if(username.length===0||password.length===0)
+        return "err";
 }
 
 export default withRouter(connector(LoginForm));

@@ -17,6 +17,7 @@ import java.util.List;
 @Builder
 public class OrderProductDto {
 
+    @JsonProperty("product")
     private ProductDto productDto;
 
     private int orderPrice;

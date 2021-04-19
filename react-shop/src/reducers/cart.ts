@@ -8,6 +8,8 @@ const initialState : CartState = {
 const cartReducer = (state = initialState, action: CartActionTypes): CartState => {
     switch(action.type) {
         case ADD_TO_CART:
+            if(state.carts.some(v=>v.product.id === action.product.id))
+                return {carts: state.carts};
             return {
                 carts: [...state.carts,
                     {
@@ -16,7 +18,7 @@ const cartReducer = (state = initialState, action: CartActionTypes): CartState =
                         orderQuantity: 1
                     }
                 ]
-            }    
+            };
         case REMOVE_FROM_CART:
             return {
                 carts: state.carts.filter((_,index) => index!==action.location),

@@ -88,6 +88,7 @@ export const RegisterFailure = (error: any):AuthActionTypes => {
 }
 
 export const LoadUser = (user: User) :AuthActionTypes => {
+    setUpAxiosInterceptors();
     return {
         type: LOAD_USER,
         user: user

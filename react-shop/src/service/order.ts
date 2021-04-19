@@ -8,9 +8,9 @@ export const order = (username: string, address:Address, carts: Cart[]) => {
     const productList = carts.map(el => {
         return {
             ...el,
-            orderPrice: el.orderPrice,
-            orderQuantity: el.orderQuantity
         }
     })
+
+    console.log({username,address,productList});
     return axios.post("/api/orders",{username, address, productList});
 }
