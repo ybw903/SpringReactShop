@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
-import { removeFromCart } from '../actions/cart';
+import { changeQuantityOfCart, removeFromCart } from '../actions/cart';
 import { RootState } from '../store';
 
 const mapState = ({cartState}: RootState) =>({
@@ -10,6 +10,7 @@ const mapState = ({cartState}: RootState) =>({
 
 const mapDispatch = {
     onRemoveFromCart: (location: number) => removeFromCart(location),
+    onChangeQuantityOfCart: (location:number, isAddOrMinus: boolean) => changeQuantityOfCart(location, isAddOrMinus)
 }
 
 const connector = connect(
@@ -23,7 +24,7 @@ type Props = PropsFromRedux& {
     isEdit: boolean
 }
 
-const CartItems = ({isEdit, carts, onRemoveFromCart}: Props) => {
+const CartItems = ({isEdit, carts, onRemoveFromCart, onChangeQuantityOfCart}: Props) => {
     const cartTotal = carts.reduce((total,el) =>total+el.orderPrice*el.orderQuantity,0);
     return(
         <ListGroup>
@@ -31,7 +32,10 @@ const CartItems = ({isEdit, carts, onRemoveFromCart}: Props) => {
                 <ListGroup.Item key={i}>
                     {cart.product.productName}
                     
-                    <span className="cart-price">${cart.orderPrice} <span className="text-muted">{cart.orderQuantity}개</span>
+                    <span className="cart-price">${cart.orderPrice+'  '}
+                    <span className="fa fa-minus-circle" onClick={()=>onChangeQuantityOfCart(i,false)}></span>
+                    <span className="text-muted">{'  '+ cart.orderQuantity}개 </span>
+                    <span className="fa fa-plus-circle" onClick={()=>onChangeQuantityOfCart(i,true)}></span>
                     {isEdit? <span className ="fa fa-times text-danger remove-item" onClick={()=> onRemoveFromCart(i)}></span>:<></>}
                     </span>
                     
