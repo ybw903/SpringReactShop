@@ -20,12 +20,10 @@ public class OrderProduct {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    @JsonIgnore
     private Order order;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Product product;
 
     private int orderPrice;

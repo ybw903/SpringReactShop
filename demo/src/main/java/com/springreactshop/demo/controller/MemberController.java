@@ -31,5 +31,9 @@ public class MemberController {
         return ResponseEntity.ok().body(memberResource);
     }
 
+    @GetMapping("/{username}/orders")
+    public ResponseEntity<?> getAllOrderByUserId(@PathVariable String username) {
+        return ResponseEntity.ok(null);
+    }
 
 }

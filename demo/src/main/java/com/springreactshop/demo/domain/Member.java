@@ -31,7 +31,6 @@ public class Member {
     private MemberRole roles;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    @JsonIgnore
     public List<Order> orders = new ArrayList<>();
 
     @Builder

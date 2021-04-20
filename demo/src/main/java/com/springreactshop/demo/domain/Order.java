@@ -21,7 +21,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Member member;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -34,7 +33,6 @@ public class Order {
 //    private Payment payment;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

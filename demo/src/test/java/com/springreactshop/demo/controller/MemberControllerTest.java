@@ -172,4 +172,20 @@ class MemberControllerTest {
                 ));
 
     }
+    
+    @Test
+    public void 회원주문목록() throws Exception {
+        //given
+        UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("testUser");
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        //when&then
+        this.mockMvc.perform(get("/api/members/{username}/orders","testUser")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token)
+                .accept(MediaTypes.HAL_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+    }
 }

@@ -14,3 +14,8 @@ export const order = (username: string, address:Address, carts: Cart[]) => {
     console.log({username,address,productList});
     return axios.post("/api/orders",{username, address, productList});
 }
+
+export const getOrders = (username: string) => {
+
+    return axios.get(`/api/members/${username}/orders`);
+}
