@@ -51,13 +51,13 @@ class MemberServiceIntegrationTest {
                 = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
 
         //When
-        MemberResource updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
+        Member updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
 
         //Then
         assertThat(updatedMember.getUsername()).isEqualTo("testUserC");
-        assertThat(updatedMember.getZipcode()).isEqualTo("000000");
-        assertThat(updatedMember.getStreet()).isEqualTo("서울시강남구테헤란로");
-        assertThat(updatedMember.getPhone()).isEqualTo("012-345-6789");
+        assertThat(updatedMember.getAddress().getZipcode()).isEqualTo("000000");
+        assertThat(updatedMember.getAddress().getStreet()).isEqualTo("서울시강남구테헤란로");
+        assertThat(updatedMember.getAddress().getPhone()).isEqualTo("012-345-6789");
     }
 
     @Test
@@ -66,9 +66,9 @@ class MemberServiceIntegrationTest {
         String username = memberService.signUpUser(signupRequest);
 
         //When
-        MemberResource memberProfile = memberService.getMemberProfileByUserName(username);
+        Member member = memberService.getMemberProfileByUserName(username);
 
         //Then
-        assertThat(memberProfile.getUsername()).isEqualTo(signupRequest.getUsername());
+        assertThat(member.getUsername()).isEqualTo(signupRequest.getUsername());
     }
 }

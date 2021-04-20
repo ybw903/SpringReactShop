@@ -108,7 +108,7 @@ class OrderServiceTest {
         AuthDto.Request signupRequest = new AuthDto.Request("user","password");
 
         memberService.signUpUser(signupRequest);
-        MemberResource member = memberService.getMemberProfileByUserName("user");
+        Member member = memberService.getMemberProfileByUserName("user");
         MemberDto.AddressUpdateRequest memberUpdateAddressRequest = MemberDto.AddressUpdateRequest.builder()
                 .phone("010-1234-5678")
                 .zipcode("000000")

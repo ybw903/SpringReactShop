@@ -2,6 +2,7 @@ package com.springreactshop.demo.service;
 
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
+import com.springreactshop.demo.domain.Order;
 import com.springreactshop.demo.dto.AuthDto;
 import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.dto.OrderDto;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,23 +36,20 @@ public class MemberService {
         return memberRepository.save(member).getUsername();
     }
 
-    public MemberResource getMemberProfileByUserName(String username) {
+    public Member getMemberProfileByUserName(String username) {
         Member member = findMemberByUsername(username);
-        return new MemberResource(member);
+        return member;
     }
 
-    public MemberResource updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
+    public Member updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
         Member member = findMemberByUsername(username);
         member.updateMember(memberUpdateAddressRequest);
-        return new MemberResource(member);
+        return member;
     }
 
-    public MemberDto.Orders getOrders(String username) {
-        return new MemberDto.Orders(
-                findMemberByUsername(username).getOrders().stream()
-                                        .map(OrderDto.Response::of)
-                                        .collect(Collectors.toList())
-        );
+    public List<Order> getOrders(String username) {
+        Member member = findMemberByUsername(username);
+        return member.getOrders();
     }
 
     public Member findMemberByUsername(String username) {

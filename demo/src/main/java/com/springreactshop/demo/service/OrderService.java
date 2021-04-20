@@ -33,7 +33,9 @@ public class OrderService {
         orderRequest.getOrderProducts().stream()
                 .map(orderProductDto ->
                 OrderProduct.createOrderProduct(
-                        orderProductDto.getProductInfo().toEntity(), orderProductDto.getOrderPrice(), orderProductDto.getOrderQuantity()))
+                        orderProductDto.getProductInfo().toEntity(),
+                        orderProductDto.getOrderPrice(),
+                        orderProductDto.getOrderQuantity()))
                 .collect(Collectors.toList());
 
         Order order = Order.createOrder(member, delivery, orderProducts);

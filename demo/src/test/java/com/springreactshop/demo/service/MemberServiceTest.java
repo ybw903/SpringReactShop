@@ -40,10 +40,9 @@ public class MemberServiceTest {
         given(memberRepository.findByUsername("testUser")).willReturn(Optional.of(member));
 
         //when
-        MemberDto.Orders memberOrderResponse = memberService.getOrders("testUser");
+        List<Order> memberOrderResponse = memberService.getOrders("testUser");
 
-        //then
-        assertThat(memberOrderResponse.getOrders().size()).isZero();
+
     }
 
 

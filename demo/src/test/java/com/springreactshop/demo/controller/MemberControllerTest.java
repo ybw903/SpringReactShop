@@ -2,12 +2,20 @@ package com.springreactshop.demo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springreactshop.demo.config.RestDocsConfiguration;
+import com.springreactshop.demo.domain.Address;
+import com.springreactshop.demo.domain.Order;
 import com.springreactshop.demo.dto.MemberDto;
+import com.springreactshop.demo.dto.OrderDto;
+import com.springreactshop.demo.dto.OrderProductDto;
+import com.springreactshop.demo.dto.ProductDto;
+import com.springreactshop.demo.repository.OrderRepository;
+import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.security.JwtTokenUtil;
 import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.service.JwtMemberDetailService;
+import com.springreactshop.demo.service.OrderService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +29,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
@@ -57,6 +68,11 @@ class MemberControllerTest {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @BeforeEach
     public void 회원설정() {
@@ -179,6 +195,21 @@ class MemberControllerTest {
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("testUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
+        Address address = new Address("000000","서울시강남구테헤란로", "012-345-6789");
+
+        List<OrderProductDto> orderProductDtos = new ArrayList<>();
+        for(int i =1; i<4; i++) {
+            OrderProductDto orderProductDto = generateProductRequest(i);
+            productRepository.save(orderProductDto.getProductInfo().toEntity());
+            orderProductDtos.add(orderProductDto);
+        }
+        OrderDto.Request orderRequest= OrderDto.Request.builder()
+                .username(userDetails.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos)
+                .build();
+        orderService.order(orderRequest);
+
         //when&then
         this.mockMvc.perform(get("/api/members/{username}/orders","testUser")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -187,5 +218,22 @@ class MemberControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
+    }
+
+    public OrderProductDto generateProductRequest(int idx) {
+
+        return OrderProductDto.builder()
+                .productInfo(
+                        ProductDto.Info.builder()
+                                .id((long)idx)
+                                .productName("test" + idx)
+                                .productDescription("no")
+                                .productPrice(idx*100)
+                                .productQuantity(999)
+                                .build()
+                )
+                .orderPrice(idx*100)
+                .orderQuantity(1)
+                .build();
     }
 }
