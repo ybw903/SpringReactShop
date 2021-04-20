@@ -2,8 +2,8 @@ import { Page } from "../types/page";
 import { Product } from "../types/products";
 import { ProductPage } from "../types/productsPage";
 
-export const getProducts = async (page:Number): Promise<ProductPage> => {
-    const response = await fetch(`/api/products?page=${page}&size=16`);
+export const getProducts = async (page:number, sortedBy:string): Promise<ProductPage> => {
+    const response = await fetch(`/api/products?page=${page}&size=16&sort=${sortedBy},desc`);
     const response_data = await response.json();
     const products :Product[] = await response_data._embedded.productResources;
     const pages: Page = await response_data.page;

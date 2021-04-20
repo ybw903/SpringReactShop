@@ -52,4 +52,20 @@ class GlobalExceptionHandlerTest {
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    void 존재하지_않는_상품_조회() throws Exception {
+        //given
+        UserDetails userDetails = userDetailsService.loadUserByUsername("user_id");
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+        ResultActions resultActions = this.mockMvc.perform(get("/api/products/99999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + token)
+                .accept(MediaTypes.HAL_JSON));
+
+        resultActions
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
 }

@@ -29,7 +29,7 @@ const ProductGrid =({productList, columnCount =4}: ProductGridProps) => {
     productRows.push(productColumns);
 
     return(
-        <Container>
+        <>
           { productRows.map((productColumn, i) => {
         return (
           <Row key={i}>
@@ -42,7 +42,7 @@ const ProductGrid =({productList, columnCount =4}: ProductGridProps) => {
             })}
           </Row>);
       })}
-        </Container>
+        </>
     )
 }
 

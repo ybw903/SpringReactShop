@@ -35,7 +35,7 @@ const ProductPagination = ({page, setPage, pageSize}:pageProps) => {
     }
 
     return(
-        <Pagination className="justify-content-center">
+        <Pagination className="justify-content-center" style={{padding:'1rem'}}> 
                 <Pagination.First onClick={pageBefore} />
                 {
                     pageArr.map(
