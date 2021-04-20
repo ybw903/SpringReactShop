@@ -5,6 +5,7 @@ import com.springreactshop.demo.domain.Product;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 public class MemberDto {
     @Data
@@ -38,5 +39,12 @@ public class MemberDto {
         private String street;
         @NotEmpty
         private String phone;
+    }
+
+    @Data @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Orders{
+        private List<OrderDto.Response> orders;
     }
 }

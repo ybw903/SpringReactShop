@@ -4,6 +4,7 @@ import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.MemberRole;
 import com.springreactshop.demo.dto.AuthDto;
 import com.springreactshop.demo.dto.MemberDto;
+import com.springreactshop.demo.dto.OrderDto;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.dto.MemberDetails;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -42,10 +44,20 @@ public class MemberService {
         return MemberDto.InfoResponse.of(member);
     }
 
+    public MemberDto.Orders getOrder(String username) {
+        return new MemberDto.Orders(
+                findMemberByUsername(username).getOrders().stream()
+                                        .map(OrderDto.Response::of)
+                                        .collect(Collectors.toList())
+        );
+    }
+
     public Member findMemberByUsername(String username) {
         Optional<Member> optionalMember = memberRepository.findByUsername(username);
         return optionalMember.orElseThrow(()-> new UsernameNotFoundException(username));
     }
+
+
 
     public MemberDetails getUserByUsername(String username){
         Optional<Member> optionalMember = memberRepository.findByUsername(username);
@@ -67,5 +79,6 @@ public class MemberService {
         memberDetails.setRole(role);
         return memberDetails;
     }
+
 
 }

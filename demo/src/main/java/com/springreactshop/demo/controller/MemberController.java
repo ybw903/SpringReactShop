@@ -32,8 +32,9 @@ public class MemberController {
     }
 
     @GetMapping("/{username}/orders")
-    public ResponseEntity<?> getAllOrderByUserId(@PathVariable String username) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<MemberDto.Orders> getAllOrderByUserId(@PathVariable String username) {
+        MemberDto.Orders meberOrders = memberService.getOrder(username);
+        return ResponseEntity.ok(meberOrders);
     }
 
 }
