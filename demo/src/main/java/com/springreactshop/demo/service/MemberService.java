@@ -7,6 +7,7 @@ import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.dto.OrderDto;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.dto.MemberDetails;
+import com.springreactshop.demo.resource.MemberResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,18 +34,18 @@ public class MemberService {
         return memberRepository.save(member).getUsername();
     }
 
-    public MemberDto.InfoResponse getMemberProfileByUserName(String username) {
+    public MemberResource getMemberProfileByUserName(String username) {
         Member member = findMemberByUsername(username);
-        return MemberDto.InfoResponse.of(member);
+        return new MemberResource(member);
     }
 
-    public MemberDto.InfoResponse updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
+    public MemberResource updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
         Member member = findMemberByUsername(username);
         member.updateMember(memberUpdateAddressRequest);
-        return MemberDto.InfoResponse.of(member);
+        return new MemberResource(member);
     }
 
-    public MemberDto.Orders getOrder(String username) {
+    public MemberDto.Orders getOrders(String username) {
         return new MemberDto.Orders(
                 findMemberByUsername(username).getOrders().stream()
                                         .map(OrderDto.Response::of)

@@ -1,7 +1,6 @@
 package com.springreactshop.demo.service;
 
-import com.springreactshop.demo.domain.Member;
-import com.springreactshop.demo.domain.Order;
+import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.dto.OrderDto;
 import com.springreactshop.demo.repository.MemberRepository;
@@ -12,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class MemberServiceTest {
@@ -39,7 +40,7 @@ public class MemberServiceTest {
         given(memberRepository.findByUsername("testUser")).willReturn(Optional.of(member));
 
         //when
-        MemberDto.Orders memberOrderResponse = memberService.getOrder("testUser");
+        MemberDto.Orders memberOrderResponse = memberService.getOrders("testUser");
 
         //then
         assertThat(memberOrderResponse.getOrders().size()).isZero();

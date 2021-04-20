@@ -4,6 +4,7 @@ import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.exception.ProductNotFoundException;
 import com.springreactshop.demo.repository.ProductRepository;
+import com.springreactshop.demo.resource.ProductResource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,10 @@ class ProductServiceTest {
 
     @Mock
     private ProductRepository productRepository;
+
+    @Mock
+    private PagedResourcesAssembler<Product> assembler;
+
     @InjectMocks
     private ProductService productService;
 
@@ -42,26 +49,26 @@ class ProductServiceTest {
         given(productRepository.findAll(pageable)).willReturn(expectedPageOfProduct);
 
         //when
-        Page<ProductDto> pageOfProduct =  productService.productsPages(pageable);
+        Page<Product> products = productService.productsPages(pageable);
 
         //then
-        assertThat(pageOfProduct.getTotalElements()).isEqualTo(expectedPageOfProduct.getTotalElements());
+        assertThat(products.getTotalElements()).isEqualTo(expectedPageOfProduct.getTotalElements());
     }
 
     @Test
     void 상품추가() {
         //given
-        ProductDto productRequest = ProductDto.builder().build();
+        ProductDto.Request productRequest = ProductDto.Request.builder().build();
         Product product = Product.builder().Id(0L).build();
         Product mockProduct = getMockProduct();
 
         given(productRepository.save(any(Product.class))).willReturn(mockProduct);
 
         //when
-        ProductDto productResponse = productService.addProduct(productRequest);
+        Product ActualProduct = productService.addProduct(productRequest);
 
         //then
-        assertThat(productResponse.getId()).isEqualTo(product.getId());
+        assertThat(ActualProduct.getId()).isEqualTo(product.getId());
     }
 
     @Test
@@ -93,24 +100,24 @@ class ProductServiceTest {
         given(productRepository.findById(0L)).willReturn(Optional.of(product));
 
         //when
-        ProductDto productResponse  = productService.getProductResponseById(0L);
+        Product actualProduct = productService.getProductResponseById(0L);
 
         //then
-        assertThat(productResponse.getId()).isEqualTo(product.getId());
+        assertThat(actualProduct.getId()).isEqualTo(product.getId());
     }
 
     @Test
     void 상품갱신() {
         //given
         Product product = Product.builder().Id(0L).build();
-        ProductDto productRequest = ProductDto
+        ProductDto.Request productRequest = ProductDto.Request
                                                 .builder()
                                                 .productName("testName")
                                                 .productDescription("testDescription")
                                                 .productPrice(100)
                                                 .productQuantity(100)
                                                 .build();
-        ProductDto expected = ProductDto
+            ProductDto.Info expected = ProductDto.Info
                                                 .builder()
                                                 .id(0L)
                                                 .productName("testName")
@@ -121,14 +128,14 @@ class ProductServiceTest {
         given(productRepository.findById(0L)).willReturn(Optional.of(product));
 
         //when
-        ProductDto productResponse = productService.update(0L, productRequest);
+        Product actualProduct = productService.update(0L, productRequest);
 
         //then
-        assertThat(productResponse.getId()).isEqualTo(expected.getId());
-        assertThat(productResponse.getProductName()).isEqualTo(expected.getProductName());
-        assertThat(productResponse.getProductDescription()).isEqualTo(expected.getProductDescription());
-        assertThat(productResponse.getProductPrice()).isEqualTo(expected.getProductPrice());
-        assertThat(productResponse.getProductQuantity()).isEqualTo(expected.getProductQuantity());
+        assertThat(actualProduct.getId()).isEqualTo(expected.getId());
+        assertThat(actualProduct.getProductName()).isEqualTo(expected.getProductName());
+        assertThat(actualProduct.getProductDescription()).isEqualTo(expected.getProductDescription());
+        assertThat(actualProduct.getProductPrice()).isEqualTo(expected.getProductPrice());
+        assertThat(actualProduct.getProductQuantity()).isEqualTo(expected.getProductQuantity());
     }
 
     private Product getMockProduct() {

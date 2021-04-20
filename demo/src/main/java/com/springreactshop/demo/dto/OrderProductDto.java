@@ -18,7 +18,7 @@ import java.util.List;
 public class OrderProductDto {
 
     @JsonProperty("product")
-    private ProductDto productDto;
+    private ProductDto.Info productInfo;
 
     private int orderPrice;
 
@@ -26,7 +26,7 @@ public class OrderProductDto {
 
     public static OrderProductDto of(OrderProduct orderProduct) {
         return OrderProductDto.builder()
-                .productDto(ProductDto.from(orderProduct.getProduct()))
+                .productInfo(ProductDto.Info.from(orderProduct.getProduct()))
                 .orderPrice(orderProduct.getOrderPrice())
                 .orderQuantity(orderProduct.getCount())
                 .build();

@@ -40,7 +40,7 @@ public class Product {
         this.productQuantity = restStock;
     }
 
-    public Product update(ProductDto productRequest) {
+    public Product update(ProductDto.Request productRequest) {
         this.productName = productRequest.getProductName();
         this.productDescription = productRequest.getProductDescription();
         this.productPrice = productRequest.getProductPrice();

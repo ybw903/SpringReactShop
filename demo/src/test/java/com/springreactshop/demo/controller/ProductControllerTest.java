@@ -9,7 +9,6 @@ import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.ProductRepository;
 import com.springreactshop.demo.dto.ProductDto;
-import com.springreactshop.demo.dto.OrderProductDto;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -69,27 +68,27 @@ class ProductControllerTest {
     void 상품목록조회테스트() throws Exception {
         //given
         Product product1 =
-                ProductDto.builder()
+                ProductDto.Request.builder()
                         .productName("test1")
                         .productDescription("test1")
                         .productPrice(100)
                         .productQuantity(999)
-                        .build().toEntityWithOutId();
+                        .build().toEntity();
 
         Product product2 =
-                ProductDto.builder()
+                ProductDto.Request.builder()
                         .productName("test2")
                         .productDescription("test2")
                         .productPrice(200)
                         .productQuantity(999)
-                        .build().toEntityWithOutId();
+                        .build().toEntity();
         Product product3 =
-                ProductDto.builder()
+                ProductDto.Request.builder()
                         .productName("test3")
                         .productDescription("test3")
                         .productPrice(300)
                         .productQuantity(999)
-                        .build().toEntityWithOutId();
+                        .build().toEntity();
         productRepository.save(product1);
         productRepository.save(product2);
         productRepository.save(product3);
@@ -160,7 +159,7 @@ class ProductControllerTest {
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        ProductDto productDto = ProductDto
+        ProductDto.Request productDto = ProductDto.Request
                 .builder()
                 .productName("testProduct")
                 .productDescription("testProduct")
@@ -238,16 +237,16 @@ class ProductControllerTest {
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        Product product = ProductDto
+        Product product = ProductDto.Request
                 .builder()
                 .productName("testProduct")
                 .productDescription("testProduct")
                 .productPrice(100)
                 .productQuantity(999)
-                .build().toEntityWithOutId();
+                .build().toEntity();
         Product savedProduct = productRepository.save(product);
 
-        ProductDto productRequest = ProductDto
+        ProductDto.Request productRequest = ProductDto.Request
                 .builder()
                 .productName("changedProduct")
                 .productDescription("changedProductDescription")
@@ -320,13 +319,13 @@ class ProductControllerTest {
         UserDetails userDetails = jwtMemberDetailService.loadUserByUsername("adminUser");
         String token = jwtTokenUtil.generateToken(userDetails);
 
-        Product product = ProductDto
+        Product product = ProductDto.Request
                 .builder()
                 .productName("testProduct")
                 .productDescription("testProduct")
                 .productPrice(100)
                 .productQuantity(999)
-                .build().toEntityWithOutId();
+                .build().toEntity();
         Product savedProduct = productRepository.save(product);
 
 

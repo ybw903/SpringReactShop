@@ -17,23 +17,20 @@ public class MemberController {
 
     @GetMapping("/{username}")
     public ResponseEntity<MemberResource> getUserInfo(@PathVariable String username) {
-        MemberDto.InfoResponse memberInfoResponse = memberService.getMemberProfileByUserName(username);
-        MemberResource memberResource = new MemberResource(memberInfoResponse);
+        MemberResource memberResource = memberService.getMemberProfileByUserName(username);
         return ResponseEntity.ok().body(memberResource);
     }
 
     @PutMapping("/{username}")
     public ResponseEntity<MemberResource> updateUserProfile (@PathVariable String username,
                       @RequestBody MemberDto.AddressUpdateRequest  memberUpdateAddressRequest) {
-
-        MemberDto.InfoResponse memberInfoResponse = memberService.updateMember(username, memberUpdateAddressRequest);
-        MemberResource memberResource = new MemberResource(memberInfoResponse);
+        MemberResource memberResource = memberService.updateMember(username, memberUpdateAddressRequest);
         return ResponseEntity.ok().body(memberResource);
     }
 
     @GetMapping("/{username}/orders")
     public ResponseEntity<MemberDto.Orders> getAllOrderByUserId(@PathVariable String username) {
-        MemberDto.Orders meberOrders = memberService.getOrder(username);
+        MemberDto.Orders meberOrders = memberService.getOrders(username);
         return ResponseEntity.ok(meberOrders);
     }
 

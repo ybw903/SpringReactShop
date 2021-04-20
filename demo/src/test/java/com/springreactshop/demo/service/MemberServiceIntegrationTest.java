@@ -4,6 +4,7 @@ import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.dto.AuthDto;
 import com.springreactshop.demo.dto.MemberDto;
 import com.springreactshop.demo.repository.MemberRepository;
+import com.springreactshop.demo.resource.MemberResource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -50,7 +51,7 @@ class MemberServiceIntegrationTest {
                 = new MemberDto.AddressUpdateRequest("000000","서울시강남구테헤란로","012-345-6789");
 
         //When
-        MemberDto.InfoResponse updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
+        MemberResource updatedMember = memberService.updateMember(username,memberUpdateAddressRequest);
 
         //Then
         assertThat(updatedMember.getUsername()).isEqualTo("testUserC");
@@ -65,7 +66,7 @@ class MemberServiceIntegrationTest {
         String username = memberService.signUpUser(signupRequest);
 
         //When
-        MemberDto.InfoResponse memberProfile = memberService.getMemberProfileByUserName(username);
+        MemberResource memberProfile = memberService.getMemberProfileByUserName(username);
 
         //Then
         assertThat(memberProfile.getUsername()).isEqualTo(signupRequest.getUsername());

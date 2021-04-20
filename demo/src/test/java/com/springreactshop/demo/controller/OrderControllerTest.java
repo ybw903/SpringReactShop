@@ -9,7 +9,6 @@ import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
-import com.springreactshop.demo.dto.OrderRequest;
 import com.springreactshop.demo.dto.OrderProductDto;
 import com.springreactshop.demo.service.JwtMemberDetailService;
 import com.springreactshop.demo.service.OrderService;
@@ -97,7 +96,7 @@ class OrderControllerTest {
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
             OrderProductDto orderProductDto = generateProductRequest(i);
-            productRepository.save(orderProductDto.getProductDto().toEntityWithOutId());
+            productRepository.save(orderProductDto.getProductInfo().toEntity());
             orderProductDtos.add(orderProductDto);
         }
         OrderDto.Request orderRequest= OrderDto.Request.builder()
@@ -167,7 +166,7 @@ class OrderControllerTest {
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
             OrderProductDto orderProductDto = generateProductRequest(i);
-            productRepository.save(orderProductDto.getProductDto().toEntityWithOutId());
+            productRepository.save(orderProductDto.getProductInfo().toEntity());
             orderProductDtos.add(orderProductDto);
         }
 
@@ -176,8 +175,8 @@ class OrderControllerTest {
                 .address(address)
                 .orderProducts(orderProductDtos)
                 .build();
-        OrderDto.Response addedOrder = orderService.order(orderRequest);
-        Long orderId = addedOrder.getId();
+        Order order = orderService.order(orderRequest);
+        Long orderId = order.getId();
 
         //when&then
         this.mockMvc.perform(delete("/api/orders/{orderId}",orderId)
@@ -233,7 +232,7 @@ class OrderControllerTest {
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<10; i++) {
             OrderProductDto orderProductDto = generateProductRequest(i);
-            productRepository.save(orderProductDto.getProductDto().toEntityWithOutId());
+            productRepository.save(orderProductDto.getProductInfo().toEntity());
             orderProductDtos.add(orderProductDto);
         }
 
@@ -252,9 +251,9 @@ class OrderControllerTest {
                 .address(address)
                 .orderProducts(orderProductDtos.subList(7,9))
                 .build();
-        OrderDto.Response addedOrder1 = orderService.order(orderRequest1);
-        OrderDto.Response addedOrder2 = orderService.order(orderRequest2);
-        OrderDto.Response addedOrder3 = orderService.order(orderRequest3);
+        Order addedOrder1 = orderService.order(orderRequest1);
+        Order addedOrder2 = orderService.order(orderRequest2);
+        Order addedOrder3 = orderService.order(orderRequest3);
 
         //when&then
         this.mockMvc.perform(get("/api/orders?page=0&size=10&sort=orderDate,asc")
@@ -300,8 +299,8 @@ class OrderControllerTest {
     public OrderProductDto generateProductRequest(int idx) {
 
         return OrderProductDto.builder()
-                .productDto(
-                        ProductDto.builder()
+                .productInfo(
+                        ProductDto.Info.builder()
                                 .id((long)idx)
                                 .productName("test" + idx)
                                 .productDescription("no")

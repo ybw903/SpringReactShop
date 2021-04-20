@@ -6,47 +6,61 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
-@Builder
+
 public class ProductDto {
 
-    private Long id;
+    @Data @NoArgsConstructor @AllArgsConstructor
+    @Builder
+    public static class Request {
+        private String productName;
 
-    private String productName;
+        private String productDescription;
 
-    private String productDescription;
+        private int productPrice;
 
-    private int productPrice;
+        private int productQuantity;
 
-    private int productQuantity;
-
-    public Product toEntityWithOutId(){
-        return Product.builder()
-                .productName(productName)
-                .productDescription(productDescription)
-                .productPrice(productPrice)
-                .productQuantity(productQuantity)
-                .build();
+        public Product toEntity(){
+            return Product.builder()
+                    .productName(productName)
+                    .productDescription(productDescription)
+                    .productPrice(productPrice)
+                    .productQuantity(productQuantity)
+                    .build();
+        }
     }
 
-    public Product toEntityWithId(){
-        return Product.builder()
-                .Id(id)
-                .productName(productName)
-                .productDescription(productDescription)
-                .productPrice(productPrice)
-                .productQuantity(productQuantity)
-                .build();
-    }
+    @Data @NoArgsConstructor @AllArgsConstructor
+    @Builder
+    public static class Info{
+        private Long id;
 
-    public static ProductDto from(Product product) {
-        return ProductDto.builder()
-                .id(product.getId())
-                .productName(product.getProductName())
-                .productDescription(product.getProductDescription())
-                .productPrice(product.getProductPrice())
-                .productQuantity(product.getProductQuantity())
-                .build();
-    }
+        private String productName;
 
+        private String productDescription;
+
+        private int productPrice;
+
+        private int productQuantity;
+
+        public  Product toEntity(){
+            return Product.builder()
+                    .Id(id)
+                    .productName(productName)
+                    .productDescription(productDescription)
+                    .productPrice(productPrice)
+                    .productQuantity(productQuantity)
+                    .build();
+        }
+
+        public static Info from(Product product) {
+            return Info.builder()
+                    .id(product.getId())
+                    .productName(product.getProductName())
+                    .productDescription(product.getProductName())
+                    .productPrice(product.getProductPrice())
+                    .productQuantity(product.getProductQuantity())
+                    .build();
+        }
+    }
 }

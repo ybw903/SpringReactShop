@@ -21,7 +21,7 @@ public class ProductResource extends RepresentationModel<ProductResource> {
 
     private final int productQuantity;
 
-    public ProductResource(ProductDto product) {
+    public ProductResource(Product product) {
         this.Id = product.getId();
         this.productName = product.getProductName();
         this.productDescription = product.getProductDescription();

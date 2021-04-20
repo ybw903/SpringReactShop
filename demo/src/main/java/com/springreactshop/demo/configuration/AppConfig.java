@@ -22,7 +22,7 @@ public class AppConfig {
             @Override
             public void run(ApplicationArguments args) throws Exception {
                 for(int i = 0; i<=1000; i++) {
-                    ProductDto productRequest = ProductDto.builder()
+                    ProductDto.Request productRequest = ProductDto.Request.builder()
                             .productName("test" + i)
                             .productDescription("testDesc" + i)
                             .productPrice(i*100)

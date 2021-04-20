@@ -4,15 +4,15 @@ import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.exception.ProductNotFoundException;
 import com.springreactshop.demo.repository.ProductRepository;
+import com.springreactshop.demo.resource.ProductResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,34 +21,31 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public ProductDto addProduct(ProductDto productRequest) {
-        Product product = productRequest.toEntityWithOutId();
+    public Product addProduct(ProductDto.Request productRequest) {
+        Product product = productRequest.toEntity();
         Product saved = productRepository.save(product);
-        return ProductDto.from(saved);
+        return saved;
     }
 
-    public Page<ProductDto> productsPages(Pageable pageable) {
+    public Page<Product> productsPages(Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
-        List<ProductDto> productsResponse = productPage
-                                                    .getContent().stream()
-                                                    .map(ProductDto::from)
-                                                    .collect(Collectors.toList());
-        return new PageImpl<>(productsResponse,pageable,productPage.getTotalElements());
+
+        return productPage ;
     }
 
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
 
-    public ProductDto getProductResponseById(Long id) {
+    public Product getProductResponseById(Long id) {
         Product product = getProductById(id);
-        return ProductDto.from(product);
+        return product;
     }
 
-    public ProductDto update(Long id, ProductDto productRequest) {
+    public Product update(Long id, ProductDto.Request productRequest) {
         Product existingProduct = getProductById(id);
         Product updated = existingProduct.update(productRequest);
-        return ProductDto.from(updated);
+        return updated;
     }
 
     public void deleteProduct(Long id) {

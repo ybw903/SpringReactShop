@@ -25,7 +25,6 @@ public class Order {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="DELIVERY_ID")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Delivery delivery;
 
 //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

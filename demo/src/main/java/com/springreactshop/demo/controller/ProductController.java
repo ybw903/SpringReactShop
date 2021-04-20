@@ -1,5 +1,6 @@
 package com.springreactshop.demo.controller;
 
+import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.resource.ProductResource;
 import com.springreactshop.demo.service.ProductService;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -25,36 +25,30 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto productRequest,
-                                                      Errors errors) {
-        ProductDto prouctResponse = productService.addProduct(productRequest);
-        URI createdUri =linkTo(ProductController.class).slash(prouctResponse.getId()).toUri();
-        ProductResource productResource = new ProductResource(prouctResponse);
-        return ResponseEntity.created(createdUri).body(productResource);
+    public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto.Request productRequest) {
+        Product product = productService.addProduct(productRequest);
+        URI createdUri =linkTo(ProductController.class).slash(product.getId()).toUri();
+        return ResponseEntity.created(createdUri).body(new ProductResource(product));
     }
 
     @GetMapping
-    public ResponseEntity<PagedModel<ProductResource>> productList(Pageable pageable,
-                                                                   PagedResourcesAssembler<ProductDto> assembler) {
-        Page<ProductDto> page =this.productService.productsPages(pageable);
-        var pageResource = assembler.toModel(page, ProductResource::new);
-        return ResponseEntity.ok(pageResource);
+    public ResponseEntity<PagedModel<ProductResource>> productList(Pageable pageable, PagedResourcesAssembler<Product> assembler) {
+        Page<Product> productPage = productService.productsPages(pageable);
+        PagedModel<ProductResource> productResourcePagedModel = assembler.toModel(productPage, ProductResource::new);
+        return ResponseEntity.ok(productResourcePagedModel);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResource> getProduct(@PathVariable Long id) {
-        ProductDto productResponse = this.productService.getProductResponseById(id);
-
-        ProductResource productResource = new ProductResource(productResponse);
-        return ResponseEntity.ok(productResource);
+        Product product = productService.getProductResponseById(id);
+        return ResponseEntity.ok(new ProductResource(product));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResource> updateProduct(@PathVariable Long id,
-                                                         @RequestBody ProductDto productDto) {
-        ProductDto productResponse = this.productService.update(id, productDto);
-        ProductResource productResource = new ProductResource(productResponse);
-        return ResponseEntity.ok(productResource);
+                                                         @RequestBody ProductDto.Request productDto) {
+        Product product = productService.update(id, productDto);
+        return ResponseEntity.ok(new ProductResource(product));
     }
 
     @DeleteMapping("/{id}")

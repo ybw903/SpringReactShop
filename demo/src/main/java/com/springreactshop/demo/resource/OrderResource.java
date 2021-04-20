@@ -19,11 +19,11 @@ public class OrderResource extends RepresentationModel<OrderResource> {
 
     private final Long id;
 
-    private final MemberResource memberResource;
+    private final MemberResource member;
 
     private final Delivery delivery;
 
-    private final List<OrderProductDto> orderProducts ;
+    private final List<OrderProduct> orderProducts ;
 
     private final OrderStatus status;
 
@@ -31,14 +31,14 @@ public class OrderResource extends RepresentationModel<OrderResource> {
 
     private final Date orderDate;
 
-    public OrderResource(OrderDto.Response orderResponse) {
-        this.id = orderResponse.getId();
-        this.memberResource =  new MemberResource(orderResponse.getMemberResponse());
-        this.delivery = orderResponse.getDelivery();
-        this.orderProducts = orderResponse.getOrderProducts();
-        this.status = orderResponse.getStatus();
-        this.totalPrice = orderResponse.getTotalPrice();
-        this.orderDate = orderResponse.getOrderDate();
+    public OrderResource(Order order) {
+        this.id = order.getId();
+        this.member =  new MemberResource(order.getMember());
+        this.delivery = order.getDelivery();
+        this.orderProducts = order.getOrderProducts();
+        this.status = order.getStatus();
+        this.totalPrice = order.getTotalPrice();
+        this.orderDate = order.getOrderDate();
         add(linkTo(OrderController.class).slash(this.id).withSelfRel());
         addIf(status==OrderStatus.ORDER,
                 ()->linkTo(OrderController.class).slash(this.id).withRel("cancel-order"));

@@ -5,6 +5,8 @@ import com.springreactshop.demo.dto.*;
 import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.repository.OrderRepository;
 import com.springreactshop.demo.repository.ProductRepository;
+import com.springreactshop.demo.resource.MemberResource;
+import com.springreactshop.demo.resource.OrderResource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +43,7 @@ class OrderServiceTest {
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
             OrderProductDto orderProductDto = generateProductRequest(i);
-            productRepository.save(orderProductDto.getProductDto().toEntityWithId());
+            productRepository.save(orderProductDto.getProductInfo().toEntity());
             orderProductDtos.add(orderProductDto);
         }
         Member member = makeUser();
@@ -53,10 +55,10 @@ class OrderServiceTest {
                                             .build();
 
         //when
-        OrderDto.Response order = orderService.order(orderRequest);
+        Order order = orderService.order(orderRequest);
 
         //then
-        assertThat(order.getMemberResponse().getUsername()).isEqualTo(member.getUsername());
+        assertThat(order.getMember().getUsername()).isEqualTo(member.getUsername());
         assertThat(order.getDelivery().getAddress().getPhone()).isEqualTo(address.getPhone());
         assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(address.getStreet());
         assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(address.getZipcode());
@@ -75,7 +77,7 @@ class OrderServiceTest {
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
             OrderProductDto orderProductDto = generateProductRequest(i);
-            productRepository.save(orderProductDto.getProductDto().toEntityWithId());
+            productRepository.save(orderProductDto.getProductInfo().toEntity());
             orderProductDtos.add(orderProductDto);
         }
         Member member = makeUser();
@@ -86,7 +88,7 @@ class OrderServiceTest {
                 .orderProducts(orderProductDtos)
                 .build();
 
-        OrderDto.Response order =  orderService.order(orderRequest);
+        Order order =  orderService.order(orderRequest);
 
         //when
         orderService.cancelOrder(order.getId());
@@ -106,7 +108,7 @@ class OrderServiceTest {
         AuthDto.Request signupRequest = new AuthDto.Request("user","password");
 
         memberService.signUpUser(signupRequest);
-        MemberDto.InfoResponse member = memberService.getMemberProfileByUserName("user");
+        MemberResource member = memberService.getMemberProfileByUserName("user");
         MemberDto.AddressUpdateRequest memberUpdateAddressRequest = MemberDto.AddressUpdateRequest.builder()
                 .phone("010-1234-5678")
                 .zipcode("000000")
@@ -120,8 +122,8 @@ class OrderServiceTest {
     public OrderProductDto generateProductRequest(int idx) {
 
         return OrderProductDto.builder()
-                .productDto(
-                        ProductDto.builder()
+                .productInfo(
+                        ProductDto.Info.builder()
                                 .id((long)idx)
                                 .productName("test" + idx)
                                 .productDescription("no")
