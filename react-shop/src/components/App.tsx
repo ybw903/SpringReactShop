@@ -1,8 +1,4 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { LoadUser } from '../actions/auth';
-import { loadUser } from '../service/user';
 import Authentication from './Authentication';
 import Cart from './Cart';
 import Checkout from './Checkout';

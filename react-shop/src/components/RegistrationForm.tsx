@@ -53,7 +53,7 @@ function RegistrationFrom({authState, onRegisetr}:Props) {
         e.preventDefault();
         onRegisetr(username,password);
 
-        setMessage((authState.error === null?'성공':'실패'));
+        setMessage((authState.error == null?'성공':'실패'));
         handleShow();
 
         setForm({

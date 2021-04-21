@@ -1,7 +1,6 @@
 import {LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOG_OUT, AuthActionTypes, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, LOAD_USER} from '../types/auth';
 import { User } from '../types/user';
 import {History} from 'history';
-import axios from 'axios';
 import { authLogin, authSignUp, setUpAxiosInterceptors } from '../service/auth';
 
 export function login(username:string, password:string, history: History) {
