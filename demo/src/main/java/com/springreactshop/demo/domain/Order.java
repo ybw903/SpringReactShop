@@ -27,12 +27,11 @@ public class Order {
     @JoinColumn(name="DELIVERY_ID")
     private Delivery delivery;
 
-//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "PAYMENT_ID")
-//    private Payment payment;
-
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderProduct> orderProducts = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Payment payment;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
