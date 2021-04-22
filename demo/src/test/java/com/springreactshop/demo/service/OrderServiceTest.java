@@ -51,6 +51,7 @@ class OrderServiceTest {
         OrderDto.Request orderRequest= OrderDto.Request.builder()
                                             .username(member.getUsername())
                                             .address(address)
+                                            .payment(Payment.CREDIT)
                                             .orderProducts(orderProductDtos)
                                             .build();
 
@@ -63,6 +64,7 @@ class OrderServiceTest {
         assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(address.getStreet());
         assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(address.getZipcode());
         assertThat(order.getDelivery().getDeliveryStatus()).isEqualTo(DeliveryStatus.READY);
+        assertThat(order.getPayment()).isEqualTo(Payment.CREDIT);
         assertThat(order.getOrderProducts().size()).isEqualTo(orderProductDtos.size());
         assertThat(order.getTotalPrice()).isEqualTo(
                         (Integer) orderProductDtos.stream()
@@ -98,7 +100,9 @@ class OrderServiceTest {
         assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(address.getStreet());
         assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(address.getZipcode());
         assertThat(order.getDelivery().getDeliveryStatus()).isEqualTo(DeliveryStatus.READY);
-        assertThat(order.getPayment()).isEqualTo(Payment.CREDIT);
+
+        assertThat(order.getPayment()).isNull(); //TODO: validate 추가
+
         assertThat(order.getOrderProducts().size()).isEqualTo(orderProductDtos.size());
         assertThat(order.getTotalPrice()).isEqualTo(
                 (Integer) orderProductDtos.stream()

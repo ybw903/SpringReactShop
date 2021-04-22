@@ -28,6 +28,7 @@ public class OrderService {
     public Order order(OrderDto.Request orderRequest) {
         Member member = memberService.findMemberByUsername(orderRequest.getUsername());
         Delivery delivery = Delivery.createDelivery(orderRequest.getAddress());
+        Payment payment = orderRequest.getPayment();
 
         List<OrderProduct> orderProducts =
         orderRequest.getOrderProducts().stream()
@@ -38,7 +39,8 @@ public class OrderService {
                         orderProductDto.getOrderQuantity()))
                 .collect(Collectors.toList());
 
-        Order order = Order.createOrder(member, delivery, orderProducts);
+        //TODO: To many parameters. you must be refactor!!
+        Order order = Order.createOrder(member, delivery, orderProducts, payment);
         Order createdOrder = orderRepository.save(order);
 
         return createdOrder;

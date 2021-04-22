@@ -25,6 +25,9 @@ public class OrderDto {
         @JsonProperty("address")
         private Address address;
 
+        @NotEmpty
+        private Payment payment;
+
         @JsonProperty("productList")
         private List<OrderProductDto> orderProducts;
     }
@@ -45,6 +48,8 @@ public class OrderDto {
 
         private OrderStatus status;
 
+        private Payment payment;
+
         private int totalPrice;
 
         private Date orderDate;
@@ -57,6 +62,7 @@ public class OrderDto {
                     .orderProducts(
                             order.getOrderProducts()
                                     .stream().map(OrderProductDto::of).collect(Collectors.toList()))
+                    .payment(order.getPayment())
                     .status(order.getStatus())
                     .totalPrice(order.getTotalPrice())
                     .orderDate(order.getOrderDate())

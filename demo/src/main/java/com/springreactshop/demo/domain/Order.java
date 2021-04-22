@@ -45,6 +45,7 @@ public class Order {
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
+    public void setPayment(Payment payment) {this.payment = payment;}
 
 
     //==연관관계 메소드==//
@@ -63,11 +64,13 @@ public class Order {
         delivery.setOrder(this);
     }
 
+
     //==생성 메소드==//
-    public static Order createOrder(Member member,Delivery delivery, List<OrderProduct> orderProducts) {
+    public static Order createOrder(Member member,Delivery delivery, List<OrderProduct> orderProducts, Payment payment) {
         Order order = new Order();
         order.setMember(member);
         order.setDelivery(delivery);
+        order.setPayment(payment);
 
         int totalPrice = 0;
         for(OrderProduct orderProduct : orderProducts) {
