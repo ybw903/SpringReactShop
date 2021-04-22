@@ -44,7 +44,7 @@ const CheckoutForm = ({user, carts}:Props) => {
             street,
             phone
         };
-        order(username,address,carts)
+        order(username,address,carts,payment)
         .then((res)=>console.log(res))
         .catch((err) =>{
             console.log(err);
@@ -89,15 +89,15 @@ const CheckoutForm = ({user, carts}:Props) => {
                     <Col>
                         <h4>Payment</h4>
                         <div className='custom-control custom-radio'>
-                            <input id="credit" type="radio" className="custom-control-input" name="payment"value="credit"  onChange={e=>setPayment(e.target.value)}></input>
+                            <input id="credit" type="radio" className="custom-control-input" name="payment"value="CREDIT"  onChange={e=>setPayment(e.target.value)}></input>
                             <label className="custom-control-label" htmlFor="credit">신용카드</label>
                         </div>
                         <div className='custom-control custom-radio'>
-                            <input id="debit" type="radio" className="custom-control-input" name="payment"value="debit" onChange={e=>setPayment(e.target.value)}></input>
+                            <input id="debit" type="radio" className="custom-control-input" name="payment"value="DEBIT" onChange={e=>setPayment(e.target.value)}></input>
                             <label className="custom-control-label" htmlFor="debit">계좌이체</label>
                         </div>
                         <div className='custom-control custom-radio'>
-                            <input id="paypal" type="radio" className="custom-control-input" name="payment"value="paypal" onChange={e=>setPayment(e.target.value)}></input>
+                            <input id="paypal" type="radio" className="custom-control-input" name="payment"value="PAYPAL" onChange={e=>setPayment(e.target.value)}></input>
                             <label className="custom-control-label" htmlFor="paypal">페이팔</label>
                         </div>
                     </Col>

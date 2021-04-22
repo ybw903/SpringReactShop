@@ -2,7 +2,7 @@ import axios from "axios"
 import { Cart } from "../types/cart"
 import { Address } from "../types/checkout"
 
-export const order = (username: string, address:Address, carts: Cart[]) => {
+export const order = (username: string, address:Address, carts: Cart[], payment: string) => {
 
     //TODO : need json into product
     const productList = carts.map(el => {
@@ -12,7 +12,7 @@ export const order = (username: string, address:Address, carts: Cart[]) => {
     })
 
     console.log({username,address,productList});
-    return axios.post("/api/orders",{username, address, productList});
+    return axios.post("/api/orders",{username, address, productList, payment});
 }
 
 export const getOrders = (username: string) => {

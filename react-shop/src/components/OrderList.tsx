@@ -30,7 +30,9 @@ const OrderList = ({ user }: Props) => {
 
     useEffect(() => {
         getOrders(user?.username ? user?.username : '')
-            .then((res) => res.data._embedded.orderResources)
+            .then((res) => {
+                return res.data._embedded.orderResources;
+            })
             .then(
                 (orderResources) => {
                     setOrders(orderResources);
@@ -38,6 +40,9 @@ const OrderList = ({ user }: Props) => {
                     console.log(orderResources);
                 }
             )
+            .catch(
+                err => console.log(err)
+            );
     }, [])
 
     return (
@@ -48,6 +53,7 @@ const OrderList = ({ user }: Props) => {
                     <th>상품정보</th>
                     <th>주문총액</th>
                     <th>주문일자</th>
+                    <th>결제수단</th>
                     <th>주문취소</th>
                 </tr>
             </thead>
@@ -59,6 +65,7 @@ const OrderList = ({ user }: Props) => {
                             <td>{order.orderProducts[0].product.productName}  {order.orderProducts.length>1?` 외 ${order.orderProducts.length}건`:''}</td>
                             <td>${order.totalPrice}</td>
                             <td>{order.orderDate}</td>
+                            <th>{order.payment}</th>
                             <td><Button>취소</Button></td>
                         </tr>
                     ))
