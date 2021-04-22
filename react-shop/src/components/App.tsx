@@ -25,9 +25,7 @@ const App = () =>{
         <Route path ="/cart">
           <Cart/>
         </Route>
-        <Route path = "/checkout">
-          <Checkout/>
-        </Route>
+        
         <Route path ="/auth">
           <Authentication/>
         </Route>
@@ -37,6 +35,8 @@ const App = () =>{
         <Route path="/403">
           <FobiddenPage/>
         </Route>
+        <RouteIf path ="/checkout" component={Checkout}>
+        </RouteIf>
         <RouteIf path ="/user" component={User}>
         </RouteIf>
         <RouteIf path ="/order" component={RecentOrder}>

@@ -37,6 +37,8 @@ const CheckoutForm = ({user, carts}:Props) => {
 
     const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if(carts.length===0)
+            return;
         const address: Address = {
             zipcode,
             street,
