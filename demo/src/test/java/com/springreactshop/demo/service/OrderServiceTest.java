@@ -37,7 +37,7 @@ class OrderServiceTest {
     ProductRepository productRepository;
 
     @Test
-    public void 주문하기() throws Exception{
+    void 주문하기() throws Exception{
 
         //given
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
@@ -74,7 +74,7 @@ class OrderServiceTest {
     }
 
     @Test
-    public void 지불방법없이_주문한_경우_에러발생() throws Exception{
+    void 지불방법없이_주문한_경우_에러발생() throws Exception{
 
         //given
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
@@ -113,7 +113,7 @@ class OrderServiceTest {
 
 
     @Test
-    public void 주문취소() throws Exception{
+    void 주문취소() throws Exception{
         //given
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for(int i =1; i<4; i++) {
@@ -140,12 +140,12 @@ class OrderServiceTest {
     }
 
     @Test
-    public void 주문목록() {
+    void 주문목록() {
         //given
 
     }
 
-    public Member makeUser() {
+    private Member makeUser() {
         AuthDto.Request signupRequest = new AuthDto.Request("user","password");
 
         memberService.signUpUser(signupRequest);
@@ -160,7 +160,7 @@ class OrderServiceTest {
         return memberRepository.findByUsername("user").orElse(null);
     }
 
-    public OrderProductDto generateProductRequest(int idx) {
+    private OrderProductDto generateProductRequest(int idx) {
 
         return OrderProductDto.builder()
                 .productInfo(

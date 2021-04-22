@@ -4,12 +4,9 @@ import com.springreactshop.demo.domain.*;
 import com.springreactshop.demo.dto.OrderDto;
 import com.springreactshop.demo.exception.OrderNotFoundException;
 import com.springreactshop.demo.repository.OrderRepository;
-import com.springreactshop.demo.resource.OrderResource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

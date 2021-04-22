@@ -35,7 +35,7 @@ const OrderList = ({ user }: Props) => {
                 (orderResources) => {
                     setOrders(orderResources);
 
-                    console.log(orders);
+                    console.log(orderResources);
                 }
             )
     }, [])

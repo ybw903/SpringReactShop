@@ -25,6 +25,8 @@ public class OrderResource extends RepresentationModel<OrderResource> {
 
     private final List<OrderProduct> orderProducts ;
 
+    private final Payment payment;
+
     private final OrderStatus status;
 
     private final int totalPrice;
@@ -36,6 +38,7 @@ public class OrderResource extends RepresentationModel<OrderResource> {
         this.member =  new MemberResource(order.getMember());
         this.delivery = order.getDelivery();
         this.orderProducts = order.getOrderProducts();
+        this.payment = order.getPayment();
         this.status = order.getStatus();
         this.totalPrice = order.getTotalPrice();
         this.orderDate = order.getOrderDate();
