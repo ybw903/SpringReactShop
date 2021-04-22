@@ -72,6 +72,43 @@ class OrderServiceTest {
     }
 
     @Test
+    public void 지불방법없이_주문한_경우_에러발생() throws Exception{
+
+        //given
+        List<OrderProductDto> orderProductDtos = new ArrayList<>();
+        for(int i =1; i<4; i++) {
+            OrderProductDto orderProductDto = generateProductRequest(i);
+            productRepository.save(orderProductDto.getProductInfo().toEntity());
+            orderProductDtos.add(orderProductDto);
+        }
+        Member member = makeUser();
+        Address address = new Address("000000", "서울시 강남구 테헤란로", "012-345-6789");
+        OrderDto.Request orderRequest= OrderDto.Request.builder()
+                .username(member.getUsername())
+                .address(address)
+                .orderProducts(orderProductDtos)
+                .build();
+
+        //when
+        Order order = orderService.order(orderRequest);
+
+        //then
+        assertThat(order.getMember().getUsername()).isEqualTo(member.getUsername());
+        assertThat(order.getDelivery().getAddress().getPhone()).isEqualTo(address.getPhone());
+        assertThat(order.getDelivery().getAddress().getStreet()).isEqualTo(address.getStreet());
+        assertThat(order.getDelivery().getAddress().getZipcode()).isEqualTo(address.getZipcode());
+        assertThat(order.getDelivery().getDeliveryStatus()).isEqualTo(DeliveryStatus.READY);
+        assertThat(order.getPayment()).isEqualTo(Payment.CREDIT);
+        assertThat(order.getOrderProducts().size()).isEqualTo(orderProductDtos.size());
+        assertThat(order.getTotalPrice()).isEqualTo(
+                (Integer) orderProductDtos.stream()
+                        .mapToInt(orderProductRequest -> orderProductRequest.getOrderPrice() * orderProductRequest.getOrderQuantity())
+                        .sum());
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.ORDER);
+    }
+
+
+    @Test
     public void 주문취소() throws Exception{
         //given
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
