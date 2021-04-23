@@ -1,18 +1,20 @@
 package com.springreactshop.demo.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="ORDERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,13 +40,15 @@ public class Order {
 
     private int totalPrice;
 
-    private Date orderDate;
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
+
 
     public void setStatus(OrderStatus Status) {this.status = Status;}
     public void setTotalPrice(int totalPrice) {this.totalPrice = totalPrice;}
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
     public void setPayment(Payment payment) {this.payment = payment;}
 
 
@@ -80,7 +84,6 @@ public class Order {
 
         order.setStatus(OrderStatus.ORDER);
         order.setTotalPrice(totalPrice);
-        order.setOrderDate(new Date());
         return order;
     }
 

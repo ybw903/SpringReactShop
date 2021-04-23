@@ -1,5 +1,6 @@
 package com.springreactshop.demo.resource;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.springreactshop.demo.controller.MemberController;
 import com.springreactshop.demo.controller.OrderController;
 import com.springreactshop.demo.domain.*;
@@ -9,6 +10,7 @@ import com.springreactshop.demo.dto.OrderProductDto;
 import lombok.Getter;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class OrderResource extends RepresentationModel<OrderResource> {
 
     private final int totalPrice;
 
-    private final Date orderDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private final LocalDateTime orderDate;
 
     public OrderResource(Order order) {
         this.id = order.getId();
@@ -41,7 +44,7 @@ public class OrderResource extends RepresentationModel<OrderResource> {
         this.payment = order.getPayment();
         this.status = order.getStatus();
         this.totalPrice = order.getTotalPrice();
-        this.orderDate = order.getOrderDate();
+        this.orderDate = order.getCreatedDate();
         add(linkTo(OrderController.class).slash(this.id).withSelfRel());
         addIf(status==OrderStatus.ORDER,
                 ()->linkTo(OrderController.class).slash(this.id).withRel("cancel-order"));
