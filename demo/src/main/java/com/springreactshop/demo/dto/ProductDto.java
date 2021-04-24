@@ -1,10 +1,13 @@
 package com.springreactshop.demo.dto;
 
+import com.springreactshop.demo.domain.Category;
 import com.springreactshop.demo.domain.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 
 public class ProductDto {
@@ -20,12 +23,15 @@ public class ProductDto {
 
         private int productQuantity;
 
+        private Category category;
+
         public Product toEntity(){
             return Product.builder()
                     .productName(productName)
                     .productDescription(productDescription)
                     .productPrice(productPrice)
                     .productQuantity(productQuantity)
+                    .category(category)
                     .build();
         }
     }
@@ -43,13 +49,16 @@ public class ProductDto {
 
         private int productQuantity;
 
+        private Category category;
+
         public  Product toEntity(){
             return Product.builder()
-                    .Id(id)
+                    .id(id)
                     .productName(productName)
                     .productDescription(productDescription)
                     .productPrice(productPrice)
                     .productQuantity(productQuantity)
+                    .category(category)
                     .build();
         }
 
@@ -60,6 +69,7 @@ public class ProductDto {
                     .productDescription(product.getProductName())
                     .productPrice(product.getProductPrice())
                     .productQuantity(product.getProductQuantity())
+                    .category(product.getCategory())
                     .build();
         }
     }

@@ -5,6 +5,8 @@ import com.springreactshop.demo.exception.NotEnoughStockException;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,7 +19,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
-    private Long Id;
+    private Long id;
 
     private String productName;
 
@@ -26,6 +28,10 @@ public class Product {
     private int productPrice;
 
     private int productQuantity;
+
+    //TODO : 확장을 고려해서 고칠 것
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     //==비즈니스 로직==//
     public void addStock(int quantity) {

@@ -4,7 +4,6 @@ import com.springreactshop.demo.domain.Product;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.exception.ProductNotFoundException;
 import com.springreactshop.demo.repository.ProductRepository;
-import com.springreactshop.demo.resource.ProductResource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.PagedModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +57,7 @@ class ProductServiceTest {
     void 상품추가() {
         //given
         ProductDto.Request productRequest = ProductDto.Request.builder().build();
-        Product product = Product.builder().Id(0L).build();
+        Product product = Product.builder().id(0L).build();
         Product mockProduct = getMockProduct();
 
         given(productRepository.save(any(Product.class))).willReturn(mockProduct);
@@ -83,7 +81,7 @@ class ProductServiceTest {
     @Test
     void 단일상품을아이디로조회() {
         //given
-        Product savedProduct = Product.builder().Id(0L).build();
+        Product savedProduct = Product.builder().id(0L).build();
         given(productRepository.findById(0L)).willReturn(Optional.of(savedProduct));
 
         //when
@@ -96,7 +94,7 @@ class ProductServiceTest {
     @Test
     void 아이디로조회한단일상품응답반환() {
         //given
-        Product product = Product.builder().Id(0L).build();
+        Product product = Product.builder().id(0L).build();
         given(productRepository.findById(0L)).willReturn(Optional.of(product));
 
         //when
@@ -109,7 +107,7 @@ class ProductServiceTest {
     @Test
     void 상품갱신() {
         //given
-        Product product = Product.builder().Id(0L).build();
+        Product product = Product.builder().id(0L).build();
         ProductDto.Request productRequest = ProductDto.Request
                                                 .builder()
                                                 .productName("testName")
