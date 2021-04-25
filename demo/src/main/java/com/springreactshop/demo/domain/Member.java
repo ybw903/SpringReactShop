@@ -3,8 +3,12 @@ package com.springreactshop.demo.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springreactshop.demo.dto.MemberDto;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Member {
 
     @Id
@@ -32,6 +37,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     public List<Order> orders = new ArrayList<>();
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
+
 
     @Builder
     public Member(String username, String password, MemberRole memberRole) {

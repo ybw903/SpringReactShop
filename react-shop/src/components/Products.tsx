@@ -19,7 +19,7 @@ const Products = () => {
     const [productList, setProductList] = useState([] as Product[]);
 
     useEffect(()=>{
-        getProducts(page.number, '')
+        getProducts(page.number, sortedBy)
             .then(productPage => {
                 setPage(productPage.pages);
         });
@@ -30,15 +30,15 @@ const Products = () => {
             .then(productPage => {
                 setProductList(productPage.productList);
         });
-    }, [page.number])
+    }, [page.number, sortedBy])
 
     return (
         <Container>
             <ButtonGroup aria-label="Basic example" style={{paddingBottom: '1rem'}}>
-                <Button >등록일순</Button>
-                <Button >가격순</Button>
+                <Button onClick={() => setSortedBy('modifiedDate')} >등록일순</Button>
+                <Button onClick={() => setSortedBy('productPrice')}>가격순</Button>
                 <DropdownButton as={ButtonGroup} title="카테고리" id="bg-nested-dropdown">
-                    <Dropdown.Item eventKey="1">책</Dropdown.Item>
+                    <Dropdown.Item eventKey="1" >책</Dropdown.Item>
                     <Dropdown.Item eventKey="2">영화</Dropdown.Item>
                 </DropdownButton>
             </ButtonGroup>

@@ -3,8 +3,12 @@ package com.springreactshop.demo.domain;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.exception.NotEnoughStockException;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +18,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
 
     @Id
@@ -32,6 +37,13 @@ public class Product {
     //TODO : 확장을 고려해서 고칠 것
     @Enumerated(EnumType.STRING)
     private Category category;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
+
 
     //==비즈니스 로직==//
     public void addStock(int quantity) {
