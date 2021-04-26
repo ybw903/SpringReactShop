@@ -1,5 +1,6 @@
 package com.springreactshop.demo.configuration;
 
+import com.springreactshop.demo.domain.Category;
 import com.springreactshop.demo.dto.ProductDto;
 import com.springreactshop.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class AppConfig {
                             .productDescription("testDesc" + i)
                             .productPrice(i*100)
                             .productQuantity(9999)
+                            .category(i<500?Category.ALBUM:Category.BOOK)
                             .build();
                     productService.addProduct(productRequest);
                 }

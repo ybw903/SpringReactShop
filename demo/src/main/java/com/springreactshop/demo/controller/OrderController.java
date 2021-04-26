@@ -14,6 +14,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -27,7 +28,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderResource> order(@RequestBody OrderDto.Request orderRequest) {
+    public ResponseEntity<OrderResource> order(@Valid @RequestBody OrderDto.Request orderRequest) {
         Order order = orderService.order(orderRequest);
         URI createdUri =linkTo(OrderController.class).slash(order.getId()).toUri();
         return ResponseEntity.created(createdUri).body(new OrderResource(order));

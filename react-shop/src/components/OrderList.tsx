@@ -66,7 +66,11 @@ const OrderList = ({ user }: Props) => {
                             <td>${order.totalPrice}</td>
                             <td>{order.orderDate}</td>
                             <th>{order.payment}</th>
-                            <td><Button>취소</Button></td>
+                            <td>
+                                {order.status==="ORDER"?
+                                <Button>취소</Button>:
+                                <p>취소완료</p>}
+                            </td>
                         </tr>
                     ))
                 }

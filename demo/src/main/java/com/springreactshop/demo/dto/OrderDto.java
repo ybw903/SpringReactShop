@@ -1,6 +1,7 @@
 package com.springreactshop.demo.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.springreactshop.demo.common.EnumNamePattern;
 import com.springreactshop.demo.domain.*;
 import lombok.*;
 
@@ -21,8 +22,8 @@ public class OrderDto {
         @JsonProperty("address")
         private Address address;
 
-        @NotEmpty
-        private Payment payment;
+        @EnumNamePattern(enumClass = Payment.class)
+        private String payment;
 
         @JsonProperty("productList")
         private List<OrderProductDto> orderProducts;

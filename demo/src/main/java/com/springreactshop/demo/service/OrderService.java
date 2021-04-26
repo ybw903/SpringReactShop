@@ -25,7 +25,7 @@ public class OrderService {
     public Order order(OrderDto.Request orderRequest) {
         Member member = memberService.findMemberByUsername(orderRequest.getUsername());
         Delivery delivery = Delivery.createDelivery(orderRequest.getAddress());
-        Payment payment = orderRequest.getPayment();
+        Payment payment = Payment.valueOf(orderRequest.getPayment());
 
         List<OrderProduct> orderProducts =
         orderRequest.getOrderProducts().stream()

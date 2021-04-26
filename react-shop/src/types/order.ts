@@ -6,7 +6,7 @@ export type Order = {
     orderDate : Date
     orderProducts : any[]
     payment: string
-    statue : string
+    status : string
     totalPrice : number
     id : number
 }

@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -34,7 +35,7 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/api/authenticate/login")
     public ResponseEntity<AuthDto.Response> createAuthenticationToken(
-            @RequestBody AuthDto.Request authenticateRequest) throws Exception {
+           @Valid @RequestBody AuthDto.Request authenticateRequest) throws Exception {
         authenticate(authenticateRequest.getUsername(), authenticateRequest.getPassword());
 
         final UserDetails userDetails = userDetailService
