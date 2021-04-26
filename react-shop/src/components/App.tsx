@@ -1,4 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
+import Admin from './admin/Admin';
 import Authentication from './Authentication';
 import Cart from './Cart';
 import Checkout from './Checkout';
@@ -34,6 +35,9 @@ const App = () =>{
         </Route>
         <Route path="/403">
           <FobiddenPage/>
+        </Route>
+        <Route path="/admin">
+          <Admin/>
         </Route>
         <RouteIf path ="/checkout" component={Checkout}>
         </RouteIf>
