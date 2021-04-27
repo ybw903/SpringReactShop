@@ -1,8 +1,8 @@
 import React from 'react';
 import { ListGroup } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
-import { changeQuantityOfCart, removeFromCart } from '../actions/cart';
-import { RootState } from '../store';
+import { changeQuantityOfCart, removeFromCart } from '../../actions/cart';
+import { RootState } from '../../store';
 
 const mapState = ({cartState}: RootState) =>({
     carts: cartState.carts

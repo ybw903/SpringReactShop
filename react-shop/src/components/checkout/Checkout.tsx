@@ -4,7 +4,7 @@ import {
     Col,
     Row
 } from 'react-bootstrap';
-import CartItems from './CartItems';
+import CartItems from '../cart/CartItems';
 import CheckoutForm from './CheckoutForm';
 
 

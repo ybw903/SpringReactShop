@@ -4,8 +4,8 @@ import {
     Button
 } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
-import { addToCart } from '../actions/cart';
-import { Product } from '../types/products';
+import { addToCart } from '../../actions/cart';
+import { Product } from '../../types/products';
 
 const mapDispatch = {
     onAddToCart : (product : Product) => addToCart(product),

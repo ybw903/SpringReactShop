@@ -32,6 +32,7 @@ const Navigation = ({loggedIn, onLogout, history}:Props) => {
             </Nav>
             
             <Nav style={{marginRight:10}} >
+                <Link to ="/admin"><Button>Admin</Button></Link>
                 {loggedIn===true?
                 <Dropdown>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">

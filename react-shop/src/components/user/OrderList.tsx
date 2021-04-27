@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, ListGroup, Table } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
-import { getOrders } from '../service/order';
-import { RootState } from '../store';
-import { Order } from '../types/order';
+import { getOrders } from '../../service/order';
+import { RootState } from '../../store';
+import { Order } from '../../types/order';
 
 const mapState = ({ authState }: RootState) => ({
     user: authState.user

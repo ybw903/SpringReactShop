@@ -3,7 +3,7 @@ import {
     Col,
     Row
 } from 'react-bootstrap';
-import { Product } from '../types/products';
+import { Product } from '../../types/products';
 import ProductCard from './ProductCard';
 
 type ProductGridProps = {

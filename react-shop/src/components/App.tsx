@@ -1,15 +1,15 @@
 import { Route, Switch } from 'react-router-dom';
 import Admin from './admin/Admin';
-import Authentication from './Authentication';
-import Cart from './Cart';
-import Checkout from './Checkout';
-import FobiddenPage from './FobiddenPage';
+import Authentication from './auth/Authentication';
+import Cart from './cart/Cart';
+import Checkout from './checkout/Checkout';
+import FobiddenPage from './auth/FobiddenPage';
 import Navigation from './Navigation';
-import Products from './Products';
-import RecentOrder from './RecentOrder';
-import RegistrationFrom from './RegistrationForm';
+import Products from './product/Products';
+import RecentOrder from './user/RecentOrder';
+import RegistrationFrom from './auth/RegistrationForm';
 import RouteIf from './RouteIf';
-import User from './User';
+import User from './user/User';
 
 const App = () =>{
   

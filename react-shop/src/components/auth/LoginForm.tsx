@@ -4,8 +4,8 @@ import { Form } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import {History} from 'history';
-import { login} from '../actions/auth';
-import { RootState } from '../store';
+import { login} from '../../actions/auth';
+import { RootState } from '../../store';
 
 const mapState = ({authState}: RootState) =>({
     authState: authState

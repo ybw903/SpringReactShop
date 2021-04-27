@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
-import { memberUpdate } from '../service/auth';
-import { RootState } from '../store';
-import { User } from '../types/user';
+import { memberUpdate } from '../../service/auth';
+import { RootState } from '../../store';
+import { User } from '../../types/user';
 
 const mapState = ({authState}: RootState) =>({
     user : authState.user,

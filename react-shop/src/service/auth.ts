@@ -5,6 +5,8 @@ export const authLogin =  (username: string, password: string) => {
     return axios.post("/api/authenticate/login",{username, password})
 }
 
+
+//TODO: Logout unset
 export const setUpAxiosInterceptors = () => {
     axios.interceptors.request.use(
         config => {

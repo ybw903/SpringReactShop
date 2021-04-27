@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
 import { useHistory } from 'react-router';
-import { order } from '../service/order';
-import { RootState } from '../store';
-import { Address } from '../types/checkout';
+import { order } from '../../service/order';
+import { RootState } from '../../store';
+import { Address } from '../../types/checkout';
 
 const mapState = ({authState, cartState}: RootState) =>({
     user : authState.user,

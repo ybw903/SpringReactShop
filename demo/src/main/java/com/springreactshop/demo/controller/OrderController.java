@@ -1,5 +1,6 @@
 package com.springreactshop.demo.controller;
 
+import com.springreactshop.demo.domain.Member;
 import com.springreactshop.demo.domain.Order;
 import com.springreactshop.demo.dto.OrderDto;
 import com.springreactshop.demo.resource.OrderResource;
@@ -40,16 +41,16 @@ public class OrderController {
         return  ResponseEntity.ok(new OrderResource(order));
     }
 
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<OrderResource> cancelOrder(@PathVariable Long orderId) {
-        Order order = orderService.cancelOrder(orderId);
-        return ResponseEntity.ok(new OrderResource(order));
-    }
-
     @GetMapping
     public ResponseEntity<PagedModel<OrderResource>> orderList(Pageable page, PagedResourcesAssembler<Order> assembler) {
         Page<Order> orderPage = orderService.orderPages(page);
         PagedModel<OrderResource> orderResourcePagedModel = assembler.toModel(orderPage, OrderResource::new);
         return ResponseEntity.ok(orderResourcePagedModel);
+    }
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<OrderResource> cancelOrder(@PathVariable Long orderId) {
+        Order order = orderService.cancelOrder(orderId);
+        return ResponseEntity.ok(new OrderResource(order));
     }
 }

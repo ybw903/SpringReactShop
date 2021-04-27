@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
-import FobiddenPage from './FobiddenPage';
+import FobiddenPage from './auth/FobiddenPage';
 
 export interface ProtectedRouteProps extends RouteProps {
     component : any

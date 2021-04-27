@@ -3,8 +3,8 @@ import { Button, Container, Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { register } from '../actions/auth';
-import { RootState } from '../store';
+import { register } from '../../actions/auth';
+import { RootState } from '../../store';
 
 const mapState = ({authState}: RootState) =>({
     authState: authState
