@@ -10,6 +10,8 @@ import com.springreactshop.demo.repository.MemberRepository;
 import com.springreactshop.demo.dto.MemberDetails;
 import com.springreactshop.demo.resource.MemberResource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,7 @@ public class MemberService {
         Member member = findMemberByUsername(username);
         return member;
     }
+    
 
     public Member updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
         Member member = findMemberByUsername(username);
@@ -56,7 +59,6 @@ public class MemberService {
         Optional<Member> optionalMember = memberRepository.findByUsername(username);
         return optionalMember.orElseThrow(()-> new UsernameNotFoundException(username));
     }
-
 
 
     public MemberDetails getUserByUsername(String username){

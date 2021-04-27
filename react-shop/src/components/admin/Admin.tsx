@@ -21,8 +21,9 @@ const Admin = () => {
                         (page===0)?
                         <AdminMembers/>:
                         (page===1)?
-                        <AdminOrders/>:
-                        <AdminProducts/>
+                        <AdminProducts/>:
+                        <AdminOrders/>
+                        
                     }
                 </Col>
             </Row>
