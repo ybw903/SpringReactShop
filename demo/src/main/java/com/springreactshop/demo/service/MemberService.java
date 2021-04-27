@@ -42,7 +42,10 @@ public class MemberService {
         Member member = findMemberByUsername(username);
         return member;
     }
-    
+    public Page<Member> getMembers(Pageable pageable) {
+        Page<Member> members = memberRepository.findAll(pageable);
+        return members;
+    }
 
     public Member updateMember(String username, MemberDto.AddressUpdateRequest memberUpdateAddressRequest) {
         Member member = findMemberByUsername(username);
