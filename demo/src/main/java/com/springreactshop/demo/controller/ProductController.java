@@ -33,7 +33,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<PagedModel<ProductResource>> productList(Pageable pageable, PagedResourcesAssembler<Product> assembler) {
-        Page<Product> productPage = productService.productsPages(pageable);
+        Page<Product> productPage = productService.getProductPage(pageable);
         PagedModel<ProductResource> productResourcePagedModel = assembler.toModel(productPage, ProductResource::new);
         return ResponseEntity.ok(productResourcePagedModel);
     }

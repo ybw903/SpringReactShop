@@ -48,7 +48,7 @@ public class MemberController {
 
     @GetMapping("/{username}/orders")
     public ResponseEntity<CollectionModel<OrderResource>> getAllOrderByUserId(@PathVariable String username) {
-        List<Order> orders = memberService.getOrders(username);
+        List<Order> orders = memberService.getOrdersByUsername(username);
         CollectionModel<OrderResource> orderResources = CollectionModel.of(
                 orders.stream()
                         .map(OrderResource::new)

@@ -2,9 +2,7 @@ package com.springreactshop.demo.common;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
+
 
 public class EnumNamePatterValidater implements ConstraintValidator<EnumNamePattern, String> {
     private EnumNamePattern annotation;

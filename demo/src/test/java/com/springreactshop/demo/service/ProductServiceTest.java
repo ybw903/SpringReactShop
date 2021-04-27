@@ -47,7 +47,7 @@ class ProductServiceTest {
         given(productRepository.findAll(pageable)).willReturn(expectedPageOfProduct);
 
         //when
-        Page<Product> products = productService.productsPages(pageable);
+        Page<Product> products = productService.getProductPage(pageable);
 
         //then
         assertThat(products.getTotalElements()).isEqualTo(expectedPageOfProduct.getTotalElements());

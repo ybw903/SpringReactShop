@@ -40,7 +40,7 @@ public class MemberServiceTest {
         given(memberRepository.findByUsername("testUser")).willReturn(Optional.of(member));
 
         //when
-        List<Order> memberOrderResponse = memberService.getOrders("testUser");
+        List<Order> memberOrderResponse = memberService.getOrdersByUsername("testUser");
 
 
     }

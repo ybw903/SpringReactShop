@@ -53,7 +53,7 @@ public class MemberService {
         return member;
     }
 
-    public List<Order> getOrders(String username) {
+    public List<Order> getOrdersByUsername(String username) {
         Member member = findMemberByUsername(username);
         return member.getOrders();
     }

@@ -43,7 +43,7 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<PagedModel<OrderResource>> orderList(Pageable page, PagedResourcesAssembler<Order> assembler) {
-        Page<Order> orderPage = orderService.orderPages(page);
+        Page<Order> orderPage = orderService.getOrderPage(page);
         PagedModel<OrderResource> orderResourcePagedModel = assembler.toModel(orderPage, OrderResource::new);
         return ResponseEntity.ok(orderResourcePagedModel);
     }

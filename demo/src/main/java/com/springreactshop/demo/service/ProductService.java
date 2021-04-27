@@ -27,7 +27,7 @@ public class ProductService {
         return saved;
     }
 
-    public Page<Product> productsPages(Pageable pageable) {
+    public Page<Product> getProductPage(Pageable pageable) {
         Page<Product> productPage = productRepository.findAll(pageable);
 
         return productPage ;

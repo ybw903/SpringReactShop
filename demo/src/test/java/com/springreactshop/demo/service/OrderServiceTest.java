@@ -51,7 +51,7 @@ class OrderServiceTest {
         OrderDto.Request orderRequest= OrderDto.Request.builder()
                                             .username(member.getUsername())
                                             .address(address)
-                                            .payment(Payment.CREDIT)
+                                            .payment("CREDIT")
                                             .orderProducts(orderProductDtos)
                                             .build();
 

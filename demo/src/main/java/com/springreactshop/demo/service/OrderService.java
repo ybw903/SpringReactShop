@@ -47,7 +47,7 @@ public class OrderService {
         return findOrderById(orderId);
     }
 
-    public Page<Order> orderPages(Pageable page) {
+    public Page<Order> getOrderPage(Pageable page) {
         Page<Order> orderPage =  orderRepository.findAll(page);
         return orderPage;
     }
