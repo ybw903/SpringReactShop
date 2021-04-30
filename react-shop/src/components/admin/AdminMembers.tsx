@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ListGroup } from "react-bootstrap";
+import { Button, ListGroup } from "react-bootstrap";
 import { getMembers } from "../../service/admin/member";
 import { User } from "../../types/user";
 
@@ -28,6 +28,7 @@ const AdminMembers = () => {
                 })
             }
         </ListGroup>
+        
     );
 
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Container, Dropdown, DropdownButton } from 'react-bootstrap';
-import { getProducts } from '../service/product';
-import { Product } from '../types/products';
+import { getProducts } from '../../service/product';
+import { Product } from '../../types/products';
 import ProductGrid from './ProductGrid';
 import ProductPagination from './ProductPagination';
 
