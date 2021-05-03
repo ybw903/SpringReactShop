@@ -24,6 +24,7 @@ public class ProductController {
 
     private final ProductService productService;
 
+    //TODO: validate Form
     @PostMapping
     public ResponseEntity<ProductResource> addProduct(@RequestBody ProductDto.Request productRequest) {
         Product product = productService.addProduct(productRequest);
