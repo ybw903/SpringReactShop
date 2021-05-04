@@ -16,7 +16,7 @@ const AdminMembers = () => {
 
     return(
         <ListGroup >
-            <ListGroup.Item className ="d-flex justify-content-between"><span>회원이름</span> <span>회원번호</span> <span>회원주소</span> <span>회원우편번호</span></ListGroup.Item>
+            <ListGroup.Item className ="d-flex justify-content-between"><span>회원이름</span> <span>회원번호</span> <span>회원주소</span> <span>회원우편번호</span> <span>변경</span></ListGroup.Item>
             {  
                 memberList.map((member) => {
                     return <ListGroup.Item className ="d-flex justify-content-between">
@@ -24,6 +24,7 @@ const AdminMembers = () => {
                         <span>{member.phone}</span>
                         <span>{member.street}</span>
                         <span>{member.zipcode}</span>
+                        <Button>변경</Button>
                     </ListGroup.Item>
                 })
             }
