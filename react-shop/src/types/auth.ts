@@ -54,4 +54,5 @@ export type AuthState = {
     isFetching?: boolean;
     user?: User;
     error?: any;
+    isAdmin? : boolean;
 }

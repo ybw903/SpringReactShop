@@ -18,12 +18,9 @@ const AdminProducts = () => {
 
     const formDescription = {
         formTitle: '상품추가',
-        formLabel1: '상품이름',
-        formLabel2: '상품설명',
-        formLabel3: '상품가격',
-        formLabel4: '상품수량',
+        formLabel: ['상품이름', '상품설명','상품가격','상품수량'],
+        formName: ['productName','productDescription','productPrice','productQuantity']
     }
-
 
     useEffect(() => {
         getProducts(0, '')

@@ -16,7 +16,7 @@ const FormModal = ({showModal,  handleClose, form, setForm, formDescription, han
 
 
     const {val1, val2, val3, val4} = form;
-    const {formTitle, formLabel1, formLabel2, formLabel3, formLabel4} = formDescription;
+    const {formTitle, formLabel, formName} = formDescription;
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -35,20 +35,20 @@ const FormModal = ({showModal,  handleClose, form, setForm, formDescription, han
             <Modal.Body>
 
                 <div className="form-group">
-                    <label>{formLabel1}</label>
-                    <input className="form-control" type="text" name="productName" value={val1} onChange={handleChange}></input>
+                    <label>{formLabel[0]}</label>
+                    <input className="form-control" type="text" name={formName[0]} value={val1} onChange={handleChange}></input>
                 </div>
                 <div className="form-group">
-                    <label>{formLabel2}</label>
-                    <input className="form-control" type="text" name="productDescription" value={val2} onChange={handleChange}></input>
+                    <label>{formLabel[1]}</label>
+                    <input className="form-control" type="text" name={formName[1]} value={val2} onChange={handleChange}></input>
                 </div>
                 <div className="form-group">
-                    <label>{formLabel3}</label>
-                    <input className="form-control" type="number" name="productPrice" value={val3} onChange={handleChange}></input>
+                    <label>{formLabel[2]}</label>
+                    <input className="form-control" type="number" name={formName[2]} value={val3} onChange={handleChange}></input>
                 </div>
                 <div className="form-group">
-                    <label>{formLabel4}</label>
-                    <input className="form-control" type="number" name="productQuantity" value={val4} onChange={handleChange}></input>
+                    <label>{formLabel[3]}</label>
+                    <input className="form-control" type="number" name={formName[3]} value={val4} onChange={handleChange}></input>
                 </div>
             </Modal.Body>
             <Modal.Footer>

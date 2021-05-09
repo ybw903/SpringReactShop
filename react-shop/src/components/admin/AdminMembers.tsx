@@ -15,6 +15,7 @@ const AdminMembers = () => {
 
 
     return(
+        <>
         <ListGroup >
             <ListGroup.Item className ="d-flex justify-content-between"><span>회원이름</span> <span>회원번호</span> <span>회원주소</span> <span>회원우편번호</span> <span>변경</span></ListGroup.Item>
             {  
@@ -29,7 +30,7 @@ const AdminMembers = () => {
                 })
             }
         </ListGroup>
-        
+        </>
     );
 
 }

@@ -10,7 +10,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { Logout } from '../actions/auth';
 
 const mapState = ({authState}: RootState) =>({
-    loggedIn : authState.loggedIn
+    loggedIn : authState.loggedIn,
+    isAdmin : authState.isAdmin
 });
 
 const mapDispatch = {
@@ -24,7 +25,7 @@ const connector = connect(
 
 type Props = ConnectedProps<typeof connector> & RouteComponentProps;
 
-const Navigation = ({loggedIn, onLogout, history}:Props) => {
+const Navigation = ({loggedIn, isAdmin, onLogout,  history}:Props) => {
     return (
         <Navbar bg="dark" variant="dark" expand="lg" fixed="top" >
             <Navbar.Brand><Link to="/">Shop</Link></Navbar.Brand>
@@ -32,7 +33,8 @@ const Navigation = ({loggedIn, onLogout, history}:Props) => {
             </Nav>
             
             <Nav style={{marginRight:10}} >
-                <Link to ="/admin"><Button>Admin</Button></Link>
+                {isAdmin?<Link to ="/admin"><Button>Admin</Button></Link>:<></>}
+                
                 {loggedIn===true?
                 <Dropdown>
                 <Dropdown.Toggle variant="primary" id="dropdown-basic">
